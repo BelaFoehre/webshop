@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NbSidebarService } from '@nebular/theme';
 
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -13,15 +12,16 @@ export class HeaderComponent implements OnInit {
     private readonly sidebarService: NbSidebarService
   ) { }
 
-      /**
+  /**
    * Toggles the animation for the sidebar to open or close it.
    * @returns `false` 
    */
-       toggleSidebar(): boolean {
-        this.sidebarService.toggle();
-        return false;
-      }
+  toggleSidebar(): boolean {
+    this.sidebarService.toggle(true, 'left');
+    return false;
+  }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
 
 }
