@@ -4,8 +4,9 @@
     <app-header></app-header>
   </nb-layout-header>
 
-  <nb-sidebar>
-    <app-navbar></app-navbar>
+  <nb-sidebar class="menu-sidebar" tag="left" state="compacted" title="Noice">
+    <nb-menu [items]="items" autoCollapse="true">
+    </nb-menu>
   </nb-sidebar>
 
   <nb-layout-column>

@@ -4,16 +4,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule} from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbUserModule, NbCardModule, NbMenuModule} from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { HeaderComponent } from './header/header.component';
-import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +21,10 @@ import { NavbarComponent } from './navbar/navbar.component';
     NbLayoutModule,
     NbEvaIconsModule,
     NbSidebarModule.forRoot(),
-    NbIconModule
+    NbIconModule,
+    NbUserModule,
+    NbCardModule,
+    NbMenuModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
