@@ -27,14 +27,13 @@ app.use(cors(corsOptions))
 
 // Register
 app.post("/api/auth/register", async (req, res) => {
-    console.log("reg")
     // Our register logic starts here
      try {
       // Get user input
-      const { fullName, email, password } = req.body;
+      const { name, surname, email, password, confirmPassord } = req.body;
   
       // Validate user input
-      if (!(email && password && fullName)) {
+      if (!(email && password && name && surname)) {
         return res.status(400).send("All input is required");
       }
   
@@ -51,16 +50,18 @@ app.post("/api/auth/register", async (req, res) => {
   
       // Create user in our database
       const user = await User.create({
-        full_name: fullName,
+        name: name,
+        surname: surname,
         email: email.toLowerCase(), // sanitize
         password: encryptedUserPassword,
       });
   
       // Create token
       const token = jwt.sign(
-        { user_id: user._id, email, user_name: user.full_name },
-        process.env.TOKEN_KEY,
         {
+          user_id: user._id,
+          email, name, surname
+        }, process.env.TOKEN_KEY, {
           expiresIn: "5h",
         }
       );
@@ -92,9 +93,12 @@ app.post("/api/auth/login", async (req, res) => {
       if (user && (await bcrypt.compare(password, user.password))) {
         // Create token
         const token = jwt.sign(
-          { user_id: user._id, email, user_name: user.full_name },
-          process.env.TOKEN_KEY,
           {
+            user_id: user._id,
+            email,
+            name: user.name,
+            surname: user.surname
+          }, process.env.TOKEN_KEY, {
             expiresIn: "5h",
           }
         );

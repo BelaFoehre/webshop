@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
     this.authService.onTokenChange().subscribe((token) => {
       if(token.isValid()){
         let payload = token.getPayload()
-        this.user_name = payload.user_name
+        this.user_name = `${payload.name} ${payload.surname}`
       }
     })
   }
