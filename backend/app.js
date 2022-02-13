@@ -36,6 +36,11 @@ app.post("/api/auth/register", async (req, res) => {
       if (!(email && password && name && surname)) {
         return res.status(400).send("All input is required");
       }
+
+      // Check if passwords match
+      if (!(password == confirmPassord)){
+        return res.status(400).send("Passwords do not match")
+      }
   
       // check if user already exist
       // Validate if user exist in our database
