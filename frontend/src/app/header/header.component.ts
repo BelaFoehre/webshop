@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { NbSidebarService } from '@nebular/theme';
-import { NbAuthJWTToken, NbAuthService, NbAuthSimpleToken, NbAuthToken } from '@nebular/auth';
+import { Component, Inject, OnInit } from '@angular/core';
+import { NbMenuItem, NbMenuService, NbSidebarService, NB_WINDOW } from '@nebular/theme';
+import { NbAuthService } from '@nebular/auth';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -13,14 +14,26 @@ export class HeaderComponent implements OnInit {
   user_description: string = "chef"
   user_avatar: string = ""
 
+  items: NbMenuItem[] = [];
+
   constructor(
+    // private nbMenuService: NbMenuService, @Inject(NB_WINDOW) private window: any,
     private readonly sidebarService: NbSidebarService,
     private readonly authService: NbAuthService
   ) {
     this.authService.onTokenChange().subscribe((token) => {
       if(token.isValid()){
+        this.items.push(
+          { title: 'Profil' },
+          { title: 'Logout', link: '/auth/logout' }
+        )
         let payload = token.getPayload()
         this.user_name = `${payload.name} ${payload.surname}`
+      } else {
+        this.items.push(
+          { title: 'Login', link: '/auth/login' },
+          { title: 'Registrieren', link: '/auth/register' }
+        )
       }
     })
   }
@@ -34,7 +47,13 @@ export class HeaderComponent implements OnInit {
     return false;
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+  //   this.nbMenuService.onItemClick()
+  //     .pipe(
+  //       filter(({ tag }) => tag === 'user-context-menu'),
+  //       map(({ item: { title } }) => title),
+  //     )
+  //     .subscribe(title => this.window.alert(`${title} was clicked!`));
   }
 
 }

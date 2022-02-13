@@ -3,5 +3,11 @@
     <hr>
     <h2>Bester Webshop EU West</h2>
     <hr>
-    <nb-user [name]="user_name" [title]="user_description" [picture]="user_avatar"></nb-user>
+    <nb-user
+      [name]="user_name"
+      [title]="user_description"
+      [picture]="user_avatar"
+      [nbContextMenu]="items"
+      nbContextMenuTag="user-context-menu"
+      nbContextMenuTrigger="hover"></nb-user>
 </nb-layout-header>
