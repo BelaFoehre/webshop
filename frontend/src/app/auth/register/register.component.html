@@ -20,23 +20,23 @@
     <label class="label" for="input-name">Vorname:</label>
     <input nbInput
            [(ngModel)]="user.name"
-           #fullName="ngModel"
+           #name="ngModel"
            id="input-name"
-           name="fullName"
+           name="name"
            placeholder="Vorname"
            autofocus
            fullWidth
            fieldSize="large"
-           [status]="fullName.dirty ? (fullName.invalid  ? 'danger' : 'success') : 'basic'"
+           [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : 'basic'"
            [required]="getConfigValue('forms.validation.fullName.required')"
            [minlength]="getConfigValue('forms.validation.fullName.minLength')"
            [maxlength]="getConfigValue('forms.validation.fullName.maxLength')"
-           [attr.aria-invalid]="fullName.invalid && fullName.touched ? true : null">
-    <ng-container *ngIf="fullName.invalid && fullName.touched">
-      <p class="caption status-danger" *ngIf="fullName.errors?.['required']">
+           [attr.aria-invalid]="name.invalid && name.touched ? true : null">
+    <ng-container *ngIf="name.name && name.touched">
+      <p class="caption status-danger" *ngIf="name.errors?.['required']">
         Vorname unvollständig!
       </p>
-      <p class="caption status-danger" *ngIf="fullName.errors?.['minlength'] || fullName.errors?.['maxlength']">
+      <p class="caption status-danger" *ngIf="name.errors?.['minlength'] || name.errors?.['maxlength']">
         Vorname sollte
         {{getConfigValue('forms.validation.fullName.minLength')}}
         bis
@@ -50,27 +50,27 @@
     <label class="label" for="input-surname">Nachname:</label>
     <input nbInput
            [(ngModel)]="user.surname"
-           #surName="ngModel"
+           #surname="ngModel"
            id="input-surname"
            name="surname"
            placeholder="Nachname"
            autofocus
            fullWidth
            fieldSize="large"
-           [status]="surName.dirty ? (surName.invalid  ? 'danger' : 'success') : 'basic'"
+           [status]="surname.dirty ? (surname.invalid  ? 'danger' : 'success') : 'basic'"
            [required]="getConfigValue('forms.validation.fullName.required')"
            [minlength]="getConfigValue('forms.validation.fullName.minLength')"
            [maxlength]="getConfigValue('forms.validation.fullName.maxLength')"
-           [attr.aria-invalid]="surName.invalid && surName.touched ? true : null">
-    <ng-container *ngIf="surName.invalid && surName.touched">
-      <p class="caption status-danger" *ngIf="surName.errors?.['required']">
+           [attr.aria-invalid]="surname.invalid && surname.touched ? true : null">
+    <ng-container *ngIf="surname.invalid && surname.touched">
+      <p class="caption status-danger" *ngIf="surname.errors?.['required']">
         Nachname unvollständig!
       </p>
-      <p class="caption status-danger" *ngIf="surName.errors?.['minlength'] || surName.errors?.['maxlength']">
+      <p class="caption status-danger" *ngIf="surname.errors?.['minlength'] || surname.errors?.['maxlength']">
         Nachname sollte
-        {{getConfigValue('forms.validation.surName.minLength')}}
+        {{getConfigValue('forms.validation.surname.minLength')}}
         bis
-        {{getConfigValue('forms.validation.surName.maxLength')}}
+        {{getConfigValue('forms.validation.surname.maxLength')}}
         Charaktere enthalten
       </p>
     </ng-container>
