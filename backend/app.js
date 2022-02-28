@@ -4,6 +4,7 @@ const app = express();
 const env = require('dotenv').config();
 const auth = require("./middleware/check-auth");
 const authRoutes = require("./routes/auth");
+const devRoutes = require("./routes/dev");
 
 
 require("./config/database").connect();
@@ -22,6 +23,7 @@ const corsOptions = {
 
 
 app.use("/api/auth/", authRoutes);
+app.use("/api/dev/", devRoutes);
 
 app.use(express.json());
 app.use(cors(corsOptions))
