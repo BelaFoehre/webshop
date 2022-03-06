@@ -4,8 +4,8 @@ const bodyParser = require('body-parser').json();
 const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken");
 // const checkAuth = require('../middleware/check-auth');
-
 const User = require("../model/user");
+const { sendMail } = require('../config/nodemailer');
 
 // Register
 router.post("/register", bodyParser, async (req, res) => {
@@ -102,4 +102,67 @@ router.post("/login", bodyParser, async (req, res) => {
     }
 })
 
+router.put('/forgot-password', bodyParser, (req, res) => {
+  const { email } = req.body;
+
+  User.findOne({email}, (err, user) => {
+    if(err || !user){
+      return res.status(400).json({error: 'User with this email does not exists.'})
+    }
+
+    const token = jwt.sign({_id: user._id}, process.env.RESET_PW_KEY, {expiresIn: '20min'})
+
+    return User.updateOne({"email": email}, {resetLink:token}, async (err, success) => {
+      if(err){
+        return res.status(400).json({error: "reset password link error"})
+      } else {
+
+        let subject = 'You Idiot forgot your fucking password god damn'
+        let text = 'Idioto use da link to reset dat shit'
+        let html = `
+          <h2>Please click dis link brah</h2>
+          <a href="http://${process.env.HOST}:4200/auth/reset-password?token=${token}">RESET PASSWORD</a>`
+
+       let response = await sendMail(email, subject, text, html)
+
+        if(response){
+          return res.status(200).send()
+        } else {
+            return res.status(503).send()
+        }
+      }
+    })
+  })
+})
+
+router.put('/reset-password', bodyParser, async (req, resp) => {
+  console.log(req.body)
+  const {resetLink, password} = req.body;
+
+  //Encrypt user password
+  encryptedUserPassword = await bcrypt.hash(password, 10);
+
+  if(resetLink){
+    jwt.verify(resetLink, process.env.RESET_PW_KEY, (err, decodedData) => {
+      if(err) {
+        return resp.status(401).json({
+          error: "Incorrect or expired token"
+        })
+      }
+
+      User.findOneAndUpdate({"resetLink": resetLink}, { $set: {password:encryptedUserPassword, name:'Florian'}, $unset: {resetLink}}, (err, doc, res) => {
+        if(err){
+          return resp.status(400).json({error: "User with this token doesn't exist"})
+        } else {
+          return resp.status(201).json({message: "Password changed successfully"})
+        }
+      })
+    })
+  } else {
+    return resp.status(401).json({error: "Auth err"})
+  }
+
+})
+
+// # if user with that email exists, we have sent you a password reset email
 module.exports = router;

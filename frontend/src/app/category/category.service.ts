@@ -36,7 +36,7 @@ export class CategoryService {
       }))
       .subscribe((res: NbMenuItem) => {
         this.categoriesUpdated.next([res])
-    })
+      })
   }
 
   getCategoryUpdateListener() {

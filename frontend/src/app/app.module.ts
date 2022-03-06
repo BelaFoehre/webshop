@@ -8,7 +8,7 @@ import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbUserMod
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { HeaderComponent } from './header/header.component';
 import { HttpClientModule } from '@angular/common/http';
-import { NbPasswordAuthStrategy, NbAuthModule, NbAuthJWTToken, NbAuthSimpleToken } from '@nebular/auth';
+import { NbPasswordAuthStrategy, NbAuthModule, NbAuthJWTToken } from '@nebular/auth';
 import { AuthGuard } from './auth-guard.service';
 
 @NgModule({
@@ -51,7 +51,15 @@ import { AuthGuard } from './auth-guard.service';
               },
               logout: {
                 endpoint: '',
-              }
+              },
+              requestPass: {
+                endpoint: '/forgot-password',
+                method: 'put',
+              },
+              resetPass: {
+                endpoint: '/reset-password',
+                method: 'put',
+              },
         }),
       ],
       forms: {},

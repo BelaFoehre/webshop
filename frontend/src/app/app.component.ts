@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMenuItem } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 import { CategoryService } from './category/category.service';
@@ -9,11 +9,14 @@ import { CategoryService } from './category/category.service';
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, OnDestroy {
   categorySub!: Subscription;
   items: NbMenuItem[] = []
 
   constructor(private categoryService: CategoryService){}
+  ngOnDestroy(): void {
+    this.categorySub.unsubscribe()
+  }
   title = 'Fresh';
 
   async ngOnInit(){

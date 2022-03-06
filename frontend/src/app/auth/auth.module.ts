@@ -14,6 +14,8 @@ import {
 } from '@nebular/theme';
 import { NgxLoginComponent } from './login/login.component';
 import { NgxRegisterComponent } from './register/register.component';
+import { NgxRequestPasswordComponent } from './request-password/request-password.component';
+import { NgxResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { NgxRegisterComponent } from './register/register.component';
   ],
   declarations: [
     NgxLoginComponent,
-    NgxRegisterComponent
+    NgxRegisterComponent,
+    NgxRequestPasswordComponent,
+    NgxResetPasswordComponent
   ],
 })
 export class NgxAuthModule {
