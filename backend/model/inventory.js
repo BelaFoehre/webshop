@@ -9,12 +9,14 @@ const inventorySchema = new mongoose.Schema({
     sub1: { type: String, default: null},
     sub2: { type: String, default: null},
   },
-  sizes: [{
-      name: { type: String },
-      price: { type: Number },
-      qty: { type: Number }
-  }],
+  price: { type: Number },
+  availableQty: { type: Number },
+  // sizes: [{
+  //     name: { type: String },
+  //     price: { type: Number },
+  //     qty: { type: Number }
+  // }],
   tags: { type: [String], default: null },
 });
 
-module.exports = mongoose.model('inventory', inventorySchema);
+module.exports = mongoose.model('Inventory', inventorySchema);
