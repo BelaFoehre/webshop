@@ -4,21 +4,12 @@ const bodyParser = require('body-parser').json();
 const { sendMail } = require('../config/nodemailer');
 const Cart = require('../model/Cart');
 const Inventory = require('../model/Inventory');
+const { getProductById, updateInventory } = require('../config/support.js')
 
 router.get('/inventory', async (req, res) => {
     const inv = await Inventory.find()
     return res.status(200).json(inv)
 })
-
-async function getProductById(searchId){
-    // const prod = await Inventory.findOne({_id: searchId})
-    let prod
-    await Inventory.findById(searchId).then((res) => {
-        prod = res
-    }).catch((err) => {})
-
-    return prod
-}
 
 router.get('/inventory/:id', async (req, res) => {
     const inv = await getProductById(req.params.id)
@@ -52,7 +43,7 @@ router.put('/cart/:id', bodyParser, async (req, res) => {
     }
 
     let data = await cart.save()
-
+    updateInventory(product, -itemQty)
     return res.status(202).json(data)
 })
 
