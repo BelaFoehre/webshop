@@ -6,6 +6,7 @@ const auth = require("./middleware/check-auth");
 const authRoutes = require("./routes/auth");
 const devRoutes = require("./routes/dev");
 const kategoriesRoutes = require("./routes/kategories")
+const purchaseRoutes = require("./routes/purchase")
 
 
 require("./config/database").connect();
@@ -26,6 +27,7 @@ const corsOptions = {
 app.use("/api/auth/", authRoutes);
 app.use("/api/dev/", devRoutes);
 app.use("/api/kategories/", kategoriesRoutes);
+app.use("/api/purchase/", purchaseRoutes)
 
 app.use(express.json());
 app.use(cors(corsOptions))
