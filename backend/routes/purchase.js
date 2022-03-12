@@ -4,7 +4,7 @@ const bodyParser = require('body-parser').json();
 const { sendMail } = require('../config/nodemailer');
 const Cart = require('../model/Cart');
 const Inventory = require('../model/Inventory');
-const { getProductById, updateInventory } = require('../config/support.js')
+const { getProductById, updateInventory, findCartById } = require('../config/support.js')
 
 router.get('/inventory', async (req, res) => {
     const inv = await Inventory.find()
@@ -12,8 +12,11 @@ router.get('/inventory', async (req, res) => {
 })
 
 router.get('/inventory/:id', async (req, res) => {
-    const inv = await getProductById(req.params.id)
-    return res.status(200).json(inv)
+    getProductById(req.params.id).then((data) => {
+        return res.status(200).json(data)
+    }).catch((err) => {
+        return res.sendStatus(404)
+    })
 })
 
 // TODO check ob es net doch post ist, weil ja auch option ist, das was neues erstellt wird - wobei natürlich das cart immer nur geändert wird
@@ -21,11 +24,14 @@ router.get('/inventory/:id', async (req, res) => {
 router.put('/cart/:id', bodyParser, async (req, res) => {
     const { itemId, itemQty } = req.body
 
-    const product = await getProductById(itemId)
-    if(!product) return res.status(404).send()
+    const product = await getProductById(itemId).catch((err) => {
+        return res.sendStatus(404)
+    })
     
     // const cart = await createCart()
-    const cart = await Cart.findById(req.params.id)
+    const cart = await Cart.findById(req.params.id).catch((err) => {
+        return res.sendStatus(404)
+    })
 
     let itemIndex = await cart.items.findIndex(item => item.id == itemId)
 
@@ -42,22 +48,42 @@ router.put('/cart/:id', bodyParser, async (req, res) => {
         })
     }
 
-    updateInventory(product, -itemQty).then(async () => {
-        let data = await cart.save()
-        return res.status(202).json(data)
+    let cartPromise = new Promise((resolve, reject) => {
+        cart.save((error, data) => {
+            if(error) reject(error)
+            else resolve(data)
+        })
+    })
+
+    let inventoryPromise = new Promise((resolve, reject) => {
+        updateInventory(product, -itemQty).then((data) => {
+            resolve(data)
+        }).catch((error) => {
+            reject(error)
+        })
+    })
+
+    Promise.all([cartPromise, inventoryPromise]).then((data) => {
+        console.log(data)
+        return res.status(200).json(data)
     }).catch((err) => {
-        return res.status(500).send()
+        return res.sendStatus(500)
     })
 })
 
-router.get('/cart/:id', async (req, res) => {
-    const cart = await Cart.find({_id: req.params.id})
-    return res.status(200).json(cart)
+router.get('/cart/:id', (req, res) => {
+    findCartById(req.params.id).then((data) => {
+        return res.status(200).json(data)
+    }).catch((err) => {
+        return res.sendStatus(404)
+    })
 })
 
 router.get('/cart', async (req, res) => {
-    const cart = await Cart.find()
-    return res.status(200).json({res: cart})
+    Cart.find((error, result) => {
+        if(error) return res.sendStatus(404)
+        return res.status(200).json(result)
+    })
 })
 
 module.exports = router;
