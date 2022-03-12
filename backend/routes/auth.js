@@ -4,7 +4,7 @@ const bodyParser = require('body-parser').json();
 const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken");
 // const checkAuth = require('../middleware/check-auth');
-const User = require("../model/user");
+const User = require('../model/User');
 const { sendMail } = require('../config/nodemailer');
 
 // Register

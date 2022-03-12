@@ -9,4 +9,4 @@ const userSchema = new mongoose.Schema({
   resetLink: { type: String, default: null}
 });
 
-module.exports = mongoose.model("user", userSchema);
+module.exports = mongoose.model("User", userSchema);

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser').json();
 
-const Inventory = require('../model/inventory')
+const Inventory = require('../model/Inventory')
 
 
 router.get('', async (req, res) => {

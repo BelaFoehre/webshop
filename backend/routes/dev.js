@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser').json();
 
-const Inventory = require("../model/inventory");
+const Inventory = require("../model/Inventory");
+const Cart = require("../model/Cart.js")
 
-const User = require('../model/user');
+const User = require('../model/User');
 const { sendMail } = require('../config/nodemailer');
 
 router.get('/sampleData', async (req, res) => {
@@ -39,49 +40,8 @@ router.post('/popSample', bodyParser, async (req, res) => {
             main: "main1",
             sub1: "sub1_1"
         },
-        sizes: [{
-            name: 'Large',
-            price: 42,
-            qty: 13
-        },{
-            name: 'Small',
-            price: 12,
-            qty: 420
-        }],
-        tags: ["tag1"]
-    },{
-        name: "Item2",
-        brand: "brand1",
-        category: {
-            main: "main1",
-            sub1: "sub1_2"
-        },
-        sizes: [{
-            name: 'Large',
-            price: 42,
-            qty: 13
-        },{
-            name: 'Small',
-            price: 12,
-            qty: 420
-        }],
-        tags: ["tag1"]
-    },{
-        name: "Item",
-        brand: "brand2",
-        category: {
-            main: "main2",
-            sub1: "sub1_1"
-        },
-        sizes: [{
-            name: 'Large',
-            price: 42,
-            qty: 13
-        },{
-            name: 'Small',
-            price: 12,
-            qty: 420
-        }],
+        price: 42,
+        availableQty: 13,
         tags: ["tag1"]
     }).then((res) => {
         console.log(res)
@@ -92,24 +52,18 @@ router.post('/popSample', bodyParser, async (req, res) => {
 
 })
 
-router.post('/popSample2', bodyParser, async (req, res) => {
+router.post('/popSampleManuel', bodyParser, async (req, res) => {
     const invItem = await Inventory.create({
-        name: "Item42",
-        brand: "brand1",
+        name: req.body.name,
+        brand: req.body.brand,
         category: {
-            main: "main1",
-            sub1: "newsub"
+            main: req.body.category.main,
+            sub1: req.body.category.sub1,
+            sub2: req.body.category.sub2
         },
-        sizes: [{
-            name: 'Large',
-            price: 42,
-            qty: 13
-        },{
-            name: 'Small',
-            price: 12,
-            qty: 420
-        }],
-        tags: ["tag1"]
+        price: req.body.price,
+        availableQty: req.body.availableQty,
+        tags: req.body.tags
     }).then((res) => {
         console.log(res)
         return res.status(202)
