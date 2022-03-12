@@ -10,7 +10,7 @@ const inventorySchema = new mongoose.Schema({
     sub2: { type: String, default: null},
   },
   price: { type: Number },
-  availableQty: { type: Number },
+  availableQty: { type: Number, min: 0 },
   // sizes: [{
   //     name: { type: String },
   //     price: { type: Number },

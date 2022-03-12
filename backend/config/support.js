@@ -12,5 +12,11 @@ exports.getProductById = async (searchId) => {
 
 exports.updateInventory = (product, qtyChange) => {
     product.availableQty += qtyChange
-    product.save()
+
+    return new Promise((resolve, reject) => {
+        product.save((err, data) => {
+            if(err) reject(err)
+            else resolve()
+        })
+    })
 }

@@ -42,9 +42,12 @@ router.put('/cart/:id', bodyParser, async (req, res) => {
         })
     }
 
-    let data = await cart.save()
-    updateInventory(product, -itemQty)
-    return res.status(202).json(data)
+    updateInventory(product, -itemQty).then(async () => {
+        let data = await cart.save()
+        return res.status(202).json(data)
+    }).catch((err) => {
+        return res.status(500).send()
+    })
 })
 
 router.get('/cart/:id', async (req, res) => {
