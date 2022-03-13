@@ -6,7 +6,7 @@ exports.getProductById = (searchId) => {
 
     return new Promise((resolve, reject) => {
         Inventory.findById(searchId, (error, result) => {
-            if(error) reject(error)
+            if(error | !result) reject(error)
             else resolve(result)
         })
     })
@@ -34,7 +34,7 @@ exports.findCartById = (searchId) => {
 
     return new Promise((resolve, reject) => {
         Cart.findById(searchId, (error, result) => {
-            if(error) reject(error)
+            if(error | !result) reject(error)
             else resolve(result)
         })
     })
