@@ -34,7 +34,7 @@ router.get('/user', bodyParser, (req, res) => {
 
 router.post('/popSample', bodyParser, async (req, res) => {
     const invItem = await Inventory.create({
-        name: "Item1",
+        bezeichnung: "Item1337",
         brand: "brand1",
         category: {
             main: "main1",
@@ -54,7 +54,7 @@ router.post('/popSample', bodyParser, async (req, res) => {
 
 router.post('/popSampleManuel', bodyParser, async (req, res) => {
     const invItem = await Inventory.create({
-        name: req.body.name,
+        bezeichnung: req.body.bezeichnung,
         brand: req.body.brand,
         category: {
             main: req.body.category.main,

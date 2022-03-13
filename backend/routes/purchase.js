@@ -41,6 +41,7 @@ router.put('/cart/:id', bodyParser, async (req, res) => {
         cart.subTotal = cart.items.map(item => item.priceTotal).reduce((prev, curr) => prev + curr)
     } else {
         cart.items.push({
+            bezeichnung: product.bezeichnung,
             id: itemId,
             quantity: itemQty,
             priceItem: product.price,

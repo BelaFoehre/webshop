@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const inventorySchema = new mongoose.Schema({
-  name: { type: String, default: null },
+  bezeichnung: { type: String, default: null },
   brand: { type: String, default: null },
 
   category: {
