@@ -10,11 +10,13 @@ import { HeaderComponent } from './header/header.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NbPasswordAuthStrategy, NbAuthModule, NbAuthJWTToken } from '@nebular/auth';
 import { AuthGuard } from './auth-guard.service';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,
