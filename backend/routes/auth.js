@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 // const checkAuth = require('../middleware/check-auth');
 const User = require('../model/User');
 const { sendMail } = require('../config/nodemailer');
+const Cart = require('../model/Cart');
 
 // Register
 router.post("/register", bodyParser, async (req, res) => {
@@ -40,7 +41,8 @@ router.post("/register", bodyParser, async (req, res) => {
         surname: surname,
         email: email.toLowerCase(), // sanitize
         password: encryptedUserPassword,
-      });
+        cart: await Cart.create({})
+      })
 
       // Create token
       const token = jwt.sign(

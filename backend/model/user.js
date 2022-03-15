@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Cart = require("./Cart");
 
 const userSchema = new mongoose.Schema({
   name: { type: String, default: null },
@@ -6,7 +7,8 @@ const userSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: true, lowercase: true },
   password: { type: String, required: true },
   token: { type: String },
-  resetLink: { type: String, default: null}
+  resetLink: { type: String, default: null },
+  cart: { type: mongoose.Schema.Types.ObjectId, ref: Cart, required: true }
 });
 
 module.exports = mongoose.model("User", userSchema);
