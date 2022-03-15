@@ -1,5 +1,6 @@
 const Inventory = require("../model/Inventory")
 const Cart = require("../model/Cart")
+const jwt = require("jsonwebtoken");
 
 exports.getProductById = (searchId) => {
     // const prod = await Inventory.findOne({_id: searchId})
@@ -39,3 +40,12 @@ exports.findCartById = (searchId) => {
         })
     })
 }
+
+exports.getUserByToken = (token) => {
+    return new Promise((resolve, reject) => {
+      jwt.verify(token, process.env.TOKEN_KEY, (error, decodedData) => {
+        if(error | !decodedData) reject(error)
+        else resolve(decodedData)
+      })
+    })
+  }
