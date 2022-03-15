@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const User = require('../model/User');
 const { sendMail } = require('../config/nodemailer');
 const Cart = require('../model/Cart');
+const { addSampleProductToCart } = require('../config/support');
 
 // Register
 router.post("/register", bodyParser, async (req, res) => {
@@ -36,13 +37,33 @@ router.post("/register", bodyParser, async (req, res) => {
       encryptedUserPassword = await bcrypt.hash(password, 10);
 
       // Create user in our database
+      /* for production: */
+      // const user = await User.create({
+      //   name: name,
+      //   surname: surname,
+      //   email: email.toLowerCase(), // sanitize
+      //   password: encryptedUserPassword,
+      //   cart: await Cart.create({})
+      // })
+
+      /* for development */
+      const cart = await Cart.create({})
+
       const user = await User.create({
         name: name,
         surname: surname,
         email: email.toLowerCase(), // sanitize
         password: encryptedUserPassword,
-        cart: await Cart.create({})
+        cart: cart
       })
+
+      console.log(cart)
+      addSampleProductToCart(cart._id).catch((err) => {
+        console.log(err)
+      }).then((stuff) => {
+        console.log(stuff)
+      })
+      /* end */
 
       // Create token
       const token = jwt.sign(

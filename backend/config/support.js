@@ -48,4 +48,42 @@ exports.getUserByToken = (token) => {
         else resolve(decodedData)
       })
     })
-  }
+}
+
+/* for development purposes */
+exports.addSampleProductToCart = (cartId) => {
+
+    return new Promise((resolve, reject) => {
+        Inventory.create({
+            bezeichnung: "Item1337",
+            brand: "brand1",
+            category: {
+                main: "main1",
+                sub1: "sub1_1"
+            },
+            price: 42,
+            availableQty: 13,
+            tags: ["tag1"]
+        }).then((product) => {
+            console.log(1)
+            this.findCartById(cartId).then((cart) => {
+                cart.items.push({
+                    bezeichnung: product.bezeichnung,
+                    id: product._id,
+                    quantity: 1,
+                    priceItem: product.price,
+                    priceTotal: product.price
+                })
+                cart.save((error, data) => {
+                    if(error) reject(error)
+                    else resolve(data)
+                })
+            }).catch((err) => {
+                reject(err)
+            })
+        }).catch((err) => {
+            reject(err)
+        })
+
+    })
+}
