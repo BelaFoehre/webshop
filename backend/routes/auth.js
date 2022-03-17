@@ -173,7 +173,7 @@ router.put('/reset-password', bodyParser, async (req, resp) => {
         })
       }
 
-      User.findOneAndUpdate({"resetLink": resetLink}, { $set: {password:encryptedUserPassword, name:'Florian'}, $unset: {resetLink}}, (err, doc, res) => {
+      User.findOneAndUpdate({"resetLink": resetLink}, { $set: {password:encryptedUserPassword}, $unset: {resetLink}}, (err, doc, res) => {
         if(err){
           return resp.status(400).json({error: "User with this token doesn't exist"})
         } else {
