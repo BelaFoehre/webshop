@@ -4,7 +4,7 @@ const bodyParser = require('body-parser').json();
 const { sendMail } = require('../config/nodemailer');
 const Cart = require('../model/Cart');
 const Inventory = require('../model/Inventory');
-const { getProductById, updateInventory, findCartById, getUserByToken } = require('../config/support.js');
+const { getProductById, updateInventory, findCartById, getUserByToken, getCartByUserToken } = require('../config/support.js');
 const User = require('../model/User');
 
 router.get('/inventory', async (req, res) => {
@@ -77,24 +77,18 @@ router.get('/cart/:id', (req, res) => {
     findCartById(req.params.id).then((data) => {
         return res.status(200).json(data)
     }).catch((err) => {
-        return res.sendStatus(404)
+        return res.status(404).json(err)
     })
 })
 
 // TODO redo this callback hell
 router.get('/cart', async (req, res) => {
     if(req.query.token){
-        getUserByToken(req.query.token).then((data) => {
-                console.log(1)
-                User.findById(data.user_id).then((data) => {
-                    console.log(2, data)
-                    findCartById(data.cart).then((data) => {
-
-                        console.log(3)
-                        return res.status(200).json(data)
-                    })})}).catch((err) => {
-                        return res.status(404).json(err)
-                    })
+        getCartByUserToken(req.query.token).then((data) => {
+            return res.status(200).json(data)
+        }).catch((err) => {
+            return res.status(404).json(err)
+        })
     } else {
         Cart.find((error, result) => {
             if(error) return res.sendStatus(404)

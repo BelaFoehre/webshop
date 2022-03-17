@@ -1,6 +1,7 @@
 const Inventory = require("../model/Inventory")
 const Cart = require("../model/Cart")
 const jwt = require("jsonwebtoken");
+const User = require("../model/User");
 
 exports.getProductById = (searchId) => {
     // const prod = await Inventory.findOne({_id: searchId})
@@ -85,5 +86,20 @@ exports.addSampleProductToCart = (cartId) => {
             reject(err)
         })
 
+    })
+}
+
+exports.getCartByUserToken = (userToken) => {
+
+    return new Promise((resolve, reject) => {
+        this.getUserByToken(userToken).then((data) => {
+            User.findById(data.user_id).then((data) => {
+                this.findCartById(data.cart).then((data) => {
+                    resolve(data)
+                })
+            })
+        }).catch((err) => {
+            reject(err)
+        })
     })
 }
