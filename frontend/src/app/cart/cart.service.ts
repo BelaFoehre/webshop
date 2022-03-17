@@ -7,7 +7,6 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class CartService {
-  CART_ID = '622ccb5638d88d84dec34ed2'
   private productsUpdates = new Subject<any[]>()
   private cart = new Subject<any>()
   constructor(private http: HttpClient, private authSerivce: NbAuthService) { }
@@ -16,17 +15,15 @@ export class CartService {
     return this.productsUpdates.asObservable()
   }
   addToCart(itemId: string, quantity: number) {
+    let token = this.getToken()
     let payload = {
       'itemId': itemId,
       'itemQty': quantity
     }
-    return this.http.put(`api/purchase/cart/${this.CART_ID}`, payload);
+    return this.http.put(`api/purchase/cart?token=${token}`, payload);
   }
   getCart() {
-    let token;
-    this.authSerivce.getToken().subscribe((res: any) => {
-      token = res['token']
-    })
+    let token = this.getToken()
     this.http.get(`api/purchase/cart?token=${token}`,).subscribe((res) => {
       this.cart.next(res)
     });
@@ -35,10 +32,19 @@ export class CartService {
   getCartUpdateListener() {
     return this.cart.asObservable()
   }
-  increaseQty(payload: any) {
-    return this.http.post(`api/purchase/cart/${this.CART_ID}`, payload);
-  }
+  // increaseQty(payload: any) {
+  //   let token = this.getToken()
+  //   return this.http.put(`api/purchase/cart?token=${token}`, payload);
+  // }
   emptyCart() {
     return this.http.delete(`api/dev/cart/empty-cart`);
+  }
+
+  private getToken(){
+    let token;
+    this.authSerivce.getToken().subscribe((res: any) => {
+      token = res['token']
+    })
+    return token
   }
 }
