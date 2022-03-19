@@ -13,6 +13,35 @@ router.get('/sampleData', async (req, res) => {
     return res.status(200).json(inv)
 })
 
+router.delete('/all', async (req, res) => {
+    let invPromise = new Promise((resolve, reject) => {
+        Inventory.deleteMany((error, data) => {
+            if(error) reject(error)
+            else resolve(data)
+        })
+    })
+
+    let cartPromise = new Promise((resolve, reject) => {
+        Cart.deleteMany((error, data) => {
+            if(error) reject(error)
+            else resolve(data)
+        })
+    })
+
+    let userPromise = new Promise((resolve, reject) => {
+        User.deleteMany((error, data) => {
+            if(error) reject(error)
+            else resolve(data)
+        })
+    })
+
+    Promise.all([invPromise, cartPromise, userPromise]).then((data) => {
+        return res.status(200).json(data)
+    }).catch((err) => {
+        return res.status(500).json(err)
+    })
+})
+
 router.delete('/sampleData', async (req, res) => {
     await Inventory.deleteMany().then(result => {
         return res.status(201).json({ message: `deleted ${result.deletedCount}` });
