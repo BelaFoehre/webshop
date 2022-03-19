@@ -8,6 +8,11 @@ const Cart = require("../model/Cart.js")
 const User = require('../model/User');
 const { sendMail } = require('../config/nodemailer');
 
+router.get('/user', async (req, res) => {
+    const user = await User.find()
+    return res.status(200).json(user)
+})
+
 router.get('/sampleData', async (req, res) => {
     const inv = await Inventory.find()
     return res.status(200).json(inv)
