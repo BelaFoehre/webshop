@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   token: { type: String },
   resetLink: { type: String, default: null },
-  cart: { type: mongoose.Schema.Types.ObjectId, ref: Cart, required: true }
+  cart: { type: mongoose.Schema.Types.ObjectId, ref: Cart, required: true },
+  roles: { type: [String] }
 });
 
 module.exports = mongoose.model("User", userSchema);

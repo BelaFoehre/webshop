@@ -54,7 +54,8 @@ router.post("/register", bodyParser, async (req, res) => {
         surname: surname,
         email: email.toLowerCase(), // sanitize
         password: encryptedUserPassword,
-        cart: cart
+        cart: cart,
+        roles: ['Consumer']
       })
 
       console.log(cart)
@@ -69,7 +70,8 @@ router.post("/register", bodyParser, async (req, res) => {
       const token = jwt.sign(
         {
           user_id: user._id,
-          email, name, surname
+          email, name, surname,
+          roles: user.roles
         }, process.env.TOKEN_KEY, {
           expiresIn: "5h",
         }
