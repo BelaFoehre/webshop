@@ -103,3 +103,50 @@ exports.getCartByUserToken = (userToken) => {
         })
     })
 }
+
+exports.updateCart = (cart, itemId, itemQty) => {
+
+    return new Promise(async (resolve, reject) => {
+        const product = await this.getProductById(itemId).catch((err) => {
+            reject(err)
+        })
+
+        let itemIndex = await cart.items.findIndex(item => item.id == itemId)
+
+        if(itemIndex !== -1){
+            cart.items[itemIndex].quantity += itemQty
+            cart.items[itemIndex].priceTotal = cart.items[itemIndex].quantity * product.price
+            cart.subTotal = cart.items.map(item => item.priceTotal).reduce((prev, curr) => prev + curr)
+        } else {
+            cart.items.push({
+                bezeichnung: product.bezeichnung,
+                id: itemId,
+                quantity: itemQty,
+                priceItem: product.price,
+                priceTotal: itemQty * product.price
+            })
+        }
+
+        let cartPromise = new Promise((resolve, reject) => {
+            cart.save((error, data) => {
+                if(error) reject(error)
+                else resolve(data)
+            })
+        })
+
+        let inventoryPromise = new Promise((resolve, reject) => {
+            this.updateInventory(product, -itemQty).then((data) => {
+                resolve(data)
+            }).catch((error) => {
+                reject(error)
+            })
+        })
+
+        Promise.all([cartPromise, inventoryPromise]).then((data) => {
+            resolve(data)
+        }).catch((err) => {
+            reject(err)
+        })
+
+    })
+}
