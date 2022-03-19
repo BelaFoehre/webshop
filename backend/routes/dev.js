@@ -72,9 +72,8 @@ router.post('/popSample', bodyParser, async (req, res) => {
         price: 42,
         availableQty: 13,
         tags: ["tag1"]
-    }).then((res) => {
-        console.log(res)
-        return res.status(202)
+    }).then((data) => {
+        return res.status(202).json(data)
     }).catch(err => {
         return res.status(403).send(err)
     })
