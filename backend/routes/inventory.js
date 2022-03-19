@@ -18,6 +18,18 @@ router.get('/:id', async (req, res) => {
 })
 
 /**
+ * Deleting the document with the id passed in the url.
+ * @returns 200 & document if successfull
+ * @returns 404 & error, if error, for any error
+ */
+ router.delete('/:id', async (req, res) => {
+    Inventory.findByIdAndDelete(req.params.id, (error, result) => {
+        if(error | !result) return res.status(404).json(error)
+        if(result) return res.status(200).json(result)
+    })
+})
+
+/**
  * API to create a new Inventory DB entry
  * @param bezeichnung @typedef String
  * @param brand @typedef String
