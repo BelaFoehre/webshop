@@ -7,6 +7,7 @@ const authRoutes = require("./routes/auth");
 const devRoutes = require("./routes/dev");
 const kategoriesRoutes = require("./routes/kategories")
 const purchaseRoutes = require("./routes/purchase")
+const inventoryRoutes = require("./routes/inventory")
 
 
 require("./config/database").connect();
@@ -28,6 +29,7 @@ app.use("/api/auth/", authRoutes);
 app.use("/api/dev/", devRoutes);
 app.use("/api/kategories/", kategoriesRoutes);
 app.use("/api/purchase/", purchaseRoutes)
+app.use("/api/inventory", inventoryRoutes)
 
 app.use(express.json());
 app.use(cors(corsOptions))

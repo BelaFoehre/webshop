@@ -1,24 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser').json();
-const { sendMail } = require('../config/nodemailer');
 const Cart = require('../model/Cart');
-const Inventory = require('../model/Inventory');
-const { getProductById, updateInventory, findCartById, getUserByToken, getCartByUserToken, updateCart } = require('../config/support.js');
-const User = require('../model/User');
-
-router.get('/inventory', async (req, res) => {
-    const inv = await Inventory.find()
-    return res.status(200).json(inv)
-})
-
-router.get('/inventory/:id', async (req, res) => {
-    getProductById(req.params.id).then((data) => {
-        return res.status(200).json(data)
-    }).catch((err) => {
-        return res.status(404).send(err)
-    })
-})
+const { findCartById, getCartByUserToken, updateCart } = require('../config/support.js');
 
 // TODO check ob es net doch post ist, weil ja auch option ist, das was neues erstellt wird - wobei natürlich das cart immer nur geändert wird
 // evtl cart._id an User binden??
