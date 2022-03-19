@@ -6,14 +6,16 @@
 
 
 # Backend APIs
-| URL | type | expl |
-|---|---|---|
-||||
-| `api/dev/popSample` | post | adds 3 sample inventory entries
-| `api/dev/popSample2` | post | adds another sample inventory entry
-| `api/dev/popSample` | delete | deletes inventory
-| `api/dev/popSample` | get | retrieves inventory
-||||
-| `api/kategories` | get | retrieves category data
-| `api/auth/login` | post | login request (nb modified logic)
-| `api/auth/register` | post | register request (nb modified logic)
+
+siehe Postman
+
+## Sources
+
+https://www.youtube.com/watch?v=YJ4dgoHEmGs bzw. https://github.com/profanis/codeShotsWithProfanis/tree/21/auth-login-has-role-guard/src/app
+
+https://de.wikipedia.org/wiki/HTTP-Statuscode
+
+https://nodejs.dev/learn/modern-asynchronous-javascript-with-async-and-await
+
+https://blog.angular-university.io/angular-jwt-authentication/
+
