@@ -151,9 +151,8 @@ exports.updateCart = (cart, itemId, itemQty) => {
     })
 }
 
-exports.addNewInventory = (bezeichnung, brand, category_main, category_sub1, price, availableQty, tags) => {
+exports.validateInventory = (bezeichnung, brand, category_main, category_sub1, price, availableQty, tags) => {
     return new Promise((resolve, reject) => {
-
         try {
             availableQty = parseInt(availableQty)
             price = parseInt(price)
@@ -163,20 +162,30 @@ exports.addNewInventory = (bezeichnung, brand, category_main, category_sub1, pri
 
         if(availableQty < 0) reject(`availableQty must be greater or equal 0 (${availableQty})`)
         if(!(price > 0)) reject(`price must be greater than 0 (${price})`)
+        resolve()
+    })
+}
 
-        Inventory.create({
-            bezeichnung: bezeichnung,
-            brand: brand,
-            category: {
-                main: category_main,
-                sub1: category_sub1
-            },
-            price: price,
-            availableQty: availableQty,
-            tags: tags
-        }, (error, doc) => {
-            if(error | !doc) reject(error)
-            else resolve(doc)
+exports.addNewInventory = (bezeichnung, brand, category_main, category_sub1, price, availableQty, tags) => {
+    return new Promise((resolve, reject) => {
+
+        this.validateInventory(bezeichnung, brand, category_main, category_sub1, price, availableQty, tags).then(() => {
+            Inventory.create({
+                bezeichnung: bezeichnung,
+                brand: brand,
+                category: {
+                    main: category_main,
+                    sub1: category_sub1
+                },
+                price: price,
+                availableQty: availableQty,
+                tags: tags
+            }, (error, doc) => {
+                if(error | !doc) reject(error)
+                else resolve(doc)
+            })
+        }).catch((err) => {
+            reject(err)
         })
     })
 }
