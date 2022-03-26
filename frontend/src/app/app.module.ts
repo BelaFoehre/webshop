@@ -4,19 +4,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbUserModule, NbCardModule, NbMenuModule, NbContextMenuModule} from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbUserModule, NbCardModule, NbMenuModule, NbContextMenuModule, NbButtonModule, NbInputModule} from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { HeaderComponent } from './header/header.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NbPasswordAuthStrategy, NbAuthModule, NbAuthJWTToken } from '@nebular/auth';
 import { AuthGuard } from './auth-guard.service';
 import { CartComponent } from './cart/cart.component';
+import { FormsModule } from '@angular/forms';
+import { AddProductComponent } from './admin/add-product/add-product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     CartComponent,
+    AddProductComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,6 +30,9 @@ import { CartComponent } from './cart/cart.component';
     NbEvaIconsModule,
     NbSidebarModule.forRoot(),
     NbIconModule,
+    NbButtonModule,
+    NbInputModule,
+    FormsModule,
     NbUserModule,
     NbCardModule,
     NbContextMenuModule,

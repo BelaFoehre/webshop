@@ -4,12 +4,23 @@ import { NbMenuItem } from '@nebular/theme';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Category } from './category.model';
+import { InventoryModel } from './inventory.model';
 
-@Injectable({ providedIn: 'root' })
-export class CategoryService {
+@Injectable({
+  providedIn: 'root'
+})
+export class InventoryService {
   private categoriesUpdated = new Subject<NbMenuItem[]>();
 
   constructor(private http: HttpClient){}
+
+  addNewProduct(data: InventoryModel){
+    this.http
+      .post<any>('/api/inventory', data)
+      .subscribe((res) => {
+        console.log(res)
+      })
+  }
 
   getAllCategories(){
     this.http

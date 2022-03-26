@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMenuItem } from '@nebular/theme';
 import { Subscription } from 'rxjs';
-import { CategoryService } from './category/category.service';
+import { InventoryService } from './inventory.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,7 @@ export class AppComponent implements OnInit, OnDestroy {
   categorySub!: Subscription;
   items: NbMenuItem[] = []
 
-  constructor(private categoryService: CategoryService){}
+  constructor(private inventoryService: InventoryService){}
   ngOnDestroy(): void {
     this.categorySub.unsubscribe()
   }
@@ -26,8 +26,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private loadCategories(){
     // this.isLoading = true;
-    this.categoryService.getAllCategories()
-    this.categorySub = this.categoryService.getCategoryUpdateListener()
+    this.inventoryService.getAllCategories()
+    this.categorySub = this.inventoryService.getCategoryUpdateListener()
       .subscribe((categories: any) => {
         this.items = categories[0]
         // this.isLoading = false;

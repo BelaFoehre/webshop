@@ -1,0 +1,10 @@
+<form (ngSubmit)="addProduct(form)" #form="ngForm" aria-labelledby="title">
+
+  <input nbInput type="text" [(ngModel)]="bezeichnung" placeholder="Bezeichnung" [required]="true" name="bezeichnung">
+  <input nbInput type="text" [(ngModel)]="brand" placeholder="Brand" [required]="true" name="brand">
+  <input nbInput type="text" [(ngModel)]="main" placeholder="Hauptkategorie" [required]="true" name="main">
+  <input nbInput type="text" [(ngModel)]="sub1" placeholder="Unterkategorie" [required]="true" name="sub1">
+  <input nbInput type="number" [(ngModel)]="price" placeholder="Preis" [required]="true" name="price">
+  <input nbInput type="number" [(ngModel)]="availableQty" placeholder="Bestand" [required]="true" name="availableQty">
+  <button nbButton status="primary">Hinzufügen</button>
+</form> <!--[disabled]="!form.valid"-->
