@@ -6,5 +6,5 @@
   <input nbInput type="text" [(ngModel)]="sub1" placeholder="Unterkategorie" [required]="true" name="sub1">
   <input nbInput type="number" [(ngModel)]="price" placeholder="Preis" [required]="true" name="price">
   <input nbInput type="number" [(ngModel)]="availableQty" placeholder="Bestand" [required]="true" name="availableQty">
-  <button nbButton status="primary">Hinzufügen</button>
-</form> <!--[disabled]="!form.valid"-->
+  <button nbButton status="primary" [disabled]="!form.valid">Hinzufügen</button>
+</form>
