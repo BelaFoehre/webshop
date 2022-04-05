@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { NbTagComponent, NbTagInputAddEvent } from '@nebular/theme';
 import { InventoryModel } from 'src/app/inventory.model';
 import { InventoryService } from 'src/app/inventory.service';
 
@@ -36,9 +37,22 @@ export class AddProductComponent implements OnInit {
         },
         price: this.price,
         availableQty: this.availableQty,
-        tags: []
+        tags: Array.from(this.trees)
       }
       this.inventoryService.addNewProduct(data)
     }
+  }
+
+  trees: Set<string> = new Set()
+
+  onTagRemove(tagToRemove: NbTagComponent): void {
+    this.trees.delete(tagToRemove.text);
+  }
+
+  onTagAdd({ value, input }: NbTagInputAddEvent): void {
+    if (value) {
+      this.trees.add(value)
+    }
+    input.nativeElement.value = '';
   }
 }

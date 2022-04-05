@@ -1,10 +1,29 @@
 <form (ngSubmit)="addProduct(form)" #form="ngForm" aria-labelledby="title">
 
-  <input nbInput type="text" [(ngModel)]="bezeichnung" placeholder="Bezeichnung" [required]="true" name="bezeichnung">
-  <input nbInput type="text" [(ngModel)]="brand" placeholder="Brand" [required]="true" name="brand">
-  <input nbInput type="text" [(ngModel)]="main" placeholder="Hauptkategorie" [required]="true" name="main">
-  <input nbInput type="text" [(ngModel)]="sub1" placeholder="Unterkategorie" [required]="true" name="sub1">
-  <input nbInput type="number" [(ngModel)]="price" placeholder="Preis" [required]="true" name="price">
-  <input nbInput type="number" [(ngModel)]="availableQty" placeholder="Bestand" [required]="true" name="availableQty">
+  <nb-card>
+
+    <nb-card-body style="width: 100%;">
+      <input nbInput type="text" [(ngModel)]="bezeichnung" placeholder="Bezeichnung" [required]="true" name="bezeichnung">
+      <input nbInput type="text" [(ngModel)]="main" placeholder="Hauptkategorie" [required]="true" name="main">
+      <input nbInput type="number" [(ngModel)]="price" placeholder="Preis" [required]="true" name="price">
+    </nb-card-body>
+
+    <nb-card-body style="width: 100%">
+        <input nbInput type="text" [(ngModel)]="brand" placeholder="Brand" [required]="true" name="brand">
+        <input nbInput type="text" [(ngModel)]="sub1" placeholder="Unterkategorie" [required]="true" name="sub1">
+        <input nbInput type="number" [(ngModel)]="availableQty" placeholder="Bestand" [required]="true" name="availableQty">
+    </nb-card-body>
+
+    <nb-card-body style="width: 100%">
+      <nb-tag-list (tagRemove)="onTagRemove($event)" style="width: 50%;">
+        <nb-tag *ngFor="let tree of trees" [text]="tree" removable status="primary" appearance="outline"></nb-tag>
+        <input type="text" nbTagInput (tagAdd)="onTagAdd($event)" fullWidth placeholder="tags" [separatorKeys]="[32]">
+      </nb-tag-list>
+    </nb-card-body>
+
+  </nb-card>
+
   <button nbButton status="primary" [disabled]="!form.valid">Hinzufügen</button>
+
+
 </form>

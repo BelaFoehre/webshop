@@ -15,6 +15,7 @@ export class InventoryService {
   constructor(private http: HttpClient){}
 
   addNewProduct(data: InventoryModel){
+    console.log('penis')
     this.http
       .post<any>('/api/inventory', data)
       .subscribe((res) => {
