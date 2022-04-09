@@ -11,6 +11,7 @@ import { InventoryModel } from './inventory.model';
 })
 export class InventoryService {
   private categoriesUpdated = new Subject<NbMenuItem[]>();
+  private productsUpdated = new Subject<InventoryModel[]>()
 
   constructor(private http: HttpClient){}
 
@@ -18,6 +19,18 @@ export class InventoryService {
     return this.http
       .post<any>('/api/inventory', data, {observe:'response'})
       // .subscribe((res) => {})
+  }
+
+  getAllProducts(){
+    this.http
+      .get<any>('/api/inventory')
+      .subscribe((res: InventoryModel) => {
+        this.productsUpdated.next([res])
+      })
+  }
+
+  getProductUpdateListener(){
+    return this.productsUpdated.asObservable()
   }
 
   getAllCategories(){

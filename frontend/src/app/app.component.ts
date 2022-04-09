@@ -14,9 +14,7 @@ export class AppComponent implements OnInit, OnDestroy {
   items: NbMenuItem[] = []
 
   constructor(private inventoryService: InventoryService){}
-  ngOnDestroy(): void {
-    this.categorySub.unsubscribe()
-  }
+
   title = 'Fresh';
 
   async ngOnInit(){
@@ -32,5 +30,9 @@ export class AppComponent implements OnInit, OnDestroy {
         this.items = categories[0]
         // this.isLoading = false;
       });
+  }
+
+  ngOnDestroy(): void {
+    this.categorySub.unsubscribe()
   }
 }
