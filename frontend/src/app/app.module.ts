@@ -12,14 +12,12 @@ import { NbPasswordAuthStrategy, NbAuthModule, NbAuthJWTToken } from '@nebular/a
 import { AuthGuard } from './auth-guard.service';
 import { CartComponent } from './cart/cart.component';
 import { FormsModule } from '@angular/forms';
-import { AddProductComponent } from './admin/add-product/add-product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     CartComponent,
-    AddProductComponent,
   ],
   imports: [
     BrowserModule,
