@@ -39,7 +39,14 @@ export class AddProductComponent implements OnInit {
         availableQty: this.availableQty,
         tags: Array.from(this.trees)
       }
-      this.inventoryService.addNewProduct(data)
+      this.inventoryService.addNewProduct(data).subscribe((res) => {
+        if(res.status == 201){
+          //inform user that request was successfull TODO
+          form.reset()
+        } else {
+          //inform user that request failed TODO
+        }
+      })
     }
   }
 
