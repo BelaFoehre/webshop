@@ -1,44 +1,26 @@
-<section>
-  <div class="spacer">
-    <div class="container">
-      <div class="row mt-5">
-        <div class="col-lg-9">
-          <div class="row shop-listing">
-            <table class="table shop-table" *ngIf="products">
-              <tr>
-                <th>Bezeichnung</th>
-                <th>Markte</th>
-                <th>Hauptkategorie</th>
-                <th>Unterkategorie</th>
-                <th>Einzelpreis</th>
-                <th>Lagerbestand</th>
-              </tr>
-              <tr *ngFor="let item of products">
-                <td>{{ item.bezeichnung }}</td>
-                <td>{{ item.brand}}</td>
-                <td>{{ item.category.main}}</td>
-                <td>{{ item.category.sub1}}</td>
-                <td>{{ item.price}} €</td>
-                <td>{{ item.availableQty}}</td>
-                <!-- <td>
-                  <button class="btn btn-primary btn-sm" (click)="changeQuantity(item.id,1)">+</button>
-                  {{ item.quantity }}
-                  <button class="btn btn-primary btn-sm" (click)="changeQuantity(item.id,-1)">-</button>
-                </td>
-                <td class="text-right">
-                  <h5 class="font-medium m-b-30">{{ item.priceTotal || 0}} €</h5>
-                </td> -->
-              </tr>
-              <tr>
-                <!-- <td colspan="3">Subtotal: {{ cart.subTotal || 0}} €</td> -->
-                <td colspan="4">
-                  <button class="btn btn-danger">Empty Cart</button>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<nb-card>
+  <nb-card-body>
+
+    <label class="search-label" for="search">Suchen: </label>
+    <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input" style="margin: 10px;">
+
+    <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)">
+
+      <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+      <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+
+      <ng-container *ngFor="let column of allColumns; let index = index"
+                    [nbTreeGridColumnDef]="column"
+                    [showOn]="getShowOn(index)">
+        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
+          {{column}}
+        </th>
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">
+            {{ row.data[column] || '-' }}
+        </td>
+      </ng-container>
+
+    </table>
+
+  </nb-card-body>
+</nb-card>
