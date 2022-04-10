@@ -4,7 +4,7 @@
     <label class="search-label" for="search">Suchen: </label>
     <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input" style="margin: 10px;">
 
-    <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)">
+    <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)" style="table-layout: auto;">
 
       <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
       <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
