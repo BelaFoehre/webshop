@@ -34,6 +34,7 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
   sortColumn!: string;
   sortDirection: NbSortDirection = NbSortDirection.NONE;
 
+  products: InventoryModel[] = []
   productsSub!: Subscription
 
   /**
@@ -41,7 +42,6 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
    * @param dataSourceBuilder - NbTreeGridDataSourceBuilder<FSEntry>
    */
   constructor(private inventoryService: InventoryService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>) {
-    this.dataSource = this.dataSourceBuilder.create(this.data)
   }
 
   /**
@@ -50,6 +50,7 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
    */
   ngOnInit(){
     this.loadProducts()
+    this.reloadTable()
   }
 
   /**
@@ -94,8 +95,8 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
     this.inventoryService.getAllProducts()
     this.productsSub = this.inventoryService.getProductUpdateListener()
       .subscribe((products: any) => {
+        this.products = products[0]
         products[0].map((prod: InventoryModel) => {
-          // let test = formatCurrency(prod.price, 'EUR',)
           this.data.push({data: {
             Bezeichnung: prod.bezeichnung,
             Marke: prod.brand,
@@ -105,8 +106,14 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
             Bestand: prod.availableQty
           }})
         })
-        this.dataSource = this.dataSourceBuilder.create(this.data)
       });
+  }
+
+/**
+ * It creates a new data source from the data that was passed in
+ */
+  reloadTable(){
+    this.dataSource = this.dataSourceBuilder.create(this.data)
   }
 
  /**
