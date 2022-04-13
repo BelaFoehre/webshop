@@ -7,13 +7,14 @@ import { hasRoleGuard } from './hasRole-guard.service';
 
 const contentModule = () => import('./content/content.module').then(x => x.ContentModule);
 const authModule = () => import('./auth/auth.module').then(x => x.NgxAuthModule);
+const adminModule = () => import('./admin/admin.module').then(x => x.AdminModule);
 
 const routes: Routes = [
   { path: '', redirectTo: '/content', pathMatch: 'full' },
   { path: 'content', loadChildren: contentModule, canActivate: [AuthGuard] },
   { path: 'auth', loadChildren: authModule },
   { path: 'cart', component: CartComponent, canActivate: [AuthGuard, hasRoleGuard], data: { role: 'Consumer'} },
-  { path: 'test', component: AddProductComponent}
+  { path: 'admin', loadChildren: adminModule /*, canActivate: [AuthGuard, hasRoleGuard], data: { role: 'Admin' } */}
 
 ];
 
