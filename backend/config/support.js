@@ -2,6 +2,7 @@ const Inventory = require("../model/Inventory")
 const Cart = require("../model/Cart")
 const jwt = require("jsonwebtoken");
 const User = require("../model/User");
+const Order = require("../model/Order");
 
 exports.getProductById = (searchId) => {
     // const prod = await Inventory.findOne({_id: searchId})
@@ -186,6 +187,16 @@ exports.addNewInventory = (bezeichnung, brand, category_main, category_sub1, pri
             })
         }).catch((err) => {
             reject(err)
+        })
+    })
+}
+
+exports.findOrderById = (orderId) => {
+    return new Promise((resolve, reject) => {
+
+        Order.findById(orderId, (error, result) => {
+            if(error | !result) reject(error)
+            else resolve(result)
         })
     })
 }
