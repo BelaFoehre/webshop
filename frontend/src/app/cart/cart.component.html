@@ -15,9 +15,9 @@
                 <td>{{ item.bezeichnung }}</td>
                 <td>{{ item.priceItem || 0}} €</td>
                 <td>
-                  <button class="btn btn-primary btn-sm" (click)="changeQuantity(item.id,1)">+</button>
-                  {{ item.quantity }}
                   <button class="btn btn-primary btn-sm" (click)="changeQuantity(item.id,-1)">-</button>
+                  {{ item.quantity }}
+                  <button class="btn btn-primary btn-sm" (click)="changeQuantity(item.id,1)">+</button>
                 </td>
                 <td class="text-right">
                   <h5 class="font-medium m-b-30">{{ item.priceTotal || 0}} €</h5>
