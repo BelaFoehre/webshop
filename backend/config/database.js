@@ -8,6 +8,7 @@ exports.connect = () => {
       // user: 'root',
       // pass: 'pwd',
       useNewUrlParser: true,
+      useUnifiedTopology: true
     })
     .then(() => {
       console.log("Info :: Successfully connected to database");

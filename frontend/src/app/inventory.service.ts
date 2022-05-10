@@ -5,13 +5,15 @@ import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Category } from './category.model';
 import { InventoryModel } from './inventory.model';
+import { OrderModel } from './order.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InventoryService {
   private categoriesUpdated = new Subject<NbMenuItem[]>();
-  private productsUpdated = new Subject<InventoryModel[]>()
+  private productsUpdated = new Subject<InventoryModel[]>();
+  private ordersUpdated = new Subject<OrderModel[]>();
 
   constructor(private http: HttpClient){}
 
@@ -29,8 +31,20 @@ export class InventoryService {
       })
   }
 
+  getAllOrders(){
+    this.http
+      .get<any>('/api/purchase/order')
+      .subscribe((res: OrderModel) => {
+        this.ordersUpdated.next([res])
+      })
+  }
+
   getProductUpdateListener(){
     return this.productsUpdated.asObservable()
+  }
+
+  getOrderUpdateListener(){
+    return this.ordersUpdated.asObservable()
   }
 
   getAllCategories(){

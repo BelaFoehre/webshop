@@ -5,15 +5,19 @@ import { ManageProductsComponent } from './manage-products/manage-products.compo
 import { AdminRoutingModule } from './admin-routing.module'
 import { NbButtonModule, NbCardModule, NbInputModule, NbTagModule, NbTreeGridModule } from '@nebular/theme';
 import { FormsModule } from '@angular/forms';
+import { TreeGridModule } from '@syncfusion/ej2-angular-treegrid';
+import { ManageOrdersComponent } from './manage-orders/manage-orders.component';
 
 
 
 @NgModule({
   declarations: [
     AddProductComponent,
-    ManageProductsComponent
+    ManageProductsComponent,
+    ManageOrdersComponent
   ],
   imports: [
+    TreeGridModule,
     CommonModule,
     AdminRoutingModule,
     NbCardModule,
@@ -25,7 +29,8 @@ import { FormsModule } from '@angular/forms';
   ],
   exports: [
     AddProductComponent,
-    ManageProductsComponent
+    ManageProductsComponent,
+    ManageOrdersComponent
   ]
 })
 export class AdminModule { }
