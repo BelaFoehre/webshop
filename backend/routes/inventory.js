@@ -44,7 +44,7 @@ router.get('/:id', async (req, res) => {
 router.post('', bodyParser, (req, res) => {
     const { bezeichnung, brand, category: {main, sub1}, price, availableQty, tags } = req.body
 
-    if(!(bezeichnung && brand && main && sub1 && price && availableQty)){
+    if(!(bezeichnung && brand && main && sub1 && price && (availableQty >= 0))){
         return res.status(400).send('Missing parameters')
     }
 
@@ -71,8 +71,7 @@ router.post('', bodyParser, (req, res) => {
 router.put('/:id', bodyParser, async (req, res) => {
 
     const { bezeichnung, brand, category: {main, sub1}, price, availableQty, tags } = req.body
-
-    if(!(bezeichnung && brand && main && sub1 && price && availableQty)){
+    if(!(bezeichnung && brand && main && sub1 && price && (availableQty >= 0))){
         return res.status(400).send('Missing parameters')
     }
 
