@@ -11,11 +11,10 @@
     <label class="search-label" for="search">Suchen: </label>
     <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input" style="margin: 10px;">
 
-    <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)" [contentEditable]="true" style="table-layout: auto;">
+    <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)" [contentEditable]="false" style="table-layout: auto;">
 
       <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
       <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
-
       <ng-container *ngFor="let column of allColumns; let index = index"
                     [nbTreeGridColumnDef]="column"
                     [showOn]="getShowOn(index)">
@@ -23,7 +22,17 @@
           {{column}}
         </th>
         <td nbTreeGridCell *nbTreeGridCellDef="let row">
+          <div *ngIf="column!=='Bearbeiten'">
             {{ row.data[column] || '-' }}
+          </div>
+          <div *ngIf="column=='Bearbeiten'">
+            <button nbButton
+                    outline
+                    status="warning"
+                    (click)="editProduct(row.data['ID'])">
+              <nb-icon icon="edit"></nb-icon>
+            </button>
+          </div>
         </td>
       </ng-container>
 

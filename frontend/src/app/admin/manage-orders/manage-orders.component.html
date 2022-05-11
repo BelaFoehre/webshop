@@ -15,7 +15,6 @@
 
       <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
       <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
-
       <ng-container *ngFor="let column of allColumns; let index = index"
                     [nbTreeGridColumnDef]="column"
                     [showOn]="getShowOn(index)">
