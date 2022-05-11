@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 export class CartService {
   private productsUpdates = new Subject<any[]>()
   private cart = new Subject<any>()
-  constructor(private http: HttpClient, private authSerivce: NbAuthService) { }
+  constructor(private http: HttpClient, private authService: NbAuthService) { }
 
   getProductsUpdateListener() {
     return this.productsUpdates.asObservable()
@@ -42,7 +42,7 @@ export class CartService {
 
   private getToken(){
     let token;
-    this.authSerivce.getToken().subscribe((res: any) => {
+    this.authService.getToken().subscribe((res: any) => {
       token = res['token']
     })
     return token
