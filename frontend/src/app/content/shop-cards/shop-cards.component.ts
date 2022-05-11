@@ -33,11 +33,11 @@ export class ShopCardsComponent implements OnInit {
   }
 
   /**
-   * The addToCart function takes a product as an argument and calls the addToCart function in the
-   * inventory service
-   * @param {InventoryModel} product - InventoryModel
+   * The addToCart function takes a productId as an argument and calls the addToCart function in the
+   * inventoryService
+   * @param {String} productId - The id of the product to be added to the cart.
    */
-  addToCart(product: InventoryModel){
-    this.inventoryService.addToCart(product)
+  addToCart(productId: String){
+    this.inventoryService.addToCart(productId)
   }
 }

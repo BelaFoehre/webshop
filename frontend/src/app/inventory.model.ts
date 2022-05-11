@@ -1,4 +1,5 @@
 export interface InventoryModel {
+  _id?: string
   bezeichnung: string
   brand: string
   category: {
