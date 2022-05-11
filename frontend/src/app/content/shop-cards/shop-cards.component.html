@@ -1,4 +1,39 @@
-<div class="card-row">
+<!-- <div class="card-row" style="max-width: 100%;"> -->
+
+<!-- <div style="display: float;"> -->
+
+<!-- align divs to the left -->
+<!-- <div style="float: left;">
+</div> -->
+<div *ngFor="let product of products; let i = index" style="float: left; padding-inline: 5px;">
+    <nb-card size="small" style="width: fit-content">
+      <nb-card-header>{{ product.bezeichnung }}</nb-card-header>
+      <nb-card-body>
+        <!-- <img src="/https://www.w3schools.com/images/w3schools_green.jpg" alt="Image"> -->
+        <p class="card-text">{{ product.brand }}</p>
+        <!-- <p class="card-text">{{ product.category.main }}</p>
+        <p class="card-text">{{ product.category.sub1 }}</p>
+        <p class="card-text">{{ product.availableQty }}</p> -->
+      </nb-card-body>
+      <nb-card-footer>
+        <p class="card-text">{{ product.price }} €</p>
+        <button [disabled]="product.availableQty <= 0"
+                nbButton
+                status="primary"
+                size="small"
+                (click)="addToCart(product)">
+          <nb-icon icon="cart-outline"></nb-icon>
+          In den Warenkorb
+        </button>
+
+      </nb-card-footer>
+    </nb-card>
+
+    <!-- <button class="btn btn-primary" (click)="addToCart(product)">In den Warenkorb</button> -->
+</div>
+<!-- </div> -->
+
+<!-- <div class="card-row">
   <div class="card-col">
     <nb-card size="medium">
       <nb-card-header>Medium card</nb-card-header>
@@ -168,4 +203,4 @@
       </nb-card-footer>
     </nb-card>
   </div>
-</div>
+</div> -->

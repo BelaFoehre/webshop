@@ -78,4 +78,8 @@ export class InventoryService {
   getCategoryUpdateListener() {
     return this.categoriesUpdated.asObservable();
   }
+
+  addToCart(product: InventoryModel) {
+    throw new Error('Method not implemented.');
+  }
 }

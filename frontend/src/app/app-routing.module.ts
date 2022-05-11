@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/content', pathMatch: 'full' },
   { path: 'content', loadChildren: contentModule, canActivate: [AuthGuard] },
   { path: 'auth', loadChildren: authModule },
-  { path: 'cart', component: CartComponent, canActivate: [AuthGuard, hasRoleGuard], data: { role: 'Consumer'} },
+  { path: 'cart', component: CartComponent, canActivate: [AuthGuard] }, // //, hasRoleGuard] }, //, data: { role: 'Consumer'} },
   { path: 'admin', loadChildren: adminModule /*, canActivate: [AuthGuard, hasRoleGuard], data: { role: 'Admin' } */}
 
 ];
