@@ -5,7 +5,6 @@ import { ManageProductsComponent } from './manage-products/manage-products.compo
 import { AdminRoutingModule } from './admin-routing.module'
 import { NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbTagModule, NbTreeGridModule } from '@nebular/theme';
 import { FormsModule } from '@angular/forms';
-import { TreeGridModule } from '@syncfusion/ej2-angular-treegrid';
 import { ManageOrdersComponent } from './manage-orders/manage-orders.component';
 
 
@@ -17,7 +16,6 @@ import { ManageOrdersComponent } from './manage-orders/manage-orders.component';
     ManageOrdersComponent
   ],
   imports: [
-    TreeGridModule,
     CommonModule,
     AdminRoutingModule,
     NbCardModule,
