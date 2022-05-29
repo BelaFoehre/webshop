@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NbDialogService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
+import { AddressComponent } from '../address/address.component';
 import { CartService } from './cart.service';
 
 @Component({
@@ -10,7 +12,11 @@ import { CartService } from './cart.service';
 export class CartComponent implements OnInit {
   cart: any
   cartSub!: Subscription
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private dialogService: NbDialogService) {}
+
+  ngOnInit(): void {
+    this.loadCart();
+  }
 
   changeQuantity(id: any, quantity: any): void {
     this.cartService.addToCart(id, quantity).subscribe((res) => {
@@ -30,8 +36,10 @@ export class CartComponent implements OnInit {
         this.cart = cart
       })
   }
-  ngOnInit(): void {
-    this.loadCart();
+
+  checkout(){
+    this.dialogService.open(AddressComponent)
+    // this.cartService.checkout()
   }
 
 }

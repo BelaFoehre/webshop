@@ -1,0 +1,90 @@
+<nb-card>
+  <nb-card-body>
+    <nb-stepper #stepper>
+      <nb-step [stepControl]="firstForm" label="First step">
+        <form #form="ngForm" (ngSubmit)="onFirstSubmit()" class="step-container" style="display: flex; flex-direction: column;">
+          <div style="width: 100%">
+            <nb-card style="float: left; width: fit-content; width: 50%">
+              <nb-card-header>Rechnungsaddresse</nb-card-header>
+              <nb-card-body style="width: 100%">
+                <label>Land</label>
+                <br><input nbInput type="text" [(ngModel)]="land" placeholder="Land" disabled="true" [required]="true" name="land"  style="width: 100%">
+                <br><br><label>PLZ</label>
+                <br><input nbInput type="text" [(ngModel)]="plz" placeholder="PLZ" [required]="true" name="plz" style="width: 100%">
+                <br><br><label>Ort</label>
+                <br><input nbInput type="text" [(ngModel)]="ort" placeholder="Ort" [required]="true" name="ort" style="width: 100%">
+              </nb-card-body>
+
+              <nb-card-body>
+                <label>Strasse</label>
+                <br><input nbInput type="text" [(ngModel)]="strasse" placeholder="Strasse" [required]="true" name="strasse" style="width: 100%">
+                <br><br><label>Hausnummer</label>
+                <br><input nbInput type="text" [(ngModel)]="hausnummer" placeholder="Hausnummer" [required]="true" name="hausnummer" style="width: 100%">
+                <br><br><label>Adresszusatz</label>
+                <br><input nbInput type="text" [(ngModel)]="adresszusatz" placeholder="Adresszusatz" [required]="false" name="adresszusatz" style="width: 100%">
+              </nb-card-body>
+            </nb-card>
+            <nb-card *ngIf="checkbox" style="width: fit-content; width: 50%">
+              <nb-card-header>Lieferaddresse</nb-card-header>
+              <nb-card-body>
+                <label>Land</label>
+                <br><input nbInput type="text" [(ngModel)]="land" placeholder="Land" disabled="true" [required]="true" name="land"  style="width: 100%">
+                <br><br><label>PLZ</label>
+                <br><input nbInput type="text" [(ngModel)]="plz" placeholder="PLZ" [required]="true" name="plz" style="width: 100%">
+                <br><br><label>Ort</label>
+                <br><input nbInput type="text" [(ngModel)]="ort" placeholder="Ort" [required]="true" name="ort" style="width: 100%">
+              </nb-card-body>
+
+              <nb-card-body>
+                <label>Strasse</label>
+                <br><input nbInput type="text" [(ngModel)]="strasse" placeholder="Strasse" [required]="true" name="strasse" style="width: 100%">
+                <br><br><label>Hausnummer</label>
+                <br><input nbInput type="text" [(ngModel)]="hausnummer" placeholder="Hausnummer" [required]="true" name="hausnummer" style="width: 100%">
+                <br><br><label>Adresszusatz</label>
+                <br><input nbInput type="text" [(ngModel)]="adresszusatz" placeholder="Adresszusatz" [required]="false" name="adresszusatz" style="width: 100%">
+              </nb-card-body>
+            </nb-card>
+          </div>
+          <div style="width: 100%">
+            <nb-checkbox [(ngModel)]="checkbox" name="checkbox" status="basic">abweichende Lieferaddresse</nb-checkbox>
+            <button nbButton nbStepperNext>Weiter</button>
+          </div>
+        </form>
+      </nb-step>
+      <nb-step [stepControl]="secondForm" label="Second step">
+        <form [formGroup]="secondForm" (ngSubmit)="onSecondSubmit()" class="step-container">
+          <p class="lorem">
+            Pellentesque we gonna chung tortor.
+            Sizzle pizzle. Fizzle izzle dolor dapibus fo shizzle mah nizzle fo rizzle, mah home g-dizzle tempus tempor.
+            Maurizzle cool nibh owned turpizzle. My shizz fo shizzle tortor.
+          </p>
+          <div class="input-group">
+            <input nbInput type="text" placeholder="Enter favorite movie" class="form-control" formControlName="secondCtrl"
+                   [ngClass]="{'form-control-danger': secondForm.invalid && (secondForm.dirty || secondForm.touched)}">
+          </div>
+          <button nbButton nbStepperPrevious>prev</button>
+          <button nbButton nbStepperNext>next</button>
+        </form>
+      </nb-step>
+      <nb-step [stepControl]="thirdForm" label="Third step">
+        <form [formGroup]="thirdForm" (ngSubmit)="onThirdSubmit()" class="step-container">
+          <p class="lorem">
+            Things boom shackalack rhoncus yo. In fo shizzle my nizzle gangsta platea dictumst. Check it out pot.
+          </p>
+          <div class="input-group">
+            <input nbInput type="text" placeholder="Enter something" class="form-control" formControlName="thirdCtrl"
+                   [ngClass]="{'form-control-danger': thirdForm.invalid && (thirdForm.dirty || thirdForm.touched)}">
+          </div>
+          <button nbButton nbStepperPrevious>prev</button>
+          <button nbButton nbStepperNext>Confirm</button>
+        </form>
+      </nb-step>
+      <nb-step [stepControl]="thirdForm" [hidden]="true" label="Third step">
+        <div class="step-container">
+          <h3>Wizard completed!</h3>
+          <button nbButton (click)="stepper.reset()">Try again</button>
+        </div>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>
