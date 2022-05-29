@@ -32,20 +32,12 @@ export class InventoryService {
       })
   }
 
-  getAllOrders(){
-    this.http
-      .get<any>('/api/purchase/order')
-      .subscribe((res: OrderModel) => {
-        this.ordersUpdated.next([res])
-      })
-  }
-
   getProductUpdateListener(){
     return this.productsUpdated.asObservable()
   }
 
-  getOrderUpdateListener(){
-    return this.ordersUpdated.asObservable()
+  getProduct(id: string): Observable<InventoryModel> {
+    return this.http.get<InventoryModel>(`/api/inventory/${id}`)
   }
 
   getAllCategories(){

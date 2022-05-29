@@ -3,6 +3,7 @@ import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbS
 import { Subscription } from 'rxjs';
 import { InventoryService } from 'src/app/inventory.service';
 import { OrderModel } from 'src/app/order.model';
+import { OrderService } from 'src/app/order.service';
 
 interface TreeNode<T> {
   data: T;
@@ -34,10 +35,10 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
   ordersSub!: Subscription
 
   /**
-   * @param {InventoryService} inventoryService - This is the service that will be used to get the data from the server.
+   * @param {OrderService} orderService - This is the service that will be used to get the data from the server.
    * @param dataSourceBuilder - NbTreeGridDataSourceBuilder<FSEntry>
    */
-  constructor(private inventoryService: InventoryService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>) {
+  constructor(private orderService: OrderService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>) {
   }
 
   /**
@@ -88,8 +89,8 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
    * The function loads all orders from the database and maps them onto the data for the table
    */
   private loadOrders(){
-    this.inventoryService.getAllOrders()
-    this.ordersSub = this.inventoryService.getOrderUpdateListener()
+    this.orderService.getAllOrders()
+    this.ordersSub = this.orderService.getOrderUpdateListener()
       .subscribe((orders: any) => {
         this.orders = orders[0]
         orders[0].map((order: OrderModel) => {
