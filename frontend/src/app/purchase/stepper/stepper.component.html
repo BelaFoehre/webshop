@@ -1,53 +1,62 @@
 <nb-card>
   <nb-card-body>
     <nb-stepper #stepper>
-      <nb-step [stepControl]="firstForm" label="First step">
-        <form #form="ngForm" (ngSubmit)="onFirstSubmit()" class="step-container" style="display: flex; flex-direction: column;">
+      <nb-step [stepControl]="firstForm" label="Addresse">
+        <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container" style="display: flex; flex-direction: column;">
           <div style="width: 100%">
             <nb-card style="float: left; width: fit-content; width: 50%">
-              <nb-card-header>Rechnungsaddresse</nb-card-header>
-              <nb-card-body style="width: 100%">
-                <label>Land</label>
-                <br><input nbInput type="text" [(ngModel)]="land" placeholder="Land" disabled="true" [required]="true" name="land"  style="width: 100%">
-                <br><br><label>PLZ</label>
-                <br><input nbInput type="text" [(ngModel)]="plz" placeholder="PLZ" [required]="true" name="plz" style="width: 100%">
-                <br><br><label>Ort</label>
-                <br><input nbInput type="text" [(ngModel)]="ort" placeholder="Ort" [required]="true" name="ort" style="width: 100%">
-              </nb-card-body>
-
-              <nb-card-body>
-                <label>Strasse</label>
-                <br><input nbInput type="text" [(ngModel)]="strasse" placeholder="Strasse" [required]="true" name="strasse" style="width: 100%">
-                <br><br><label>Hausnummer</label>
-                <br><input nbInput type="text" [(ngModel)]="hausnummer" placeholder="Hausnummer" [required]="true" name="hausnummer" style="width: 100%">
-                <br><br><label>Adresszusatz</label>
-                <br><input nbInput type="text" [(ngModel)]="adresszusatz" placeholder="Adresszusatz" [required]="false" name="adresszusatz" style="width: 100%">
-              </nb-card-body>
-            </nb-card>
-            <nb-card *ngIf="checkbox" style="width: fit-content; width: 50%">
               <nb-card-header>Lieferaddresse</nb-card-header>
-              <nb-card-body>
-                <label>Land</label>
-                <br><input nbInput type="text" [(ngModel)]="land" placeholder="Land" disabled="true" [required]="true" name="land"  style="width: 100%">
-                <br><br><label>PLZ</label>
-                <br><input nbInput type="text" [(ngModel)]="plz" placeholder="PLZ" [required]="true" name="plz" style="width: 100%">
-                <br><br><label>Ort</label>
-                <br><input nbInput type="text" [(ngModel)]="ort" placeholder="Ort" [required]="true" name="ort" style="width: 100%">
+              <nb-card-body style="width: 100%">
+                <div class="form-group">
+                  <label for="land">Land</label>
+                  <input nbInput fullWidth name="land" type="text" class="form-control" formControlName="landCtrl" placeholder="Land">
+                  <br>
+                  <label for="plz">PLZ</label>
+                  <input nbInput fullWidth name="plz" type="number" class="form-control" formControlName="plzCtrl" placeholder="13127">
+                  <br>
+                  <label for="ort">Ort</label>
+                  <input nbInput fullWidth name="ort" type="text" class="form-control" formControlName="ortCtrl" placeholder="Ort">
+                  <br>
+                  <label for="strasse">Strasse</label>
+                  <input nbInput fullWidth name="strasse" type="text" class="form-control" formControlName="strasseCtrl" placeholder="Strasse">
+                  <br>
+                  <label for="hausnummer">Hausnummer</label>
+                  <input nbInput fullWidth name="hausnummer" type="text" class="form-control" formControlName="hausnummerCtrl" placeholder="Hausnummer">
+                  <br>
+                  <label for="zusatz">Addresszusatz</label>
+                  <input nbInput fullWidth name="zusatz" type="text" class="form-control" formControlName="zusatzCtrl" placeholder="Addresszusatz">
+                </div>
               </nb-card-body>
 
+            </nb-card>
+            <nb-card *ngIf="firstForm.get('checkboxCtrl')?.value" style="width: fit-content; width: 50%">
+              <nb-card-header>Rechnungsaddresse</nb-card-header>
               <nb-card-body>
-                <label>Strasse</label>
-                <br><input nbInput type="text" [(ngModel)]="strasse" placeholder="Strasse" [required]="true" name="strasse" style="width: 100%">
-                <br><br><label>Hausnummer</label>
-                <br><input nbInput type="text" [(ngModel)]="hausnummer" placeholder="Hausnummer" [required]="true" name="hausnummer" style="width: 100%">
-                <br><br><label>Adresszusatz</label>
-                <br><input nbInput type="text" [(ngModel)]="adresszusatz" placeholder="Adresszusatz" [required]="false" name="adresszusatz" style="width: 100%">
+                <div class="form-group">
+                  <label for="r_land">Land</label>
+                  <input nbInput fullWidth name="r_land" type="text" class="form-control" formControlName="r_landCtrl" placeholder="Land">
+                  <br>
+                  <!-- <label for="r_plz">PLZ</label>
+                  <input nbInput fullWidth name="r_plz" type="number" class="form-control" placeholder="13127">
+                  <br>
+                  <label for="r_ort">Ort</label>
+                  <input nbInput fullWidth name="r_ort" type="text" class="form-control" placeholder="Ort">
+                  <br>
+                  <label for="r_strasse">Strasse</label>
+                  <input nbInput fullWidth name="r_strasse" type="text" class="form-control" placeholder="Strasse">
+                  <br>
+                  <label for="r_hausnummer">Hausnummer</label>
+                  <input nbInput fullWidth name="r_hausnummer" type="text" class="form-control" placeholder="Hausnummer">
+                  <br>
+                  <label for="r_zusatz">Addresszusatz</label>
+                  <input nbInput fullWidth name="r_zusatz" type="text" class="form-control" placeholder="Addresszusatz"> -->
+                </div>
               </nb-card-body>
             </nb-card>
           </div>
           <div style="width: 100%">
-            <nb-checkbox [(ngModel)]="checkbox" name="checkbox" status="basic">abweichende Lieferaddresse</nb-checkbox>
-            <button nbButton nbStepperNext>Weiter</button>
+            <nb-checkbox style="float: left" (change)="checkboxChange($event)" formControlName="checkboxCtrl" status="basic">abweichende Rechnungsaddresse</nb-checkbox>
+            <button style="float: right" class="btn btn-success" [disabled]="!firstForm.valid" nbStepperNext>Weiter</button>
           </div>
         </form>
       </nb-step>

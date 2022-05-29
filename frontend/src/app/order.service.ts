@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { OrderModel } from './order.model';
 
@@ -7,6 +8,7 @@ import { OrderModel } from './order.model';
   providedIn: 'root'
 })
 export class OrderService {
+
   private ordersUpdated = new Subject<OrderModel[]>()
 
   constructor(private http: HttpClient){}
@@ -39,5 +41,11 @@ export class OrderService {
    */
   getOrderUpdateListener(): Observable<OrderModel[]>{
     return this.ordersUpdated.asObservable()
+  }
+
+  addAdress(form: FormGroup) {
+    console.log('test')
+    console.log(form.get('land')?.value)
+    console.log(form.value)
   }
 }
