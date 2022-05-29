@@ -105,6 +105,22 @@ exports.getCartByUserToken = (userToken) => {
     })
 }
 
+exports.resetCart = (cartId) => {
+
+        return new Promise((resolve, reject) => {
+            this.findCartById(cartId).then((cart) => {
+                cart.items = []
+                cart.subTotal = 0
+                cart.save((error, data) => {
+                    if(error) reject(error)
+                    else resolve(data)
+                })
+            }).catch((err) => {
+                reject(err)
+            })
+        })
+}
+
 exports.updateCart = (cart, itemId, itemQty) => {
 
     return new Promise(async (resolve, reject) => {

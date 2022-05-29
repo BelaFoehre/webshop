@@ -15,16 +15,14 @@ export class CartService {
     return this.productsUpdates.asObservable()
   }
   addToCart(itemId: string, quantity: number) {
-    let token = this.getToken()
     let payload = {
       'itemId': itemId,
       'itemQty': quantity
     }
-    return this.http.put(`api/purchase/cart?token=${token}`, payload);
+    return this.http.put(`api/purchase/cart?token=${this.getToken()}`, payload);
   }
   getCart() {
-    let token = this.getToken()
-    this.http.get(`api/purchase/cart?token=${token}`,).subscribe((res) => {
+    this.http.get(`api/purchase/cart?token=${this.getToken()}`,).subscribe((res) => {
       this.cart.next(res)
     });
   }
@@ -32,12 +30,9 @@ export class CartService {
   getCartUpdateListener() {
     return this.cart.asObservable()
   }
-  // increaseQty(payload: any) {
-  //   let token = this.getToken()
-  //   return this.http.put(`api/purchase/cart?token=${token}`, payload);
-  // }
+
   emptyCart() {
-    return this.http.delete(`api/dev/cart/empty-cart`);
+    return this.http.delete(`api/purchase/cart?token=${this.getToken()}`);
   }
 
   private getToken(){

@@ -14,14 +14,12 @@ export class CartComponent implements OnInit {
 
   changeQuantity(id: any, quantity: any): void {
     this.cartService.addToCart(id, quantity).subscribe((res) => {
-      console.log("result :: ", res)
       this.loadCart()
     });
   }
-  _emptyCart(): void {
+  emptyCart(): void {
     this.cartService.emptyCart().subscribe(() => {
-      // this.getCart();
-      alert('Cart Emptied');
+      this.loadCart()
     });
   }
 
