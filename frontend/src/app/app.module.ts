@@ -12,7 +12,6 @@ import { NbPasswordAuthStrategy, NbAuthModule, NbAuthJWTToken } from '@nebular/a
 import { AuthGuard } from './auth-guard.service';
 import { CartComponent } from './cart/cart.component';
 import { FormsModule } from '@angular/forms';
-import { TreeGridModule } from '@syncfusion/ej2-angular-treegrid';
 
 @NgModule({
   declarations: [
