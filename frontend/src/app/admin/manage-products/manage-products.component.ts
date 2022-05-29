@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbSortRequest, NbDialogService } from '@nebular/theme';
+import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbSortRequest, NbDialogService, NbDialogRef } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 import { InventoryModel } from 'src/app/inventory.model';
 import { InventoryService } from 'src/app/inventory.service';
@@ -40,7 +40,7 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
   products: InventoryModel[] = []
   productsSub!: Subscription
 
-  /*test*/ names: string[] = [];
+  private dialogRef!: NbDialogRef<EditProductComponent>;
 
   /**
    * @param {InventoryService} inventoryService - This is the service that will be used to get the data from the server.
@@ -55,7 +55,6 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
    */
   ngOnInit(){
     this.loadProducts()
-    this.reloadTable()
   }
 
   /**
@@ -113,6 +112,7 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
             Tags: prod.tags
           }})
         })
+        this.reloadTable()
       });
   }
 
@@ -130,14 +130,20 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
       this.productsSub.unsubscribe()
   }
 
-  editProduct(test: String){
-    this.open()
-    console.log(test)
+  editProduct(selectedProductId: string){
+    this.openEditProductDialog(selectedProductId)
   }
 
-  private open() {
-    this.dialogService.open(AddProductComponent)
-      .onClose.subscribe(name => name && this.names.push(name));
-  }
+  //open addproductcomponent dialog with the product id
+  openEditProductDialog(id: string){
+    this.dialogRef = this.dialogService.open(EditProductComponent, {
+      context: {
+        id: id
+      }, hasBackdrop: true, closeOnBackdropClick: true
+    })
 
+    this.dialogRef.onClose.subscribe(() => {
+      window.location.reload();
+    })
+  }
 }

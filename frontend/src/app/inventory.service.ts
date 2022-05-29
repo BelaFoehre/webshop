@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NbMenuItem } from '@nebular/theme';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { Category } from './category.model';
@@ -22,6 +22,11 @@ export class InventoryService {
     return this.http
       .post<any>('/api/inventory', data, {observe:'response'})
       // .subscribe((res) => {})
+  }
+
+  updateProduct(id: String, data: InventoryModel){
+    return this.http
+      .put<any>(`/api/inventory/${id}`, data, {observe:'response'})
   }
 
   getAllProducts(){

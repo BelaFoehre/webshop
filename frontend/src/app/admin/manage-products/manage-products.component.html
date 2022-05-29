@@ -1,13 +1,6 @@
 <nb-card>
   <nb-card-body>
 
-    <button nbButton
-          status="primary"
-          size="medium"
-          (click)="reloadTable()">
-    Reload
-  </button>
-
     <label class="search-label" for="search">Suchen: </label>
     <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input" style="margin: 10px;">
 
