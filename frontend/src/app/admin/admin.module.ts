@@ -6,6 +6,7 @@ import { AdminRoutingModule } from './admin-routing.module'
 import { NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbTagModule, NbTreeGridModule } from '@nebular/theme';
 import { FormsModule } from '@angular/forms';
 import { ManageOrdersComponent } from './manage-orders/manage-orders.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
 
 
 
@@ -13,7 +14,8 @@ import { ManageOrdersComponent } from './manage-orders/manage-orders.component';
   declarations: [
     AddProductComponent,
     ManageProductsComponent,
-    ManageOrdersComponent
+    ManageOrdersComponent,
+    EditProductComponent
   ],
   imports: [
     CommonModule,

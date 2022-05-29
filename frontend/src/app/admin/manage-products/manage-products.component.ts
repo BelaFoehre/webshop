@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbSortRequest } from '@nebular/theme';
+import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbSortRequest, NbDialogService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 import { InventoryModel } from 'src/app/inventory.model';
 import { InventoryService } from 'src/app/inventory.service';
+import { AddProductComponent } from '../add-product/add-product.component';
+import { EditProductComponent } from '../edit-product/edit-product.component';
 
 interface TreeNode<T> {
   data: T;
@@ -38,11 +40,13 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
   products: InventoryModel[] = []
   productsSub!: Subscription
 
+  /*test*/ names: string[] = [];
+
   /**
    * @param {InventoryService} inventoryService - This is the service that will be used to get the data from the server.
    * @param dataSourceBuilder - NbTreeGridDataSourceBuilder<FSEntry>
    */
-  constructor(private inventoryService: InventoryService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>) {
+  constructor(private inventoryService: InventoryService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private dialogService: NbDialogService) {
   }
 
   /**
@@ -127,7 +131,13 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
   }
 
   editProduct(test: String){
+    this.open()
     console.log(test)
+  }
+
+  private open() {
+    this.dialogService.open(AddProductComponent)
+      .onClose.subscribe(name => name && this.names.push(name));
   }
 
 }
