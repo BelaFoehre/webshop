@@ -47,7 +47,6 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
    */
   ngOnInit(){
     this.loadOrders()
-    this.reloadTable()
   }
 
   /**
@@ -100,6 +99,7 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
             status: order.status || "unknown"
           }})
         })
+        this.reloadTable()
       });
   }
 
