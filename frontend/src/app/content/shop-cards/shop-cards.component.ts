@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 import { InventoryModel } from 'src/app/inventory.model';
 import { InventoryService } from 'src/app/inventory.service';
+import { DetailViewComponent } from '../detail-view/detail-view.component';
 
 @Component({
   selector: 'app-shop-cards',
@@ -12,7 +14,9 @@ export class ShopCardsComponent implements OnInit {
   productsSub!: Subscription
   products: InventoryModel[] = [];
 
-  constructor(private inventoryService: InventoryService) { }
+  private dialogRef!: NbDialogRef<DetailViewComponent>;
+
+  constructor(private inventoryService: InventoryService, private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
     this.loadProducts()
@@ -39,5 +43,19 @@ export class ShopCardsComponent implements OnInit {
    */
   addToCart(productId: String){
     this.inventoryService.addToCart(productId)
+  }
+
+  /**
+   * The function takes a productId as a parameter, finds the product with that id in the products
+   * array, and then opens a dialog with the DetailViewComponent, passing the product as a context
+   * @param {string} productId - string - The product id of the product that was clicked on.
+   */
+  openDetails(productId: string){
+    let product = this.products.find(product => product._id === productId)
+    this.dialogRef = this.dialogService.open(DetailViewComponent, {
+      context: {
+        product: product
+      }, hasBackdrop: true, closeOnBackdropClick: true
+    })
   }
 }

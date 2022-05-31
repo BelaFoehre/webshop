@@ -4,11 +4,13 @@ import { ShopCardsComponent } from './shop-cards/shop-cards.component';
 import { NbCardModule, NbButtonModule, NbIconModule } from '@nebular/theme';
 import { RouterModule } from '@angular/router';
 import { ContentRoutingModule } from './content-routing.module';
+import { DetailViewComponent } from './detail-view/detail-view.component';
 
 
 @NgModule({
   declarations: [
-    ShopCardsComponent
+    ShopCardsComponent,
+    DetailViewComponent
   ],
   imports: [
     CommonModule,

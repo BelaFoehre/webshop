@@ -17,14 +17,25 @@
       </nb-card-body>
       <nb-card-footer>
         <p class="card-text">{{ product.price }} €</p>
-        <button [disabled]="product.availableQty <= 0"
-                nbButton
-                status="primary"
-                size="small"
-                (click)="addToCart(product._id || '404')">
-          <nb-icon icon="shopping-bag-outline"></nb-icon>
-          In den Warenkorb
-        </button>
+
+        <div style="float: left;">
+          <button style="margin-right:10px"
+                  nbButton
+                  status="basic"
+                  size="small"
+                  (click)="openDetails(product._id || '404')">
+            Details
+          </button>
+
+          <button [disabled]="product.availableQty <= 0"
+                  nbButton
+                  status="primary"
+                  size="small"
+                  (click)="addToCart(product._id || '404')">
+            <nb-icon icon="shopping-bag-outline"></nb-icon>
+            In den Warenkorb
+          </button>
+        </div>
 
       </nb-card-footer>
     </nb-card>
