@@ -58,4 +58,11 @@ export class ShopCardsComponent implements OnInit {
       }, hasBackdrop: true, closeOnBackdropClick: true
     })
   }
+
+  searchInput(event: any){
+    let searchValue = event.target.value
+    let filteredProducts = this.products.filter(product => product.bezeichnung.toLowerCase().includes(searchValue.toLowerCase()))
+    this.products = filteredProducts
+  }
+
 }

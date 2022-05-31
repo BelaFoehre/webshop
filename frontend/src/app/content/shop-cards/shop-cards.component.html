@@ -5,6 +5,7 @@
 <!-- align divs to the left -->
 <!-- <div style="float: left;">
 </div> -->
+<input nbInput id="search" class="search-input" style="margin: 10px;" (change)="searchInput($event)">
 <div *ngFor="let product of products; let i = index" style="float: left; padding-inline: 5px;">
     <nb-card size="small" style="width: fit-content">
       <nb-card-header>{{ product.bezeichnung }}</nb-card-header>
