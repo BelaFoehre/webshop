@@ -9,7 +9,7 @@
               <nb-card-body style="width: 100%">
                 <div class="form-group">
                   <label for="land">Land</label>
-                  <input nbInput fullWidth name="land" type="text" class="form-control" formControlName="landCtrl" placeholder="Land">
+                  <input nbInput fullWidth name="land" [value]="land" [disabled]="true" type="text" class="form-control" placeholder="Land">
                   <br>
                   <label for="plz">PLZ</label>
                   <input nbInput fullWidth name="plz" type="number" class="form-control" formControlName="plzCtrl" placeholder="13127">
@@ -29,53 +29,63 @@
               </nb-card-body>
 
             </nb-card>
-            <nb-card *ngIf="firstForm.get('checkboxCtrl')?.value" style="width: fit-content; width: 50%">
+            <nb-card *ngIf="seperateRechnung" style="width: fit-content; width: 50%">
               <nb-card-header>Rechnungsaddresse</nb-card-header>
               <nb-card-body>
                 <div class="form-group">
                   <label for="r_land">Land</label>
-                  <input nbInput fullWidth name="r_land" type="text" class="form-control" formControlName="r_landCtrl" placeholder="Land">
+                  <input nbInput fullWidth name="r_land" [value]="land" [disabled]="true" type="text" class="form-control" placeholder="Land">
                   <br>
-                  <!-- <label for="r_plz">PLZ</label>
-                  <input nbInput fullWidth name="r_plz" type="number" class="form-control" placeholder="13127">
+                  <label for="r_plz">PLZ</label>
+                  <input nbInput fullWidth name="r_plz" type="number" class="form-control" formControlName="r_plzCtrl" placeholder="13127">
                   <br>
                   <label for="r_ort">Ort</label>
-                  <input nbInput fullWidth name="r_ort" type="text" class="form-control" placeholder="Ort">
+                  <input nbInput fullWidth name="r_ort" type="text" class="form-control" formControlName="r_ortCtrl" placeholder="Ort">
                   <br>
                   <label for="r_strasse">Strasse</label>
-                  <input nbInput fullWidth name="r_strasse" type="text" class="form-control" placeholder="Strasse">
+                  <input nbInput fullWidth name="r_strasse" type="text" class="form-control" formControlName="r_strasseCtrl" placeholder="Strasse">
                   <br>
                   <label for="r_hausnummer">Hausnummer</label>
-                  <input nbInput fullWidth name="r_hausnummer" type="text" class="form-control" placeholder="Hausnummer">
+                  <input nbInput fullWidth name="r_hausnummer" type="text" class="form-control" formControlName="r_hausnummerCtrl" placeholder="Hausnummer">
                   <br>
                   <label for="r_zusatz">Addresszusatz</label>
-                  <input nbInput fullWidth name="r_zusatz" type="text" class="form-control" placeholder="Addresszusatz"> -->
+                  <input nbInput fullWidth name="r_zusatz" type="text" class="form-control" formControlName="r_zusatzCtrl" placeholder="Addresszusatz">
                 </div>
               </nb-card-body>
             </nb-card>
           </div>
           <div style="width: 100%">
-            <nb-checkbox style="float: left" (change)="checkboxChange($event)" formControlName="checkboxCtrl" status="basic">abweichende Rechnungsaddresse</nb-checkbox>
-            <button style="float: right" class="btn btn-success" [disabled]="!firstForm.valid" nbStepperNext>Weiter</button>
+            <nb-checkbox style="float: left" (change)="checkboxChange($event)" status="basic">abweichende Rechnungsaddresse</nb-checkbox>
+            <button nbStepperNext style="float: right" class="btn btn-success" [disabled]="!firstForm.valid">Weiter</button>
           </div>
         </form>
       </nb-step>
-      <nb-step [stepControl]="secondForm" label="Second step">
+      <nb-step [stepControl]="secondForm" label="Zahlungsmittel">
         <form [formGroup]="secondForm" (ngSubmit)="onSecondSubmit()" class="step-container">
-          <p class="lorem">
-            Pellentesque we gonna chung tortor.
-            Sizzle pizzle. Fizzle izzle dolor dapibus fo shizzle mah nizzle fo rizzle, mah home g-dizzle tempus tempor.
-            Maurizzle cool nibh owned turpizzle. My shizz fo shizzle tortor.
-          </p>
-          <div class="input-group">
-            <input nbInput type="text" placeholder="Enter favorite movie" class="form-control" formControlName="secondCtrl"
-                   [ngClass]="{'form-control-danger': secondForm.invalid && (secondForm.dirty || secondForm.touched)}">
+          <nb-card>
+            <nb-card-header>Ausgewählt: {{ zahlungsOption }}</nb-card-header>
+            <nb-card-body>
+              <div class="input-group">
+                <nb-radio-group [(ngModel)]="zahlungsOption" formControlName="zahlungsOptionenCtrl">
+                  <nb-radio
+                    *ngFor="let zahlungsOption of zahlungsOptionen"
+                    [disabled]="zahlungsOption.disabled"
+                    [value]="zahlungsOption.value">
+                    {{ zahlungsOption.label }}
+                  </nb-radio>
+                </nb-radio-group>
+                  <!-- <input nbInput type="text" placeholder="Enter favorite movie" class="form-control" formControlName="secondCtrl"
+                       [ngClass]="{'form-control-danger': secondForm.invalid && (secondForm.dirty || secondForm.touched)}"> -->
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <div style="width: 100%">
+            <button nbStepperPrevious nbButton outline status="warning" >Zurück</button>
+            <button nbStepperNext style="float: right" class="btn btn-success" [disabled]="!secondForm.valid">Weiter</button>
           </div>
-          <button nbButton nbStepperPrevious>prev</button>
-          <button nbButton nbStepperNext>next</button>
         </form>
       </nb-step>
-      <nb-step [stepControl]="thirdForm" label="Third step">
+      <nb-step [stepControl]="thirdForm" label="Bestätigung">
         <form [formGroup]="thirdForm" (ngSubmit)="onThirdSubmit()" class="step-container">
           <p class="lorem">
             Things boom shackalack rhoncus yo. In fo shizzle my nizzle gangsta platea dictumst. Check it out pot.

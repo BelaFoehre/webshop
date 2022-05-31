@@ -23,26 +23,33 @@ export class StepperComponent implements OnInit {
   hausnummer!: string
   adresszusatz!: string
   checkbox: boolean = false
-  r_land: string = "Deutschland"
+  seperateRechnung: boolean = false
   r_plz!: string
   r_ort!: string
   r_strasse!: string
   r_hausnummer!: string
   r_adresszusatz!: string
 
+  zahlungsOptionen = [
+    { value: 'Kauf auf Rechnung', label: 'Rechnung' },
+    { value: '3dsds', label: '2' },
+    { value: 'Zahlung mit Paypal', label: 'Paypal', disabled: true },
+    { value: 'Einzug via Lastschrift', label: 'SEPA Lastschrift', disabled: true },
+  ];
+  zahlungsOption: any
+
   ngOnInit() {
     this.firstForm = this.fb.group({
-      landCtrl: [this.land, Validators.required],
       plzCtrl: [this.plz, Validators.required],
       ortCtrl: [this.ort, Validators.required],
       strasseCtrl: [this.strasse, Validators.required],
       hausnummerCtrl: [this.hausnummer, Validators.required],
-      zusatzCtrl: [this.adresszusatz, Validators.required],
-      checkboxCtrl: [this.checkbox, Validators.required]
+      zusatzCtrl: [this.adresszusatz, Validators.required]
+      // checkboxCtrl: [this.checkbox, Validators.required]
     });
 
     this.secondForm = this.fb.group({
-      secondCtrl: ['', Validators.required],
+      zahlungsOptionenCtrl: ['', Validators.required],
     });
 
     this.thirdForm = this.fb.group({
@@ -52,14 +59,14 @@ export class StepperComponent implements OnInit {
 
   checkboxChange(e: any) {
     if(e.target.checked){
-      this.firstForm.addControl('r_landCtrl', this.fb.control(this.r_land, Validators.required))
       this.firstForm.addControl('r_plzCtrl', this.fb.control(this.r_plz, Validators.required))
       this.firstForm.addControl('r_ortCtrl', this.fb.control(this.r_ort, Validators.required))
       this.firstForm.addControl('r_strasseCtrl', this.fb.control(this.r_strasse, Validators.required))
       this.firstForm.addControl('r_hausnummerCtrl', this.fb.control(this.r_hausnummer, Validators.required))
       this.firstForm.addControl('r_zusatzCtrl', this.fb.control(this.r_adresszusatz, Validators.required))
+      this.seperateRechnung = true
     } else {
-      this.firstForm.removeControl('r_landCtrl')
+      this.seperateRechnung = false
       this.firstForm.removeControl('r_plzCtrl')
       this.firstForm.removeControl('r_ortCtrl')
       this.firstForm.removeControl('r_strasseCtrl')
@@ -70,11 +77,14 @@ export class StepperComponent implements OnInit {
   }
 
   onFirstSubmit() {
+    console.log('test')
     this.firstForm.markAsDirty();
-    this.orderService.addAdress(this.firstForm)
+    // this.orderService.addAdress(this.firstForm)
   }
 
   onSecondSubmit() {
+    console.log('test2')
+    console.log(this.firstForm.value)
     this.secondForm.markAsDirty();
   }
 
