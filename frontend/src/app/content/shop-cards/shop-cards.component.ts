@@ -42,7 +42,7 @@ export class ShopCardsComponent implements OnInit {
    * @param {String} productId - The id of the product to be added to the cart.
    */
   addToCart(productId: String){
-    this.inventoryService.addToCart(productId)
+    this.inventoryService.addToCart(productId, 1)
   }
 
   /**
@@ -61,7 +61,7 @@ export class ShopCardsComponent implements OnInit {
 
   searchInput(event: any){
     let searchValue = event.target.value
-    let filteredProducts = this.products.filter(product => product.bezeichnung.toLowerCase().includes(searchValue.toLowerCase()))
+    let filteredProducts = this.products.filter(product => product.name.toLowerCase().includes(searchValue.toLowerCase()))
     this.products = filteredProducts
   }
 

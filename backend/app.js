@@ -8,6 +8,7 @@ const devRoutes = require("./routes/dev");
 const kategoriesRoutes = require("./routes/kategories")
 const purchaseRoutes = require("./routes/purchase")
 const inventoryRoutes = require("./routes/inventory")
+const bodyParser = require('body-parser')
 
 
 require("./config/database").connect();
@@ -23,7 +24,9 @@ const corsOptions = {
     origin: 'localhost.com',
     optionsSuccessStatus: 200 // for some legacy browsers
   }
-
+  
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: false }));
 
 app.use("/api/auth/", authRoutes);
 app.use("/api/dev/", devRoutes);

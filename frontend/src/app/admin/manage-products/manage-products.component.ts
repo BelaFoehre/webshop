@@ -21,6 +21,7 @@ interface FSEntry {
   Preis: number;
   Bestand: number;
   Tags?: string[];
+  Img: any
 }
 
 @Component({
@@ -103,13 +104,14 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
         products[0].map((prod: InventoryModel) => {
           this.data.push({data: {
             ID: prod._id || 'null',
-            Bezeichnung: prod.bezeichnung,
+            Bezeichnung: prod.name,
             Marke: prod.brand,
             Hauptkategorie: prod.category.main,
             Unterkategorie: prod.category.sub1,
             Preis: prod.price,
             Bestand: prod.availableQty,
-            Tags: prod.tags
+            Tags: prod.tags,
+            Img: prod.imgBase64
           }})
         })
         this.reloadTable()
@@ -143,7 +145,7 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
     })
 
     this.dialogRef.onClose.subscribe(() => {
-      window.location.reload();
+      // window.location.reload();
     })
   }
 }

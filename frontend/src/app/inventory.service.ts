@@ -6,7 +6,6 @@ import { map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { Category } from './category.model';
 import { InventoryModel } from './inventory.model';
-import { OrderModel } from './order.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +13,12 @@ import { OrderModel } from './order.model';
 export class InventoryService {
   private categoriesUpdated = new Subject<NbMenuItem[]>();
   private productsUpdated = new Subject<InventoryModel[]>();
-  private ordersUpdated = new Subject<OrderModel[]>();
 
   constructor(private http: HttpClient, private authService: AuthService){}
 
   addNewProduct(data: InventoryModel){
     return this.http
       .post<any>('/api/inventory', data, {observe:'response'})
-      // .subscribe((res) => {})
   }
 
   updateProduct(id: String, data: InventoryModel){
@@ -81,7 +78,7 @@ export class InventoryService {
    * We're using the `put` method to send a request to the server with the product id and quantity of 1
    * @param {String} productId - The id of the product you want to add to the cart.
    */
-  addToCart(productId: String) {
+  addToCart(productId: String, itemQty: number) {
     let token = this.getToken()
     this.http
       .put<any>(`/api/purchase/cart?token=${token}`, {itemId: productId, itemQty: 1})

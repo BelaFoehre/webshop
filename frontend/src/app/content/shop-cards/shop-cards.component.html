@@ -8,13 +8,15 @@
 <input nbInput id="search" class="search-input" style="margin: 10px;" (change)="searchInput($event)">
 <div *ngFor="let product of products; let i = index" style="float: left; padding-inline: 5px;">
     <nb-card size="small" style="width: fit-content">
-      <nb-card-header>{{ product.bezeichnung }}</nb-card-header>
+      <nb-card-header>{{ product.name }}</nb-card-header>
       <nb-card-body>
-        <!-- <img src="/https://www.w3schools.com/images/w3schools_green.jpg" alt="Image"> -->
-        <p class="card-text">{{ product.brand }}</p>
-        <!-- <p class="card-text">{{ product.category.main }}</p>
-        <p class="card-text">{{ product.category.sub1 }}</p>
-        <p class="card-text">{{ product.availableQty }}</p> -->
+      <!-- <nb-card-body style="text-align:center; background-image: url({{product.imgBase64}}); background-repeat:no-repeat; max-width:200px; max-height:100px; width:fit-content; height:fit-content"> -->
+        <img src="{{ product.imgBase64 }}" style="max-width: 100px; max-height: 100%; width:auto; float:left; margin-right: 5px;">
+        <div style="float: left; max-width: fit-content">
+          <p class="card-text" style="color:#2730eb;"><strong>{{ product.brand }}</strong></p>
+          <p class="card-text" style="color:#5c5c5c">{{ product.category.main }} > {{ product.category.sub1 }}</p>
+          <p class="card-text" style="color:#ffffff">Verfübar: {{ product.availableQty }}</p>
+        </div>
       </nb-card-body>
       <nb-card-footer>
         <p class="card-text">{{ product.price }} €</p>
@@ -43,176 +45,3 @@
 
     <!-- <button class="btn btn-primary" (click)="addToCart(product)">In den Warenkorb</button> -->
 </div>
-<!-- </div> -->
-
-<!-- <div class="card-row">
-  <div class="card-col">
-    <nb-card size="medium">
-      <nb-card-header>Medium card</nb-card-header>
-      <nb-card-body>
-        <img src="/https://www.w3schools.com/images/w3schools_green.jpg" alt="Image">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec euismod, nisl eget tincidunt tempor, nisi nunc
-          interdum massa, eget aliquam urna nisl non nunc.
-          Pellentesque habitant morbi tristique senectus et netus et
-          malesuada fames ac turpis egestas.
-        </p>
-      </nb-card-body>
-      <nb-card-footer>
-        <button nbButton size="small" status="instant_order">Instant Order</button>
-        <button nbButton size="small" status="wish_list">Wish List</button>
-      </nb-card-footer>
-    </nb-card>
-  </div>
-  <div class="card-col">
-    <nb-card size="medium">
-      <nb-card-header>Medium card</nb-card-header>
-      <nb-card-body>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec euismod, nisl eget tincidunt tempor, nisi nunc
-          interdum massa, eget aliquam urna nisl non nunc.
-          Pellentesque habitant morbi tristique senectus et netus et
-          malesuada fames ac turpis egestas.
-        </p>
-      </nb-card-body>
-      <nb-card-footer>
-        <button nbButton size="small" status="instant_order">Instant Order</button>
-        <button nbButton size="small" status="wish_list">Wish List</button>
-      </nb-card-footer>
-    </nb-card>
-  </div>
-  <div class="card-col">
-    <nb-card size="medium">
-      <nb-card-header>Medium card</nb-card-header>
-      <nb-card-body>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec euismod, nisl eget tincidunt tempor, nisi nunc
-          interdum massa, eget aliquam urna nisl non nunc.
-          Pellentesque habitant morbi tristique senectus et netus et
-          malesuada fames ac turpis egestas.
-        </p>
-      </nb-card-body>
-      <nb-card-footer>
-        <button nbButton size="small" status="instant_order">Instant Order</button>
-        <button nbButton size="small" status="wish_list">Wish List</button>
-      </nb-card-footer>
-    </nb-card>
-  </div>
-</div>
-
-<div class="card-row">
-  <div class="card-col">
-    <nb-card size="small">
-      <nb-card-header>Small card</nb-card-header>
-      <nb-card-body>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec euismod, nisl eget tincidunt tempor, nisi nunc
-          interdum massa, eget aliquam urna nisl non nunc.
-          Pellentesque habitant morbi tristique senectus et netus et
-          malesuada fames ac turpis egestas.
-        </p>
-      </nb-card-body>
-      <nb-card-footer>
-        <button nbButton size="small" status="instant_order">Instant Order</button>
-        <button nbButton size="small" status="wish_list">Wish List</button>
-      </nb-card-footer>
-    </nb-card>
-  </div>
-  <div class="card-col">
-    <nb-card size="small">
-      <nb-card-header>Small card</nb-card-header>
-      <nb-card-body>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec euismod, nisl eget tincidunt tempor, nisi nunc
-          interdum massa, eget aliquam urna nisl non nunc.
-          Pellentesque habitant morbi tristique senectus et netus et
-          malesuada fames ac turpis egestas.
-        </p>
-        </nb-card-body>
-        <nb-card-footer>
-          <button nbButton size="small" status="instant_order">Instant Order</button>
-          <button nbButton size="small" status="wish_list">Wish List</button>
-        </nb-card-footer>
-      </nb-card>
-    </div>
-    <div class="card-col">
-      <nb-card size="small">
-        <nb-card-header>Small card</nb-card-header>
-        <nb-card-body>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Donec euismod, nisl eget tincidunt tempor, nisi nunc
-            interdum massa, eget aliquam urna nisl non nunc.
-            Pellentesque habitant morbi tristique senectus et netus et
-            malesuada fames ac turpis egestas.
-          </p>
-        </nb-card-body>
-        <nb-card-footer>
-          <button nbButton size="small" status="instant_order">Instant Order</button>
-          <button nbButton size="small" status="wish_list">Wish List</button>
-        </nb-card-footer>
-      </nb-card>
-  </div>
-</div>
-
-<div class="card-row">
-<div class="card-col">
-  <nb-card size="small">
-    <nb-card-header>Small card</nb-card-header>
-    <nb-card-body>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Donec euismod, nisl eget tincidunt tempor, nisi nunc
-        interdum massa, eget aliquam urna nisl non nunc.
-        Pellentesque habitant morbi tristique senectus et netus et
-        malesuada fames ac turpis egestas.
-      </p>
-      </nb-card-body>
-      <nb-card-footer>
-        <button nbButton size="small" status="instant_order">Instant Order</button>
-        <button nbButton size="small" status="wish_list">Wish List</button>
-      </nb-card-footer>
-    </nb-card>
-  </div>
-  <div class="card-col">
-    <nb-card size="small">
-      <nb-card-header>Small card</nb-card-header>
-      <nb-card-body>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec euismod, nisl eget tincidunt tempor, nisi nunc
-          interdum massa, eget aliquam urna nisl non nunc.
-          Pellentesque habitant morbi tristique senectus et netus et
-          malesuada fames ac turpis egestas.
-        </p>
-      </nb-card-body>
-      <nb-card-footer>
-        <button nbButton size="small" status="instant_order">Instant Order</button>
-        <button nbButton size="small" status="wish_list">Wish List</button>
-      </nb-card-footer>
-    </nb-card>
-  </div>
-  <div class="card-col">
-    <nb-card size="small">
-      <nb-card-header>Small card</nb-card-header>
-      <nb-card-body>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec euismod, nisl eget tincidunt tempor, nisi nunc
-          interdum massa, eget aliquam urna nisl non nunc.
-          Pellentesque habitant morbi tristique senectus et netus et
-          malesuada fames ac turpis egestas.
-        </p>
-      </nb-card-body>
-      <nb-card-footer>
-        <button nbButton size="small" status="instant_order">Instant Order</button>
-        <button nbButton size="small" status="wish_list">Wish List</button>
-      </nb-card-footer>
-    </nb-card>
-  </div>
-</div> -->

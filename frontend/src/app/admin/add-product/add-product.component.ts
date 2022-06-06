@@ -13,15 +13,15 @@ export class AddProductComponent implements OnInit {
 
   constructor(private inventoryService: InventoryService) { }
 
-  bezeichnung!: string
+  name!: string
   brand!: string
-  // category!: {
-    main!: string
-    sub1!: string
-  // }
+  main!: string
+  sub1!: string
   price!: number
   availableQty!: number
+  description!: string
 
+  imageSrc!: string
   ngOnInit(): void {
   }
 
@@ -29,15 +29,17 @@ export class AddProductComponent implements OnInit {
 
     if(form.valid){
       let data: InventoryModel = {
-        bezeichnung: this.bezeichnung,
+        name: this.name,
         brand: this.brand,
         category: {
           main: this.main,
           sub1: this.sub1
         },
+        description: this.description,
         price: this.price,
         availableQty: this.availableQty,
-        tags: Array.from(this.trees)
+        tags: Array.from(this.trees),
+        imgBase64: ""
       }
       this.inventoryService.addNewProduct(data).subscribe((res) => {
         if(res.status == 201){
@@ -61,5 +63,23 @@ export class AddProductComponent implements OnInit {
       this.trees.add(value)
     }
     input.nativeElement.value = '';
+  }
+
+  onFileChange(e: any) {
+    var file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
+    var pattern = /image-*/;
+    var reader = new FileReader();
+    if (!file.type.match(pattern)) {
+      alert('invalid format');
+      return;
+    }
+    reader.onload = this._handleReaderLoaded.bind(this);
+    reader.readAsDataURL(file);
+  }
+
+  _handleReaderLoaded(e: any) {
+    let reader = e.target;
+    this.imageSrc = reader.result;
+    console.log(this.imageSrc)
   }
 }

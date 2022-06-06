@@ -11,12 +11,8 @@ const inventorySchema = new mongoose.Schema({
   },
   price: { type: Number },
   availableQty: { type: Number, min: 0 },
-  // sizes: [{
-  //     name: { type: String },
-  //     price: { type: Number },
-  //     qty: { type: Number }
-  // }],
   tags: { type: [String], default: null },
+  imgBase64: { type: String, default: ''}
 });
 
 module.exports = mongoose.model('Inventory', inventorySchema);

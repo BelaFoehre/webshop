@@ -37,18 +37,19 @@ router.get('/:id', async (req, res) => {
  * @param price @typedef Number and greater than 0
  * @param availableQty @typedef Number and greater or equal 0
  * @param tags @typedef String OPTIONAL
+ * @param imgBase64 @typedef String OPTIONAL base64 encoded image
  * @returns 201 if successfull
  * @returns 400 if required parameters are missing
  * @returns 500 if unsuccessfull
  */
 router.post('', bodyParser, (req, res) => {
-    const { bezeichnung, brand, category: {main, sub1}, price, availableQty, tags } = req.body
+    const { bezeichnung, brand, category: {main, sub1}, price, availableQty, tags, imgBase64} = req.body
 
     if(!(bezeichnung && brand && main && sub1 && price && (availableQty >= 0))){
         return res.status(400).send('Missing parameters')
     }
 
-    addNewInventory(bezeichnung, brand, main, sub1, price, availableQty, tags).then((data) => {
+    addNewInventory(bezeichnung, brand, main, sub1, price, availableQty, tags, imgBase64).then((data) => {
         return res.status(201).json(data)
     }).catch((err) => {
         return res.status(500).json(err)
@@ -63,6 +64,7 @@ router.post('', bodyParser, (req, res) => {
  * @param price @typedef Number and greater than 0
  * @param availableQty @typedef Number and greater or equal 0
  * @param tags @typedef String OPTIONAL
+ * @param imgBase64 @typedef String OPTIONAL base64 encoded image
  * @returns 200 if successfull
  * @returns 400 if required parameters are missing or bad
  * @returns 404 if passed id is not found in db
@@ -70,7 +72,7 @@ router.post('', bodyParser, (req, res) => {
  */
 router.put('/:id', bodyParser, async (req, res) => {
 
-    const { bezeichnung, brand, category: {main, sub1}, price, availableQty, tags } = req.body
+    const { bezeichnung, brand, category: {main, sub1}, price, availableQty, tags, imgBase64 } = req.body
     if(!(bezeichnung && brand && main && sub1 && price && (availableQty >= 0))){
         return res.status(400).send('Missing parameters')
     }
@@ -84,6 +86,7 @@ router.put('/:id', bodyParser, async (req, res) => {
             product.price = price
             product.availableQty = availableQty
             product.tags = tags
+            product.imgBase64 =  imgBase64
 
             product.save((err, data) => {
                 if(err) return res.status(500).json(err)

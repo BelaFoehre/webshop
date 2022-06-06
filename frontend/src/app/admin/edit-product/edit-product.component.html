@@ -3,7 +3,7 @@
   <nb-card>
     <nb-card-body style="width: 100%;">
       <label for="bezeichnung">Bezeichnung</label>
-      <br><input nbInput type="text" [(ngModel)]="bezeichnung" placeholder="Bezeichnung" [required]="true" name="bezeichnung">
+      <br><input nbInput type="text" [(ngModel)]="name" placeholder="Bezeichnung" [required]="true" name="name">
       <br><br><label>Hauptkategorie</label>
       <br><input nbInput type="text" [(ngModel)]="main" placeholder="Hauptkategorie" [required]="true" name="main">
       <br><br><label>Preis</label>
@@ -19,12 +19,25 @@
       <br><input nbInput type="number" [(ngModel)]="availableQty" placeholder="Bestand" [required]="true" name="availableQty">
     </nb-card-body>
 
+    <nb-card-body>
+      <label>Beschreibung</label>
+      <br><textarea nbInput [(ngModel)]="description" placeholder="Beschreibung" [required]="true" name="description"></textarea>
+    </nb-card-body>
+
     <nb-card-body style="width: 100%">
       <label>Tags</label><br>
       <nb-tag-list (tagRemove)="onTagRemove($event)" style="width: 50%;">
         <nb-tag *ngFor="let tree of trees" [text]="tree" removable status="primary" appearance="outline"></nb-tag>
         <input type="text" nbTagInput (tagAdd)="onTagAdd($event)" fullWidth [separatorKeys]="[32]">
       </nb-tag-list>
+    </nb-card-body>
+
+    <nb-card-body>
+      <div class="text-center">
+        <img [src]="imageSrc" alt="Product Image" width="200" height="200">
+        <input class="form-control" type="file" accept="image/*"
+                (change)="onFileChange($event)">
+      </div>
     </nb-card-body>
 
   </nb-card>

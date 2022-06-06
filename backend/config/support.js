@@ -5,8 +5,6 @@ const User = require("../model/User");
 const Order = require("../model/Order");
 
 exports.getProductById = (searchId) => {
-    // const prod = await Inventory.findOne({_id: searchId})
-
     return new Promise((resolve, reject) => {
         Inventory.findById(searchId, (error, result) => {
             if(error | !result) reject(error)
@@ -183,7 +181,7 @@ exports.validateInventory = (bezeichnung, brand, category_main, category_sub1, p
     })
 }
 
-exports.addNewInventory = (bezeichnung, brand, category_main, category_sub1, price, availableQty, tags) => {
+exports.addNewInventory = (bezeichnung, brand, category_main, category_sub1, price, availableQty, tags, imgBase64) => {
     return new Promise((resolve, reject) => {
 
         this.validateInventory(bezeichnung, brand, category_main, category_sub1, price, availableQty, tags).then(() => {
@@ -196,7 +194,8 @@ exports.addNewInventory = (bezeichnung, brand, category_main, category_sub1, pri
                 },
                 price: price,
                 availableQty: availableQty,
-                tags: tags
+                tags: tags,
+                imgBase64: imgBase64
             }, (error, doc) => {
                 if(error | !doc) reject(error)
                 else resolve(doc)
