@@ -1,0 +1,25 @@
+<nb-card accent="info">
+  <nb-card-header> {{ product.name }}</nb-card-header>
+  <nb-card-body>
+    <img src="{{ product.imgBase64 }}" style="max-width: 100px; max-height: 100%; width:auto; float:left; margin-right: 5px;">
+    <div style="float: left; max-width: fit-content">
+      <p class="card-text" style="color:#2730eb;"><strong>{{ product.brand }}</strong></p>
+      <p class="card-text" style="color:#5c5c5c">{{ product.description }}</p>
+      <p class="card-text" style="color:#5c5c5c">{{ product.category.main }} > {{ product.category.sub1 }}</p>
+      <p class="card-text" style="color:#ffffff">Verfübar: {{ product.availableQty }}</p>
+      <p class="card-text" style="color:#2730eb">{{ product.price }}</p>
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+    <!-- <input type="number" [(ngModel)]="itemQty" style="width: 50px; margin-right: 10px"> -->
+    <input type="number" style="width: 50px; margin-right: 10px">
+    <button [disabled]="product.availableQty <= 0"
+            nbButton
+            status="primary"
+            size="small"
+            (click)="addToCart(product._id || '404')">
+      <nb-icon icon="shopping-bag-outline"></nb-icon>
+      In den Warenkorb
+    </button>
+  </nb-card-footer>
+</nb-card>
