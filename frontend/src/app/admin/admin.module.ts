@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { ManageOrdersComponent } from './manage-orders/manage-orders.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { ManageComponent } from './manage/manage.component';
+import { ManageUserComponent } from './manage-user/manage-user.component';
 
 
 
@@ -17,7 +18,8 @@ import { ManageComponent } from './manage/manage.component';
     ManageProductsComponent,
     ManageOrdersComponent,
     EditProductComponent,
-    ManageComponent
+    ManageComponent,
+    ManageUserComponent
   ],
   imports: [
     NbMenuModule,

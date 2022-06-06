@@ -1,14 +1,6 @@
 const mongoose = require("mongoose");
 const Cart = require("./Cart");
 
-let addressSchema = new mongoose.Schema({
-  city: { type: String },
-  zipcode: { type: Number },
-  street: { type: String },
-  number: { type: String },
-  additional: { type: String }
-})
-
 const userSchema = new mongoose.Schema({
   name: { type: String, default: null },
   surname: { type: String, default: null },
@@ -18,8 +10,8 @@ const userSchema = new mongoose.Schema({
   resetLink: { type: String, default: null },
   cart: { type: mongoose.Schema.Types.ObjectId, ref: Cart, required: true },
   roles: { type: [String] },
-  shippingaddress: { type: addressSchema },
-  billingaddress: { type: addressSchema }
+  locked: { type: Boolean, default: false },
+  locked_message: { type: String, default: null }
 });
 
 module.exports = mongoose.model("User", userSchema);

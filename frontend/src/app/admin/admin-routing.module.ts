@@ -5,12 +5,15 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { ManageProductsComponent } from './manage-products/manage-products.component';
 import { ManageOrdersComponent } from './manage-orders/manage-orders.component';
 import { ManageComponent } from './manage/manage.component';
+import { ManageUserComponent } from './manage-user/manage-user.component';
 
 const routes: Routes = [
+    { path: '', redirectTo: 'manage', pathMatch: 'full' },
     { path: 'add', component: AddProductComponent },
     { path: 'manage', component: ManageComponent },
     { path: 'products', component: ManageProductsComponent },
-    { path: 'orders', component: ManageOrdersComponent }
+    { path: 'orders', component: ManageOrdersComponent },
+    { path: 'users', component: ManageUserComponent }
 ];
 
 @NgModule({

@@ -3,7 +3,6 @@ import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbS
 import { Subscription } from 'rxjs';
 import { InventoryModel } from 'src/app/inventory.model';
 import { InventoryService } from 'src/app/inventory.service';
-import { AddProductComponent } from '../add-product/add-product.component';
 import { EditProductComponent } from '../edit-product/edit-product.component';
 
 interface TreeNode<T> {
@@ -121,7 +120,7 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
 /**
  * It creates a new data source from the data that was passed in
  */
-  reloadTable(){
+  private reloadTable(){
     this.dataSource = this.dataSourceBuilder.create(this.data)
   }
 
@@ -132,11 +131,21 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
       this.productsSub.unsubscribe()
   }
 
+  /**
+   * This function is called when the user clicks the edit button on a product. It takes the product id
+   * as a parameter and calls the openEditProductDialog function, passing the product id as a parameter
+   * @param {string} selectedProductId - string - this is the id of the product that was selected by
+   * the user.
+   */
   editProduct(selectedProductId: string){
     this.openEditProductDialog(selectedProductId)
   }
 
-  //open addproductcomponent dialog with the product id
+  /**
+   * This function opens the EditProductComponent in a dialog box, and when the dialog box is closed,
+   * it reloads the page
+   * @param {string} id - string - The id of the product to be edited.
+   */
   openEditProductDialog(id: string){
     this.dialogRef = this.dialogService.open(EditProductComponent, {
       context: {
@@ -145,7 +154,7 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
     })
 
     this.dialogRef.onClose.subscribe(() => {
-      // window.location.reload();
+      window.location.reload();
     })
   }
 }

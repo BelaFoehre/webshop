@@ -1,0 +1,51 @@
+<nb-card>
+  <nb-card-body>
+
+    <label class="search-label" for="search">Suchen: </label>
+    <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input" style="margin: 10px;">
+
+    <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)" [contentEditable]="false" style="table-layout: auto;">
+
+      <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+      <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+      <ng-container *ngFor="let column of allColumns; let index = index"
+                    [nbTreeGridColumnDef]="column"
+                    [showOn]="getShowOn(index)">
+        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
+          {{column}}
+        </th>
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">
+          <div *ngIf="column!=='Bearbeiten'">
+            {{ row.data[column] || '-' }}
+          </div>
+          <div *ngIf="column=='Bearbeiten'">
+            <button nbButton
+                    [disabled]="row.data['Gesperrt'] == 'Nein'"
+                    outline
+                    status="success"
+                    (click)="lockUser(row.data['ID'], false)"
+                    style="margin-right: 10px">
+              <nb-icon icon="unlock-outline"></nb-icon>
+            </button>
+            <button nbButton
+                    [disabled]="row.data['Gesperrt'] == 'Ja'"
+                    outline
+                    status="warning"
+                    (click)="lockUser(row.data['ID'], true)"
+                    style="margin-right: 10px">
+              <nb-icon icon="lock-outline"></nb-icon>
+            </button>
+            <button nbButton
+                    outline
+                    status="danger"
+                    (click)="deleteUser(row.data['ID'])">
+              <nb-icon icon="minus-circle-outline"></nb-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+    </table>
+
+  </nb-card-body>
+</nb-card>

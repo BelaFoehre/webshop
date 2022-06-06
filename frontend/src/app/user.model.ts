@@ -1,7 +1,9 @@
 export interface UserModel {
+  _id?: string
   name: string
   surname: string
   email: string
-  user_id: string
   roles: string[]
+  locked: boolean
+  locked_message?: string
 }
