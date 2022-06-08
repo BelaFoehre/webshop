@@ -12,7 +12,7 @@
                 <th class="text-right">Total Price</th>
               </tr>
               <tr *ngFor="let item of cart.items">
-                <td>{{ item.bezeichnung }}</td>
+                <td>{{ item.name }}</td>
                 <td>{{ item.priceItem || 0}} €</td>
                 <td>
                   <button class="btn btn-primary btn-sm" (click)="changeQuantity(item.id,-1)">-</button>

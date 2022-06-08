@@ -31,7 +31,7 @@ router.get('/:id', async (req, res) => {
 
 /**
  * API to create a new Inventory DB entry
- * @param bezeichnung @typedef String
+ * @param name @typedef String
  * @param brand @typedef String
  * @param category: {main @typedef String, sub1 @typedef String}
  * @param price @typedef Number and greater than 0
@@ -43,13 +43,13 @@ router.get('/:id', async (req, res) => {
  * @returns 500 if unsuccessfull
  */
 router.post('', bodyParser, (req, res) => {
-    const { bezeichnung, brand, category: {main, sub1}, price, availableQty, tags, imgBase64} = req.body
+    const { name, brand, category: {main, sub1}, price, availableQty, tags, imgBase64} = req.body
 
-    if(!(bezeichnung && brand && main && sub1 && price && (availableQty >= 0))){
+    if(!(name && brand && main && sub1 && price && (availableQty >= 0))){
         return res.status(400).send('Missing parameters')
     }
 
-    addNewInventory(bezeichnung, brand, main, sub1, price, availableQty, tags, imgBase64).then((data) => {
+    addNewInventory(name, brand, main, sub1, price, availableQty, tags, imgBase64).then((data) => {
         return res.status(201).json(data)
     }).catch((err) => {
         return res.status(500).json(err)
@@ -58,7 +58,7 @@ router.post('', bodyParser, (req, res) => {
 
 /**
  * API to update an Inventory DB entry
- * @param bezeichnung @typedef String
+ * @param name @typedef String
  * @param brand @typedef String
  * @param category: {main @typedef String, sub1 @typedef String}
  * @param price @typedef Number and greater than 0
@@ -72,14 +72,14 @@ router.post('', bodyParser, (req, res) => {
  */
 router.put('/:id', bodyParser, async (req, res) => {
 
-    const { bezeichnung, brand, category: {main, sub1}, price, availableQty, tags, imgBase64 } = req.body
-    if(!(bezeichnung && brand && main && sub1 && price && (availableQty >= 0))){
+    const { name, brand, category: {main, sub1}, price, availableQty, tags, imgBase64 } = req.body
+    if(!(name && brand && main && sub1 && price && (availableQty >= 0))){
         return res.status(400).send('Missing parameters')
     }
 
-    validateInventory(bezeichnung, brand, main, sub1, price, availableQty, tags).then(() => {
+    validateInventory(name, brand, main, sub1, price, availableQty, tags).then(() => {
         getProductById(req.params.id).then(async (product) => {
-            product.bezeichnung = bezeichnung
+            product.name = name
             product.brand = brand
             product.category['main'] = main
             product.category['sub1'] = sub1

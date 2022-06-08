@@ -55,7 +55,7 @@ exports.addSampleProductToCart = (cartId) => {
 
     return new Promise((resolve, reject) => {
         Inventory.create({
-            bezeichnung: "Item1337",
+            name: "Item1337",
             brand: "brand1",
             category: {
                 main: "main1",
@@ -68,7 +68,7 @@ exports.addSampleProductToCart = (cartId) => {
             console.log(1)
             this.findCartById(cartId).then((cart) => {
                 cart.items.push({
-                    bezeichnung: product.bezeichnung,
+                    name: product.name,
                     id: product._id,
                     quantity: 1,
                     priceItem: product.price,
@@ -134,7 +134,7 @@ exports.updateCart = (cart, itemId, itemQty) => {
             cart.subTotal = cart.items.map(item => item.priceTotal).reduce((prev, curr) => prev + curr)
         } else {
             cart.items.push({
-                bezeichnung: product.bezeichnung,
+                name: product.name,
                 id: itemId,
                 quantity: itemQty,
                 priceItem: product.price,
@@ -166,7 +166,7 @@ exports.updateCart = (cart, itemId, itemQty) => {
     })
 }
 
-exports.validateInventory = (bezeichnung, brand, category_main, category_sub1, price, availableQty, tags) => {
+exports.validateInventory = (name, brand, category_main, category_sub1, price, availableQty, tags) => {
     return new Promise((resolve, reject) => {
         try {
             availableQty = parseInt(availableQty)
@@ -181,12 +181,12 @@ exports.validateInventory = (bezeichnung, brand, category_main, category_sub1, p
     })
 }
 
-exports.addNewInventory = (bezeichnung, brand, category_main, category_sub1, price, availableQty, tags, imgBase64) => {
+exports.addNewInventory = (name, brand, category_main, category_sub1, price, availableQty, tags, imgBase64) => {
     return new Promise((resolve, reject) => {
 
-        this.validateInventory(bezeichnung, brand, category_main, category_sub1, price, availableQty, tags).then(() => {
+        this.validateInventory(name, brand, category_main, category_sub1, price, availableQty, tags).then(() => {
             Inventory.create({
-                bezeichnung: bezeichnung,
+                name: name,
                 brand: brand,
                 category: {
                     main: category_main,

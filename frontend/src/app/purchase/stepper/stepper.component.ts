@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CartModel } from 'src/app/cart.model';
+import { OrderModel } from 'src/app/order.model';
 import { OrderService } from 'src/app/order.service';
 
 @Component({
@@ -15,6 +17,8 @@ export class StepperComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private orderService: OrderService) {
   }
+
+  cart!: CartModel
 
   land: string = "Deutschland"
   plz!: string
