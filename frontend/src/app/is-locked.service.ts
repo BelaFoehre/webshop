@@ -21,9 +21,10 @@ export class isLockedGuard implements CanActivate {
     let user: UserModel | null = this.authService.getUser()
 
     const isLocked = user?.locked
+    const locked_msg = user?.locked_message || 'Dieser Account wurde gesperrt'
 
     if(isLocked){
-      this.toastr.error('Dieser Account wurde gesperrt', 'Account gesperrt', { closeButton: true })
+      this.toastr.error(locked_msg, 'Account gesperrt', { closeButton: true })
         .onHidden
         .subscribe(() => {
           this.router.navigate(['/auth/login'])
