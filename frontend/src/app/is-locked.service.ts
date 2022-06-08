@@ -8,13 +8,11 @@ import { UserModel } from './user.model';
 @Injectable({
   providedIn: 'root'
 })
-export class hasRoleGuard implements CanActivate {
+export class isLockedGuard implements CanActivate {
 
   constructor(private authService: AuthService, private toastr: ToastrService, private router: Router) { }
 
-  canActivate(
-    route: ActivatedRouteSnapshot
-  ):
+  canActivate():
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean
@@ -22,18 +20,16 @@ export class hasRoleGuard implements CanActivate {
     this.authService.setToken()
     let user: UserModel | null = this.authService.getUser()
 
-    const isAuthorized = user?.roles.includes(route.data['role'])
+    const isLocked = user?.locked
 
-    if(!isAuthorized){
-      this.toastr.error('Sie sind nicht authorisiert', 'Nicht authorisiert', { timeOut: 1000 })
+    if(isLocked){
+      this.toastr.error('Dieser Account wurde gesperrt', 'Account gesperrt', { closeButton: true })
         .onHidden
         .subscribe(() => {
-          this.router.navigate(['/'])
+          this.router.navigate(['/auth/login'])
         })
-
     }
 
-    return isAuthorized || false
+    return !isLocked || false
   }
-
 }

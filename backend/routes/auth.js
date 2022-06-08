@@ -71,7 +71,9 @@ router.post("/register", bodyParser, async (req, res) => {
         {
           user_id: user._id,
           email, name, surname,
-          roles: user.roles
+          roles: user.roles,
+          locked: user.locked,
+          locked_message: user.locked_message
         }, process.env.TOKEN_KEY, {
           expiresIn: "5h",
         }
@@ -107,7 +109,10 @@ router.post("/login", bodyParser, async (req, res) => {
             user_id: user._id,
             email,
             name: user.name,
-            surname: user.surname
+            surname: user.surname,
+            locked: user.locked,
+            locked_message: user.locked_message,
+            roles: user.roles
           }, process.env.TOKEN_KEY, {
             expiresIn: "5h",
           }

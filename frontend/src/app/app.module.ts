@@ -14,6 +14,7 @@ import { CartComponent } from './purchase/cart/cart.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddressComponent } from './purchase/address/address.component';
 import { StepperComponent } from './purchase/stepper/stepper.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { StepperComponent } from './purchase/stepper/stepper.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     NbThemeModule.forRoot({ name: 'dark' }),
     NbLayoutModule,
     NbEvaIconsModule,
