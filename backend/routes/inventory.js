@@ -43,13 +43,13 @@ router.get('/:id', async (req, res) => {
  * @returns 500 if unsuccessfull
  */
 router.post('', bodyParser, (req, res) => {
-    const { name, brand, category: {main, sub1}, price, availableQty, tags, imgBase64} = req.body
+    const { name, brand, description, category: {main, sub1}, price, availableQty, tags, imgBase64} = req.body
 
     if(!(name && brand && main && sub1 && price && (availableQty >= 0))){
         return res.status(400).send('Missing parameters')
     }
 
-    addNewInventory(name, brand, main, sub1, price, availableQty, tags, imgBase64).then((data) => {
+    addNewInventory(name, brand, description, main, sub1, price, availableQty, tags, imgBase64).then((data) => {
         return res.status(201).json(data)
     }).catch((err) => {
         return res.status(500).json(err)
@@ -72,7 +72,7 @@ router.post('', bodyParser, (req, res) => {
  */
 router.put('/:id', bodyParser, async (req, res) => {
 
-    const { name, brand, category: {main, sub1}, price, availableQty, tags, imgBase64 } = req.body
+    const { name, brand, description, category: {main, sub1}, price, availableQty, tags, imgBase64 } = req.body
     if(!(name && brand && main && sub1 && price && (availableQty >= 0))){
         return res.status(400).send('Missing parameters')
     }
@@ -87,7 +87,7 @@ router.put('/:id', bodyParser, async (req, res) => {
             product.availableQty = availableQty
             product.tags = tags
             product.imgBase64 =  imgBase64
-
+            product.description = description
             product.save((err, data) => {
                 if(err) return res.status(500).json(err)
                 else return res.status(200).json(data)

@@ -15,7 +15,10 @@
           {{column}}
         </th>
         <td nbTreeGridCell *nbTreeGridCellDef="let row">
-          <div *ngIf="column!=='Bearbeiten'">
+          <div *ngIf="column=='Bild'">
+            <img [src]=row.data[column] style="height: 50px; width: 50px">
+          </div>
+          <div *ngIf="column!=='Bearbeiten' && column!=='Bild' && column!=='Preis'">
             {{ row.data[column] || '-' }}
           </div>
           <div *ngIf="column=='Bearbeiten'">
@@ -25,6 +28,9 @@
                     (click)="editProduct(row.data['ID'])">
               <nb-icon icon="edit"></nb-icon>
             </button>
+          </div>
+          <div *ngIf="column=='Preis'">
+            {{ row.data[column]+' €' || '-' }}
           </div>
         </td>
       </ng-container>

@@ -13,14 +13,15 @@ interface TreeNode<T> {
 
 interface FSEntry {
   ID: string
-  Bezeichnung: string;
+  Name: string;
   Marke: string;
   Hauptkategorie: string;
   Unterkategorie: string;
   Preis: number;
   Bestand: number;
   Tags?: string[];
-  Img: any
+  Bild: string;
+  Beschreibung: string;
 }
 
 @Component({
@@ -29,7 +30,7 @@ interface FSEntry {
   styleUrls: ['./manage-products.component.scss']
 })
 export class ManageProductsComponent implements OnInit, OnDestroy {
-  allColumns = [ 'Bezeichnung', 'Marke', 'Hauptkategorie', 'Unterkategorie', 'Preis', 'Bestand', 'Tags', 'Bearbeiten', 'ID' ];
+  allColumns = [ 'Bild', 'Name', 'Beschreibung', 'Marke', 'Hauptkategorie', 'Unterkategorie', 'Preis', 'Bestand', 'Tags', 'Bearbeiten', 'ID' ];
   data: TreeNode<FSEntry>[] = []
 
   dataSource!: NbTreeGridDataSource<FSEntry>
@@ -103,14 +104,15 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
         products[0].map((prod: InventoryModel) => {
           this.data.push({data: {
             ID: prod._id || 'null',
-            Bezeichnung: prod.name,
+            Name: prod.name,
             Marke: prod.brand,
             Hauptkategorie: prod.category.main,
             Unterkategorie: prod.category.sub1,
             Preis: prod.price,
             Bestand: prod.availableQty,
             Tags: prod.tags,
-            Img: prod.imgBase64
+            Bild: prod.imgBase64,
+            Beschreibung: prod.description
           }})
         })
         this.reloadTable()

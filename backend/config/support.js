@@ -181,13 +181,14 @@ exports.validateInventory = (name, brand, category_main, category_sub1, price, a
     })
 }
 
-exports.addNewInventory = (name, brand, category_main, category_sub1, price, availableQty, tags, imgBase64) => {
+exports.addNewInventory = (name, brand, description, category_main, category_sub1, price, availableQty, tags, imgBase64) => {
     return new Promise((resolve, reject) => {
 
         this.validateInventory(name, brand, category_main, category_sub1, price, availableQty, tags).then(() => {
             Inventory.create({
                 name: name,
                 brand: brand,
+                description: description,
                 category: {
                     main: category_main,
                     sub1: category_sub1
