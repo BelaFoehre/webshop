@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 import { CartModel } from 'src/app/cart.model';
-import { AddressComponent } from '../address/address.component';
 import { StepperComponent } from '../stepper/stepper.component';
 import { CartService } from './cart.service';
 

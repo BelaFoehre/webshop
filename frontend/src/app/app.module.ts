@@ -12,7 +12,6 @@ import { NbPasswordAuthStrategy, NbAuthModule, NbAuthJWTToken } from '@nebular/a
 import { AuthGuard } from './auth-guard.service';
 import { CartComponent } from './purchase/cart/cart.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AddressComponent } from './purchase/address/address.component';
 import { StepperComponent } from './purchase/stepper/stepper.component';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -21,7 +20,6 @@ import { ToastrModule } from 'ngx-toastr';
     AppComponent,
     HeaderComponent,
     CartComponent,
-    AddressComponent,
     StepperComponent,
   ],
   imports: [
