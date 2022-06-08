@@ -27,7 +27,11 @@ export class isLockedGuard implements CanActivate {
       this.toastr.error(locked_msg, 'Account gesperrt', { closeButton: true })
         .onHidden
         .subscribe(() => {
-          this.router.navigate(['/auth/login'])
+          if(this.router.url == '/auth/login'){
+            window.location.reload()
+          } else {
+            this.router.navigate(['/auth/login'])
+          }
         })
     }
 
