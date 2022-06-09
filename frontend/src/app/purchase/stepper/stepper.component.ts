@@ -65,7 +65,7 @@ export class StepperComponent implements OnInit {
       ort: ['',Validators.required],
       strasse: ['',Validators.required],
       hausnummer: ['',Validators.required],
-      adresszusatz: ['',Validators.required]
+      adresszusatz: ['']
     });
 
     this.secondForm = this.fb.group({
@@ -87,7 +87,7 @@ export class StepperComponent implements OnInit {
       this.firstForm.addControl('r_ort', this.fb.control('',Validators.required))
       this.firstForm.addControl('r_strasse', this.fb.control('',Validators.required))
       this.firstForm.addControl('r_hausnummer', this.fb.control('',Validators.required))
-      this.firstForm.addControl('r_adresszusatz', this.fb.control('',Validators.required))
+      this.firstForm.addControl('r_adresszusatz', this.fb.control(''))
       this.seperateRechnung = true
     } else {
       this.seperateRechnung = false
