@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { UserModel } from './user.model';
+import { UserModel } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,12 +9,12 @@ import { UserModel } from './user.model';
 export class UserService {
   private usersUpdated = new Subject<UserModel[]>();
 
-  /**
-   * The constructor function is a default function that runs when the component is loaded. The private
-   * http: HttpClient variable creates an instance of the HttpClient service and stores it in a private
-   * variable called http
-   * @param {HttpClient} http - HttpClient - This is the service that we're injecting into our service.
-   */
+/**
+ * The constructor function is a default function that runs when the component is loaded. The private
+ * http: HttpClient variable creates an instance of the HttpClient service and stores it in a private
+ * variable called http
+ * @param {HttpClient} http - HttpClient - This is the service that we're injecting into our service.
+ */
   constructor(private http: HttpClient) { }
 
 /**

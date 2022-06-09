@@ -17,7 +17,6 @@ export class HeaderComponent {
   items: NbMenuItem[] = [];
 
   constructor(
-    private readonly sidebarService: NbSidebarService,
     private readonly authService: NbAuthService
   ) {
     this.authService.onTokenChange().subscribe((token) => {

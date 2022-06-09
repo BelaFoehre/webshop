@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbSortRequest } from '@nebular/theme';
-import { OrderModel } from 'src/app/order.model';
-import { OrderService } from 'src/app/order.service';
-import { CartService } from 'src/app/purchase/cart/cart.service';
+import { OrderModel } from 'src/app/models/order.model';
+import { OrderService } from 'src/app/services/order.service';
+import { CartService } from 'src/app/services/cart.service';
 
 interface TreeNode<T> {
   data: T;
@@ -84,6 +84,9 @@ export class OrderOverviewComponent implements OnInit {
     return minWithForMultipleColumns + (nextColumnStep * index);
   }
 
+/**
+ * It loads the orders from the backend and adds them to the table
+ */
   private loadOrders(){
     this.orderService.getOwnOrders()
       .subscribe((orders: any) => {
@@ -105,5 +108,4 @@ export class OrderOverviewComponent implements OnInit {
   reloadTable(){
     this.dataSource = this.dataSourceBuilder.create(this.data)
   }
-
 }

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/auth.service';
-import { CartModel } from 'src/app/cart.model';
-import { OrderModel } from 'src/app/order.model';
-import { OrderService } from 'src/app/order.service';
-import { UserModel } from 'src/app/user.model';
-import { CartService } from '../cart/cart.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { CartModel } from 'src/app/models/cart.model';
+import { OrderModel } from 'src/app/models/order.model';
+import { OrderService } from 'src/app/services/order.service';
+import { UserModel } from 'src/app/models/user.model';
+import { CartService } from '../../services/cart.service';
 
 
 @Component({
@@ -19,8 +19,14 @@ export class StepperComponent implements OnInit {
   secondForm!: FormGroup;
   thirdForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private orderService: OrderService, private cartService: CartService, private authService: AuthService) {
-  }
+/**
+ * The constructor function is a special function that is called when a new instance of the class is created
+ * @param {FormBuilder} fb - FormBuilder - This is an Angular service that we use to create forms.
+ * @param {OrderService} orderService - This is the service that will be used to send the order to the server.
+ * @param {CartService} cartService - This is the service that we created in the previous section.
+ * @param {AuthService} authService - We need this to get the current user's id.
+ */
+  constructor(private fb: FormBuilder, private orderService: OrderService, private cartService: CartService, private authService: AuthService) {}
 
   cart!: CartModel
   order!: OrderModel
@@ -48,6 +54,9 @@ export class StepperComponent implements OnInit {
   zahlungsOption: any
   lastStep: boolean = false
 
+/**
+ * It creates a form group with the given controls and validators
+ */
   ngOnInit() {
     let user = this.authService.getUser()
     if(user != null) this.user = user as UserModel
@@ -68,6 +77,10 @@ export class StepperComponent implements OnInit {
     });
   }
 
+/**
+ * If the checkbox is checked, add the controls to the form, otherwise remove them
+ * @param {any} e - any - The event that is triggered when the checkbox is clicked.
+ */
   checkboxChange(e: any) {
     if(e.target.checked){
       this.firstForm.addControl('r_plz', this.fb.control('',Validators.required))
@@ -84,9 +97,11 @@ export class StepperComponent implements OnInit {
       this.firstForm.removeControl('r_hausnummer')
       this.firstForm.removeControl('r_adresszusatz')
     }
-    console.log(this.firstForm.controls)
   }
 
+/**
+ * It takes the values from the first form and saves them in variables
+ */
   onFirstSubmit() {
     this.ort = this.firstForm.value.ort
     this.plz = this.firstForm.value.plz
@@ -109,21 +124,31 @@ export class StepperComponent implements OnInit {
     this.firstForm.markAsDirty();
   }
 
+/**
+ * The function is called when the user clicks on the "Bestellen" button. It checks if the form is
+ * valid and if it is, it sets the payment option to the value of the form and calls the createOrder()
+ * function.
+ */
   onSecondSubmit() {
-    console.log(this.user)
-    console.log('ort ' + this.ort)
-    console.log(this.firstForm.value)
     this.secondForm.markAsDirty();
     this.zahlungsOption = this.secondForm.value.zahlungsOptionen
     this.createOrder()
   }
 
+/**
+ * We're calling the emptyCart() function from the cart service, which will empty the cart, and then
+ * we're calling the createInvoice() function, which will create the invoice
+ */
   onThirdSubmit() {
     this.cartService.emptyCart().subscribe((res) => {
       this.createInvoice()
     })
   }
 
+/**
+ * It takes the cart and user data from the component, and sends it to the order service, which then
+ * sends it to the server
+ */
   createOrder(){
     let orderData = {
       cartId: this.cart._id || '404',
@@ -139,25 +164,17 @@ export class StepperComponent implements OnInit {
     })
   }
 
+/**
+ * It takes the HTML of the invoice, converts it to a string, and sends it to the server
+ */
   createInvoice(){
     const element = document.getElementById('invoice');
-    const opt = {
-      filename: 'myPage.pdf',
-      margin: 2,
-      image: {type: 'jpeg', quality: 0.9},
-      jsPDF: {format: 'letter', orientation: 'portrait'}
-    };
-
     let htmlInvoice = element?.innerHTML;
 
     let data = {
       htmlInvoice: JSON.stringify(htmlInvoice),
       userId: this.user._id || '404',
     }
-    this.orderService.sendInvoice(data).subscribe((res) => {console.log(res)})
-    // html2pdf().set(opt).from(element).save();
-    // // Old monolithic-style usage:
-    // html2pdf(element, opt);
+    this.orderService.sendInvoice(data).subscribe(() => {})
   }
-
 }

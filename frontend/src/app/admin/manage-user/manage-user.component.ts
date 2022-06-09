@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbDialogService, NbSortRequest } from '@nebular/theme';
 import { Subscription } from 'rxjs';
-import { UserModel } from 'src/app/user.model';
-import { UserService } from 'src/app/user.service';
+import { UserModel } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user.service';
 
 interface TreeNode<T> {
   data: T;
@@ -34,6 +34,13 @@ export class ManageUserComponent implements OnInit {
   users: UserModel[] = []
   userSub!: Subscription
 
+/**
+ * The constructor function is used to inject the UserService and NbTreeGridDataSourceBuilder services
+ * into the component
+ * @param {UserService} userService - This is the service that we created in the previous step.
+ * @param dataSourceBuilder - This is a service that is used to create a data source for the tree grid.
+ * @param {NbDialogService} dialogService - This is the service that will be used to open the dialog.
+ */
   constructor(private userService: UserService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private dialogService: NbDialogService) { }
 
   /**

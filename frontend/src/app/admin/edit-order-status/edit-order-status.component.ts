@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
-import { OrderService } from 'src/app/order.service';
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'app-edit-order-status',
@@ -14,14 +14,20 @@ export class EditOrderStatusComponent {
   status_neu!: string
   status!: string
 
+/**
+ * The constructor function is used to inject the NbDialogRef service and the OrderService service into
+ * the component
+ * @param dialogRef - NbDialogRef<EditOrderStatusComponent> - This is the reference to the dialog.
+ * @param {OrderService} orderService - This is the service that we created earlier.
+ */
   constructor(private dialogRef: NbDialogRef<EditOrderStatusComponent>, private orderService: OrderService) { }
 
-  /**
-   * It takes the orderId and new_status from the form, and sends a PUT request to the API to update
-   * the order status
-   */
+/**
+ * It takes the form data, sends it to the backend, and if the backend returns a status code of 200, it
+ * closes the dialog
+ * @param {NgForm} form - NgForm - this is the form that we created in the HTML file.
+ */
   changeOrderStatus(form: NgForm){
-    console.log(this.orderId, this.status_neu, this.status)
     if(form.valid){
       this.orderService.editOrderStatus(this.orderId, this.status_neu).subscribe((res) => {
 
@@ -31,5 +37,4 @@ export class EditOrderStatusComponent {
       })
     }
   }
-
 }

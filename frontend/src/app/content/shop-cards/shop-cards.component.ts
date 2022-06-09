@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
-import { InventoryModel } from 'src/app/inventory.model';
-import { InventoryService } from 'src/app/inventory.service';
+import { InventoryModel } from 'src/app/models/inventory.model';
+import { InventoryService } from 'src/app/services/inventory.service';
 import { DetailViewComponent } from '../detail-view/detail-view.component';
 
 @Component({

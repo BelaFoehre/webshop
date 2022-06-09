@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbSortRequest, NbDialogService, NbDialogRef } from '@nebular/theme';
 import { Subscription } from 'rxjs';
-import { InventoryModel } from 'src/app/inventory.model';
-import { InventoryService } from 'src/app/inventory.service';
+import { InventoryModel } from 'src/app/models/inventory.model';
+import { InventoryService } from 'src/app/services/inventory.service';
 import { EditProductComponent } from '../edit-product/edit-product.component';
 
 interface TreeNode<T> {
@@ -95,9 +95,9 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
     return minWithForMultipleColumns + (nextColumnStep * index);
   }
 
-  /**
-   * The function loads all products from the database and maps them onto the data for the table
-   */
+/**
+ * It loads all products from the database and pushes them into the data array
+ */
   private loadProducts(){
     this.inventoryService.getAllProducts()
     this.productsSub = this.inventoryService.getProductUpdateListener()

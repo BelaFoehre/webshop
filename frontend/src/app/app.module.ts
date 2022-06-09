@@ -9,7 +9,7 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { HeaderComponent } from './header/header.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NbPasswordAuthStrategy, NbAuthModule, NbAuthJWTToken } from '@nebular/auth';
-import { AuthGuard } from './auth-guard.service';
+import { AuthGuard } from './services/auth-guard.service';
 import { CartComponent } from './purchase/cart/cart.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StepperComponent } from './purchase/stepper/stepper.component';

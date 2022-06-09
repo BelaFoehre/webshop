@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './auth-guard.service';
+import { AuthGuard } from './services/auth-guard.service';
 import { CartComponent } from './purchase/cart/cart.component';
-import { hasRoleGuard } from './hasRole-guard.service';
+import { hasRoleGuard } from './services/hasRole-guard.service';
 import { StepperComponent } from './purchase/stepper/stepper.component';
-import { isLockedGuard } from './is-locked.service';
+import { isLockedGuard } from './services/is-locked.service';
 import { OrderOverviewComponent } from './content/order-overview/order-overview.component';
 
 const contentModule = () => import('./content/content.module').then(x => x.ContentModule);

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NbMenuItem } from '@nebular/theme';
 
 @Component({
@@ -6,12 +6,9 @@ import { NbMenuItem } from '@nebular/theme';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.scss']
 })
-export class ManageComponent implements OnInit {
+export class ManageComponent {
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
   items: NbMenuItem[] = [
     {

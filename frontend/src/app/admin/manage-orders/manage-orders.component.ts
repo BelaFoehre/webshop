@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbSortRequest, NbDialogService, NbDialogRef } from '@nebular/theme';
 import { Subscription } from 'rxjs';
-import { OrderModel } from 'src/app/order.model';
-import { OrderService } from 'src/app/order.service';
+import { OrderModel } from 'src/app/models/order.model';
+import { OrderService } from 'src/app/services/order.service';
 import { EditOrderStatusComponent } from '../edit-order-status/edit-order-status.component';
 
 interface TreeNode<T> {

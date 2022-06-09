@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { AuthService } from './auth.service';
-import { OrderModel } from './order.model';
-import { UserModel } from './user.model';
+import { OrderModel } from '../models/order.model';
+import { UserModel } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,11 @@ export class OrderService {
   private ordersUpdated = new Subject<OrderModel[]>()
   user!: UserModel;
 
+/**
+ * The constructor function is a default function that runs whenever we create a new instance of the service
+ * @param {HttpClient} http - HttpClient - This is the Angular HttpClient that we'll use to make the HTTP requests.
+ * @param {AuthService} authService - This is the service that we created in the previous section.
+ */
   constructor(private http: HttpClient, private authService: AuthService){}
 
   /**
@@ -46,16 +51,29 @@ export class OrderService {
     return this.ordersUpdated.asObservable()
   }
 
+ /**
+  * This function sends an invoice to a user
+  * @param data - { userId: string, htmlInvoice: string }
+  * @returns The response from the server.
+  */
   sendInvoice(data: { userId: string, htmlInvoice: string }){
     return this.http
       .post('/api/purchase/order-invoice', data, {observe:'response'})
   }
 
+/**
+ * It returns an observable of an array of OrderModel objects
+ * @returns An observable of an array of OrderModel objects.
+ */
   getOwnOrders(): Observable<OrderModel[]>{
     return this.http
       .get<OrderModel[]>(`/api/purchase/order?token=${this.getToken()}`)
   }
 
+/**
+ * It returns a token, but it doesn't return it until the observable has been subscribed to
+ * @returns The token is being returned.
+ */
   private getToken(){
     let token;
     this.authService.getToken().subscribe((res: any) => {
@@ -64,6 +82,13 @@ export class OrderService {
     return token
   }
 
+/**
+ * This function takes in an orderId and a new_status, and then it makes a PUT request to the server,
+ * sending the new_status as the body of the request
+ * @param {string} orderId - the id of the order you want to edit
+ * @param {string} new_status - string
+ * @returns The response from the server.
+ */
   editOrderStatus(orderId: string, new_status: string) {
     return this.http
       .put(`/api/purchase/order-status/${orderId}`, {status: new_status}, {observe:'response'})
