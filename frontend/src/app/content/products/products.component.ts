@@ -30,7 +30,7 @@ interface FSEntry {
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit, OnDestroy {
-  allColumns = [ 'Bild', 'Name', 'Beschreibung', 'Marke', 'Hauptkategorie', 'Unterkategorie', 'Preis', 'Verfügbar', 'Tags', 'Aktion', 'ID' ];
+  allColumns = [ 'Bild', 'Name', 'Beschreibung', 'Marke', 'Hauptkategorie', 'Unterkategorie', 'Preis', 'Verfügbar', 'Tags', 'Aktion' ];
   data: TreeNode<FSEntry>[] = []
 
   dataSource!: NbTreeGridDataSource<FSEntry>
