@@ -15,15 +15,21 @@
           {{column}}
         </th>
         <td nbTreeGridCell *nbTreeGridCellDef="let row">
-          <div *ngIf="column!=='Bearbeiten'">
+          <div *ngIf="column!=='Bearbeiten' && column!=='Gesperrt'">
             {{ row.data[column] || '-' }}
+          </div>
+          <div *ngIf="column=='Gesperrt'">
+            {{ row.data[column] }}
+              <div *ngIf="row.data['Gesperrt'] == 'Ja' && row.data['Grund']">
+                Grund: {{ row.data['Grund'] }}
+              </div>
           </div>
           <div *ngIf="column=='Bearbeiten'">
             <button nbButton
                     [disabled]="row.data['Gesperrt'] == 'Nein'"
                     outline
                     status="success"
-                    (click)="lockUser(row.data['ID'], false)"
+                    (click)="unlockUser(row.data['ID'])"
                     style="margin-right: 10px">
               <nb-icon icon="unlock-outline"></nb-icon>
             </button>
@@ -31,7 +37,7 @@
                     [disabled]="row.data['Gesperrt'] == 'Ja'"
                     outline
                     status="warning"
-                    (click)="lockUser(row.data['ID'], true)"
+                    (click)="lockUser(row.data['ID'])"
                     style="margin-right: 10px">
               <nb-icon icon="lock-outline"></nb-icon>
             </button>

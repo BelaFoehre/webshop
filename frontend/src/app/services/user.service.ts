@@ -58,4 +58,13 @@ export class UserService {
   deleteUser(id: string){
     return this.http.delete(`/api/users/${id}`)
   }
+
+ /**
+  * This function takes in an id as a string, and returns a user object from the database
+  * @param {string} id - The id of the user you want to get.
+  * @returns The user with the id of the parameter
+  */
+  getUser(id: string){
+    return this.http.get<UserModel>(`/api/users/${id}`)
+  }
 }

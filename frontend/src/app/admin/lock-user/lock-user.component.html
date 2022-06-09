@@ -1,0 +1,21 @@
+<form (ngSubmit)="lockUser(form)" #form="ngForm" aria-labelledby="title">
+  <nb-card>
+    <nb-card-header>Nutzersperrung</nb-card-header>
+    <nb-card-body style="width: 100%;">
+      <label>Sperrung für</label><br>
+      <label for="bezeichnung">Name</label>
+      <br><input nbInput type="text" [(ngModel)]="name" [disabled]="true" name="name">
+      <br><br><label>Nachname</label>
+      <br><input nbInput type="text" [(ngModel)]="surname" [disabled]="true" name="surname">
+      <br><br><label>Email</label>
+      <br><input nbInput type="text" [(ngModel)]="email" [disabled]="true" name="email">
+    </nb-card-body>
+
+    <nb-card-body>
+      <label>Sperrnachricht (optional)</label><br>
+      <textarea style="width: 100%" nbInput type="text" [(ngModel)]="lock_msg" placeholder="Sperrnachricht" [required]="true" name="lock_msg"></textarea>
+    </nb-card-body>
+
+  </nb-card>
+  <button nbButton [disabled]="!form.valid" status="primary">Nutzer sperren</button>
+</form>

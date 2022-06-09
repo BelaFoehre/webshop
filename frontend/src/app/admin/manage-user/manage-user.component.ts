@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbDialogService, NbSortRequest } from '@nebular/theme';
+import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbDialogService, NbSortRequest, NbDialogRef } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 import { UserModel } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { LockUserComponent } from '../lock-user/lock-user.component';
 
 interface TreeNode<T> {
   data: T;
@@ -17,6 +18,7 @@ interface FSEntry {
   Email: string;
   Rollen: string[];
   Gesperrt: string;
+  Grund: string | undefined;
 }
 
 @Component({
@@ -34,6 +36,8 @@ export class ManageUserComponent implements OnInit {
   users: UserModel[] = []
   userSub!: Subscription
 
+  private dialogRef!: NbDialogRef<LockUserComponent>;
+
 /**
  * The constructor function is used to inject the UserService and NbTreeGridDataSourceBuilder services
  * into the component
@@ -41,7 +45,11 @@ export class ManageUserComponent implements OnInit {
  * @param dataSourceBuilder - This is a service that is used to create a data source for the tree grid.
  * @param {NbDialogService} dialogService - This is the service that will be used to open the dialog.
  */
-  constructor(private userService: UserService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private dialogService: NbDialogService) { }
+  constructor(
+    private userService: UserService,
+    private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>,
+    private dialogService: NbDialogService
+  ) { }
 
   /**
    * The ngOnInit() function is a lifecycle hook that is called after Angular has initialized all
@@ -104,6 +112,7 @@ export class ManageUserComponent implements OnInit {
               Email: user.email,
               Rollen: user.roles,
               Gesperrt: locked,
+              Grund: user.locked_message,
             }})
           })
         this.reloadTable()
@@ -125,14 +134,25 @@ export class ManageUserComponent implements OnInit {
   }
 
 /**
- * It takes an id and a boolean value, and then it calls the lockUser function in the user service,
- * which takes an id and a boolean value, and then it reloads the page
- * @param {string} id - the id of the user you want to lock/unlock
- * @param {Boolean} lock - Boolean - This is the boolean value that will be passed to the backend to
- * lock or unlock the user.
+ * It takes the id of the user that is to be unlocked, and then calls the lockUser function in the user
+ * service, passing in the id and false as the parameters
+ * @param {string} id - the id of the user you want to lock
  */
-  lockUser(id: string, lock: Boolean){
-    this.userService.lockUser(id, lock).subscribe(() => {
+  unlockUser(id: string){
+    this.userService.lockUser(id, false).subscribe(() => {
+      window.location.reload()
+    })
+  }
+
+/**
+ * It opens a dialog box, and when the dialog box is closed, it reloads the page
+ * @param {string} id - the id of the user to be locked
+ */
+  lockUser(id: string){
+    this.dialogRef = this.dialogService.open(LockUserComponent, {
+      context: { userId: id }})
+
+    this.dialogRef.onClose.subscribe(() => {
       window.location.reload()
     })
   }
