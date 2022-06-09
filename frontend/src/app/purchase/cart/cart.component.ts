@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 import { CartModel } from 'src/app/cart.model';
 import { StepperComponent } from '../stepper/stepper.component';
@@ -14,6 +14,8 @@ import { CartService } from './cart.service';
 export class CartComponent implements OnInit {
   cart!: CartModel
   cartSub!: Subscription
+  private dialogRef!: NbDialogRef<StepperComponent>;
+
   constructor(private cartService: CartService, private dialogService: NbDialogService) {}
 
   ngOnInit(): void {
@@ -40,7 +42,7 @@ export class CartComponent implements OnInit {
   }
 
   checkout(){
-    this.dialogService.open(StepperComponent, { context: { cart: this.cart }, closeOnBackdropClick: false })
+    this.dialogRef = this.dialogService.open(StepperComponent, { context: { cart: this.cart }, closeOnBackdropClick: false })
     // this.cartService.checkout()
   }
 

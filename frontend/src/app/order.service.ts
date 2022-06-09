@@ -42,4 +42,9 @@ export class OrderService {
   getOrderUpdateListener(): Observable<OrderModel[]>{
     return this.ordersUpdated.asObservable()
   }
+
+  sendInvoice(data: { userId: string, htmlInvoice: string }){
+    return this.http
+      .post('/api/purchase/order-invoice', data, {observe:'response'})
+  }
 }

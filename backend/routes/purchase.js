@@ -4,6 +4,8 @@ const bodyParser = require('body-parser').json();
 const Cart = require('../model/Cart');
 const Order = require('../model/Order')
 const { findCartById, getCartByUserToken, updateCart, findOrderById, resetCart } = require('../config/support.js');
+const { sendMail } = require('../config/nodemailer');
+const User = require('../model/User');
 
 router.put('/cart/:id', bodyParser, async (req, res) => {
     findCartById(req.params.id).then((cart) => {
@@ -67,6 +69,14 @@ router.get('/cart', async (req, res) => {
             return res.status(200).json(result)
         })
     }
+})
+
+router.post('/order-invoice', bodyParser, async (req, res) => {
+    console.log('test')
+    const { userId, htmlInvoice } = req.body
+    const user = await User.findById(userId)
+    if(!user) return res.status(404).json({error: 'User not found'})
+    sendMail(user.email, 'Order Confirmation', 'Your order has been placed successfully', htmlInvoice)
 })
 
 router.post('/order', bodyParser, async (req, res) => {

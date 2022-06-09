@@ -92,7 +92,7 @@ exports.getCartByUserToken = (userToken) => {
 
     return new Promise((resolve, reject) => {
         this.getUserByToken(userToken).then((data) => {
-            User.findById(data.user_id).then((data) => {
+            User.findById(data._id).then((data) => {
                 this.findCartById(data.cart).then((data) => {
                     resolve(data)
                 })

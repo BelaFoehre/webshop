@@ -130,12 +130,35 @@ export class StepperComponent implements OnInit {
     }
     this.orderService.addNewOrder(orderData).subscribe((res) => {
       if(res.ok){
-        if(res.body) this.order = res.body
-        this.lastStep = true
+        if(res.body){
+          this.order = res.body
+          this.lastStep = true
+        }
         this.cartService.emptyCart().subscribe((res) => {
+          this.createInvoice()
         })
       }
     })
+  }
+
+  createInvoice(){
+    const element = document.getElementById('invoice');
+    console.log('element ' + element)
+    let htmlInvoice = "'"+element+"'"
+    const opt = {
+      filename: 'myPage.pdf',
+      margin: 2,
+      image: {type: 'jpeg', quality: 0.9},
+      jsPDF: {format: 'letter', orientation: 'portrait'}
+    };
+    let data = {
+      htmlInvoice: htmlInvoice,
+      userId: this.user._id || '404',
+    }
+    this.orderService.sendInvoice(data).subscribe((res) => {console.log(res)})
+    // html2pdf().set(opt).from(element).save();
+    // // Old monolithic-style usage:
+    // html2pdf(element, opt);
   }
 
 }

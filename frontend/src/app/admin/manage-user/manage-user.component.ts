@@ -25,7 +25,7 @@ interface FSEntry {
   styleUrls: ['./manage-user.component.scss']
 })
 export class ManageUserComponent implements OnInit {
-  allColumns = [ 'Name', 'Nachname', 'Email', 'Rollen', 'Gesperrt', 'Bearbeiten' ];
+  allColumns = [ 'Name', 'Nachname', 'Email', 'Rollen', 'Gesperrt', 'Bearbeiten', 'ID' ];
   data: TreeNode<FSEntry>[] = []
   dataSource!: NbTreeGridDataSource<FSEntry>
   sortColumn!: string;
