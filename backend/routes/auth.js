@@ -38,7 +38,7 @@ router.post("/register", bodyParser, async (req, res) => {
         email: email.toLowerCase(),
         password: encryptedUserPassword,
         cart: cart,
-        roles: ['Consumer']
+        roles: ['Customer']
       })
 
       const token = jwt.sign(
