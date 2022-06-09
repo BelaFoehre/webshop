@@ -24,11 +24,11 @@
                 </td>
               </tr>
               <tr>
-                <td colspan="3">Subtotal: {{ cart.subTotal || 0}} €</td>
-                <td colspan="4">
+                <td colspan="2">Subtotal: {{ cart.subTotal || 0}} €</td>
+                <td>
                   <button class="btn btn-danger" (click)="emptyCart()">Empty Cart</button>
                 </td>
-                <td colspan="4">
+                <td style="float: right">
                   <button class="btn btn-success" (click)="checkout()">Purchase Items</button>
                 </td>
               </tr>
