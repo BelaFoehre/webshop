@@ -5,43 +5,50 @@
 <!-- align divs to the left -->
 <!-- <div style="float: left;">
 </div> -->
-<input nbInput id="search" class="search-input" style="margin: 10px;" (change)="searchInput($event)">
-<div *ngFor="let product of products; let i = index" style="float: left; padding-inline: 5px;">
-    <nb-card size="small" style="width: fit-content">
-      <nb-card-header>{{ product.name }}</nb-card-header>
-      <nb-card-body>
-      <!-- <nb-card-body style="text-align:center; background-image: url({{product.imgBase64}}); background-repeat:no-repeat; max-width:200px; max-height:100px; width:fit-content; height:fit-content"> -->
-        <img src="{{ product.imgBase64 }}" style="max-width: 100px; max-height: 100%; width:auto; float:left; margin-right: 5px;">
-        <div style="float: left; max-width: fit-content">
-          <p class="card-text" style="color:#2730eb;"><strong>{{ product.brand }}</strong></p>
-          <p class="card-text" style="color:#5c5c5c">{{ product.category.main }} > {{ product.category.sub1 }}</p>
-          <p class="card-text" style="color:#ffffff">Verfübar: {{ product.availableQty }}</p>
-        </div>
-      </nb-card-body>
-      <nb-card-footer>
-        <p class="card-text">{{ product.price }} €</p>
+<div>
+  <label class="search-label" for="search">Suchen: </label>
+  <input nbInput id="search" class="search-input" style="margin: 10px;" (change)="searchInput($event)">
 
-        <div style="float: left;">
-          <button style="margin-right:10px"
-                  nbButton
-                  status="basic"
-                  size="small"
-                  (click)="openDetails(product._id || '404')">
-            Details
-          </button>
+</div>
 
-          <button [disabled]="product.availableQty <= 0"
-                  nbButton
-                  status="primary"
-                  size="small"
-                  (click)="addToCart(product._id || '404')">
-            <nb-icon icon="shopping-bag-outline"></nb-icon>
-            In den Warenkorb
-          </button>
-        </div>
+<div>
+  <div *ngFor="let product of products; let i = index" style="float: left; padding-inline: 5px;">
+      <nb-card size="small" style="width: fit-content">
+        <nb-card-header>{{ product.name }}</nb-card-header>
+        <nb-card-body>
+        <!-- <nb-card-body style="text-align:center; background-image: url({{product.imgBase64}}); background-repeat:no-repeat; max-width:200px; max-height:100px; width:fit-content; height:fit-content"> -->
+          <img src="{{ product.imgBase64 }}" style="max-width: 100px; max-height: 100%; width:auto; float:left; margin-right: 5px;">
+          <div style="float: left; max-width: fit-content">
+            <p class="card-text" style="color:#2730eb;"><strong>{{ product.brand }}</strong></p>
+            <p class="card-text" style="color:#5c5c5c">{{ product.category.main }} > {{ product.category.sub1 }}</p>
+            <p class="card-text" style="color:#ffffff">Verfübar: {{ product.availableQty }}</p>
+          </div>
+        </nb-card-body>
+        <nb-card-footer>
+          <p class="card-text">{{ product.price }} €</p>
 
-      </nb-card-footer>
-    </nb-card>
+          <div style="float: left;">
+            <button style="margin-right:10px"
+                    nbButton
+                    status="basic"
+                    size="small"
+                    (click)="openDetails(product._id || '404')">
+              Details
+            </button>
 
-    <!-- <button class="btn btn-primary" (click)="addToCart(product)">In den Warenkorb</button> -->
+            <button [disabled]="product.availableQty <= 0"
+                    nbButton
+                    status="primary"
+                    size="small"
+                    (click)="addToCart(product._id || '404')">
+              <nb-icon icon="shopping-bag-outline"></nb-icon>
+              In den Warenkorb
+            </button>
+          </div>
+
+        </nb-card-footer>
+      </nb-card>
+
+      <!-- <button class="btn btn-primary" (click)="addToCart(product)">In den Warenkorb</button> -->
+  </div>
 </div>

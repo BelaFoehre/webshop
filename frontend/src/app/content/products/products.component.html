@@ -1,0 +1,48 @@
+<nb-card>
+  <nb-card-body>
+
+    <label class="search-label" for="search">Suchen: </label>
+    <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input" style="margin: 10px;">
+
+    <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)" [contentEditable]="false" style="table-layout: auto;">
+
+      <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+      <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+      <ng-container *ngFor="let column of allColumns; let index = index"
+                    [nbTreeGridColumnDef]="column"
+                    [showOn]="getShowOn(index)">
+        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
+          {{column}}
+        </th>
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">
+          <div *ngIf="column=='Bild'">
+            <img [src]=row.data[column] style="height: 50px; width: 50px">
+          </div>
+          <div *ngIf="column!=='Aktion' && column!=='Bild' && column!=='Preis'">
+            {{ row.data[column] || '-' }}
+          </div>
+          <div *ngIf="column=='Preis'">
+            {{ row.data[column]+' €' || '-' }}
+          </div>
+          <div *ngIf="column=='Aktion'">
+            <button nbButton
+                    outline
+                    status="warning"
+                    (click)="openDetails(row.data['ID'])">
+              <nb-icon icon="search-outline"></nb-icon>
+            </button>
+            <button nbButton
+                    [disabled]="row.data['Verfügbar']<1"
+                    outline
+                    status="warning"
+                    (click)="addToCart(row.data['ID'])">
+              <nb-icon icon="shopping-cart-outline"></nb-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+    </table>
+
+  </nb-card-body>
+</nb-card>
