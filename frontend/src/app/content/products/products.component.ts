@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbSortRequest, NbDialogService, NbDialogRef } from '@nebular/theme';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { InventoryModel } from 'src/app/models/inventory.model';
 import { InventoryService } from 'src/app/services/inventory.service';
@@ -43,15 +44,20 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   private dialogRef!: NbDialogRef<DetailViewComponent>;
 
-
-  /**
-   * The constructor function is used to inject the InventoryService and NbTreeGridDataSourceBuilder
-   * services into the component.
-   * @param {InventoryService} inventoryService - This is the service that we created earlier.
-   * @param dataSourceBuilder - NbTreeGridDataSourceBuilder<FSEntry>
-   * @param {NbDialogService} dialogService - This is the service that will be used to open the dialog.
-   */
-  constructor(private inventoryService: InventoryService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private dialogService: NbDialogService) { }
+/**
+ * We're injecting the InventoryService, NbTreeGridDataSourceBuilder, NbDialogService, and
+ * ToastrService into the constructor
+ * @param {InventoryService} inventoryService - This is the service that we created earlier.
+ * @param dataSourceBuilder - NbTreeGridDataSourceBuilder<FSEntry>
+ * @param {NbDialogService} dialogService - This is the service that will be used to open the dialog.
+ * @param {ToastrService} toastr - This is a service that allows us to display toast messages.
+ */
+  constructor(
+    private inventoryService: InventoryService,
+    private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>,
+    private dialogService: NbDialogService,
+    private toastr: ToastrService
+  ) { }
 
   /**
    * The ngOnInit() function is a lifecycle hook that is called after Angular has initialized all
@@ -151,11 +157,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
 /**
- * The addToCart function takes a productId as an argument and calls the addToCart function in the
- * inventoryService
- * @param {string} productId - The id of the product to be added to the cart.
+ * It calls the addToCart function of the inventoryService and passes the productId and the quantity of
+ * 1
+ * @param {string} productId - The id of the product to be added to the cart
  */
   addToCart(productId: string){
     this.inventoryService.addToCart(productId, 1)
+    this.toastr.success('Produkt wurde zum Warenkorb hinzugefügt!', 'Produkt hinzugefügt')
   }
 }
