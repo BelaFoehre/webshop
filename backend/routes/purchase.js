@@ -76,7 +76,11 @@ router.post('/order-invoice', bodyParser, async (req, res) => {
     const { userId, htmlInvoice } = req.body
     const user = await User.findById(userId)
     if(!user) return res.status(404).json({error: 'User not found'})
-    sendMail(user.email, 'Order Confirmation', 'Your order has been placed successfully', htmlInvoice)
+    sendMail(user.email, 'Order Confirmation', 'Your order has been placed successfully', htmlInvoice).then((data) => {
+        return res.status(200).json(data)
+    }).catch((err) => {
+        return res.status(400).json(err)
+    })
 })
 
 router.post('/order', bodyParser, async (req, res) => {
