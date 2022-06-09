@@ -7,7 +7,7 @@ interface ItemSchema {
 }
 
 export interface OrderModel {
-  _id?: string
+  _id: string
   userId: string,
   status?: string,
   cartItems: ItemSchema[],

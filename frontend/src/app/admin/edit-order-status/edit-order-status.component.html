@@ -1,1 +1,13 @@
-<p>edit-order-status works!</p>
+<form (ngSubmit)="changeOrderStatus(form)" #form="ngForm" aria-labelledby="title">
+  <nb-card>
+    <nb-card-body>
+      <h1>Status Aktualisieren</h1><br>
+      <label>Derzeitiger Status</label><br>
+      <textarea style="width: 100%" [disabled]="true" nbInput type="text" [(ngModel)]="status" name="status"></textarea><br><br>
+      <label>Neuer Status</label><br>
+      <textarea style="width: 100%" nbInput type="text" [(ngModel)]="status_neu" placeholder="Neue Status" [required]="true" name="status_neu"></textarea>
+    </nb-card-body>
+
+  </nb-card>
+  <button nbButton [disabled]="!form.valid" status="primary">Aktualisieren</button>
+</form>

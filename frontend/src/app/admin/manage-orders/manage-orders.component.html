@@ -23,7 +23,7 @@
             <button nbButton
                     outline
                     status="warning"
-                    (click)="editOrderStatus(row.data['ID'])">
+                    (click)="editOrderStatus(row.data['OrderId'], row.data['Status'])">
               <nb-icon icon="edit"></nb-icon>
             </button>
           </div>

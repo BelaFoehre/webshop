@@ -66,6 +66,6 @@ export class OrderService {
 
   editOrderStatus(orderId: string, new_status: string) {
     return this.http
-      .put(`/api/purchase/order/${orderId}`, {status: new_status}, {observe:'response'})
+      .put(`/api/purchase/order-status/${orderId}`, {status: new_status}, {observe:'response'})
   }
 }

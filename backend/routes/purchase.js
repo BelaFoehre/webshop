@@ -112,27 +112,18 @@ router.post('/order', bodyParser, async (req, res) => {
     return res.status(200).json(orderDoc)
 })
 
-router.put('/order/:id', bodyParser, async (req, res) => {
-
-    const { cartId, billingaddressId, shippingaddressId, userId, status } = req.body
-
+/* Updating the status of an order. */
+router.put('/order-status/:id', bodyParser, async (req, res) => {
+    const { status } = req.body
     findOrderById(req.params.id).then((order) => {
-        order.cartId = cartId
-        order.billingaddressId = billingaddressId
-        order.shippingaddressId = shippingaddressId
-        order.userId = userId
         order.status = status
-
-        order.save((err, data) => {
-            if(err) return res.status(500).json(err)
-            else return res.status(200).json(data)
+        order.save((error, doc) => {
+            if(error) return res.status(400).json(error)
+            return res.status(200).json(doc)
         })
-        
     }).catch((err) => {
-        console.log(err)
-        return res.status(404).send('Order not found')
+        return res.status(404).json(err)
     })
-
 })
 
 /* A get request to the route /order/:id. It is using the findOrderById function to find the order with

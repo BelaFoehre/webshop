@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbSortRequest, NbDialogService, NbDialogRef } from '@nebular/theme';
 import { Subscription } from 'rxjs';
-import { InventoryService } from 'src/app/inventory.service';
 import { OrderModel } from 'src/app/order.model';
 import { OrderService } from 'src/app/order.service';
 import { EditOrderStatusComponent } from '../edit-order-status/edit-order-status.component';
@@ -128,16 +127,14 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
   }
 
 /**
- * It opens a dialog box with the EditOrderStatusComponent component inside it, and passes the orderId
- * to the component
- * @param {string} orderId - string - this is the orderId that we are passing to the
- * EditOrderStatusComponent.
+ * It opens a dialog box with the EditOrderStatusComponent component, and passes in the orderId and
+ * status of the order that was clicked on
+ * @param {string} orderId - The order id of the order that is being edited.
+ * @param {string} status - string - this is the status of the order.
  */
-  editOrderStatus(orderId: string){
+  editOrderStatus(orderId: string, status: string){
     this.dialogRef = this.dialogService.open(EditOrderStatusComponent, {
-      context: {
-        orderId: orderId
-      }, hasBackdrop: true, closeOnBackdropClick: true
+      context: { orderId, status }, hasBackdrop: true, closeOnBackdropClick: true
     })
 
     this.dialogRef.onClose.subscribe(() => {
