@@ -74,8 +74,6 @@
                     {{ zahlungsOption.label }}
                   </nb-radio>
                 </nb-radio-group>
-                  <!-- <input nbInput type="text" placeholder="Enter favorite movie" class="form-control" formControlName="second"
-                       [ngClass]="{'form-control-danger': secondForm.invalid && (secondForm.dirty || secondForm.touched)}"> -->
               </div>
             </nb-card-body>
           </nb-card>
@@ -85,8 +83,7 @@
           </div>
         </form>
       </nb-step>
-      <nb-step [stepControl]="thirdForm" label="Bestätigung">
-        <form [formGroup]="thirdForm" (ngSubmit)="onThirdSubmit()" class="step-container">
+      <nb-step [stepControl]="secondForm" label="Bestätigung">
           <div>
           <div id="invoice">
             <h1>Verpackungszubehör.de</h1>
@@ -153,21 +150,12 @@
               </p>
             </div>
             </div>
-          <!-- <p class="lorem">
-            Things boom shackalack rhoncus yo. In fo shizzle my nizzle gangsta platea dictumst. Check it out pot.
-          </p>
-          <div class="input-group">
-            <input nbInput type="text" placeholder="Enter something" class="form-control" formControlName="third"
-                   [ngClass]="{'form-control-danger': thirdForm.invalid && (thirdForm.dirty || thirdForm.touched)}">
-          </div>
-          <button nbButton nbStepperPrevious>prev</button>
-          <button nbButton nbStepperNext>Confirm</button> -->
-        </form>
+          <button nbStepperNext style="float: right" class="btn btn-success" (click)="onThirdSubmit()">Bestätigen</button>
       </nb-step>
-      <nb-step [stepControl]="thirdForm" [hidden]="true" label="Third step">
+      <nb-step [stepControl]="thirdForm" [hidden]="true" label="Bestätigung">
         <div class="step-container">
-          <h3>Wizard completed!</h3>
-          <button nbButton (click)="stepper.reset()">Try again</button>
+          <h3>Deine Lieferung ist unterwegs!</h3>
+          <p>Ein Beleg wurde an die hinterlegte E-Mail ausgestellt</p>
         </div>
       </nb-step>
     </nb-stepper>
