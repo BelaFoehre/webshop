@@ -12,19 +12,19 @@
                   <input nbInput fullWidth name="land" [value]="land" [disabled]="true" type="text" class="form-control" placeholder="Land">
                   <br>
                   <label for="plz">PLZ</label>
-                  <input nbInput fullWidth name="plz" type="number" class="form-control" formControlName="plzCtrl" placeholder="13127">
+                  <input nbInput fullWidth name="plz" type="number" class="form-control" formControlName="plz" placeholder="13127">
                   <br>
                   <label for="ort">Ort</label>
-                  <input nbInput fullWidth name="ort" type="text" class="form-control" formControlName="ortCtrl" placeholder="Ort">
+                  <input nbInput fullWidth name="ort" type="text" class="form-control" formControlName="ort" placeholder="Ort">
                   <br>
                   <label for="strasse">Strasse</label>
-                  <input nbInput fullWidth name="strasse" type="text" class="form-control" formControlName="strasseCtrl" placeholder="Strasse">
+                  <input nbInput fullWidth name="strasse" type="text" class="form-control" formControlName="strasse" placeholder="Strasse">
                   <br>
                   <label for="hausnummer">Hausnummer</label>
-                  <input nbInput fullWidth name="hausnummer" type="text" class="form-control" formControlName="hausnummerCtrl" placeholder="Hausnummer">
+                  <input nbInput fullWidth name="hausnummer" type="text" class="form-control" formControlName="hausnummer" placeholder="Hausnummer">
                   <br>
                   <label for="zusatz">Addresszusatz</label>
-                  <input nbInput fullWidth name="zusatz" type="text" class="form-control" formControlName="zusatzCtrl" placeholder="Addresszusatz">
+                  <input nbInput fullWidth name="zusatz" type="text" class="form-control" formControlName="adresszusatz" placeholder="Addresszusatz">
                 </div>
               </nb-card-body>
 
@@ -37,26 +37,26 @@
                   <input nbInput fullWidth name="r_land" [value]="land" [disabled]="true" type="text" class="form-control" placeholder="Land">
                   <br>
                   <label for="r_plz">PLZ</label>
-                  <input nbInput fullWidth name="r_plz" type="number" class="form-control" formControlName="r_plzCtrl" placeholder="13127">
+                  <input nbInput fullWidth name="r_plz" type="number" class="form-control" formControlName="r_plz" placeholder="13127">
                   <br>
                   <label for="r_ort">Ort</label>
-                  <input nbInput fullWidth name="r_ort" type="text" class="form-control" formControlName="r_ortCtrl" placeholder="Ort">
+                  <input nbInput fullWidth name="r_ort" type="text" class="form-control" formControlName="r_ort" placeholder="Ort">
                   <br>
                   <label for="r_strasse">Strasse</label>
-                  <input nbInput fullWidth name="r_strasse" type="text" class="form-control" formControlName="r_strasseCtrl" placeholder="Strasse">
+                  <input nbInput fullWidth name="r_strasse" type="text" class="form-control" formControlName="r_strasse" placeholder="Strasse">
                   <br>
                   <label for="r_hausnummer">Hausnummer</label>
-                  <input nbInput fullWidth name="r_hausnummer" type="text" class="form-control" formControlName="r_hausnummerCtrl" placeholder="Hausnummer">
+                  <input nbInput fullWidth name="r_hausnummer" type="text" class="form-control" formControlName="r_hausnummer" placeholder="Hausnummer">
                   <br>
                   <label for="r_zusatz">Addresszusatz</label>
-                  <input nbInput fullWidth name="r_zusatz" type="text" class="form-control" formControlName="r_zusatzCtrl" placeholder="Addresszusatz">
+                  <input nbInput fullWidth name="r_zusatz" type="text" class="form-control" formControlName="r_adresszusatz" placeholder="Addresszusatz">
                 </div>
               </nb-card-body>
             </nb-card>
           </div>
           <div style="width: 100%">
             <nb-checkbox style="float: left" (change)="checkboxChange($event)" status="basic">abweichende Rechnungsaddresse</nb-checkbox>
-            <button nbStepperNext style="float: right" class="btn btn-success" [disabled]="!firstForm.valid">Weiter</button>
+            <button nbStepperNext style="float: right" class="btn btn-success" (click)="onFirstSubmit()" [disabled]="!firstForm.valid">Weiter</button>
           </div>
         </form>
       </nb-step>
@@ -66,7 +66,7 @@
             <nb-card-header>Ausgewählt: {{ zahlungsOption }}</nb-card-header>
             <nb-card-body>
               <div class="input-group">
-                <nb-radio-group [(ngModel)]="zahlungsOption" formControlName="zahlungsOptionenCtrl">
+                <nb-radio-group [(ngModel)]="zahlungsOption" formControlName="zahlungsOptionen">
                   <nb-radio
                     *ngFor="let zahlungsOption of zahlungsOptionen"
                     [disabled]="zahlungsOption.disabled"
@@ -74,28 +74,92 @@
                     {{ zahlungsOption.label }}
                   </nb-radio>
                 </nb-radio-group>
-                  <!-- <input nbInput type="text" placeholder="Enter favorite movie" class="form-control" formControlName="secondCtrl"
+                  <!-- <input nbInput type="text" placeholder="Enter favorite movie" class="form-control" formControlName="second"
                        [ngClass]="{'form-control-danger': secondForm.invalid && (secondForm.dirty || secondForm.touched)}"> -->
               </div>
             </nb-card-body>
           </nb-card>
           <div style="width: 100%">
             <button nbStepperPrevious nbButton outline status="warning" >Zurück</button>
-            <button nbStepperNext style="float: right" class="btn btn-success" [disabled]="!secondForm.valid">Weiter</button>
+            <button nbStepperNext style="float: right" class="btn btn-success" (click)="onSecondSubmit()" [disabled]="!secondForm.valid">Weiter</button>
           </div>
         </form>
       </nb-step>
       <nb-step [stepControl]="thirdForm" label="Bestätigung">
         <form [formGroup]="thirdForm" (ngSubmit)="onThirdSubmit()" class="step-container">
-          <p class="lorem">
+          <div *ngIf="lastStep">
+            <h1>Verpackungszubehör.de</h1>
+              <br>
+              <p>
+                Rechnungsadresse: <br>
+                <br>
+                <div *ngIf="seperateRechnung">
+                  {{ user.name }} {{ user.surname }}<br>
+                  {{ r_strasse }} {{ r_hausnummer }}<br>
+                  {{ r_adresszusatz }}
+                  {{ r_plz }} {{ r_ort }}
+                </div>
+                <div *ngIf="!seperateRechnung">
+                  {{ user.name }} {{ user.surname }}<br>
+                  {{ strasse }} {{ hausnummer }}<br>
+                  {{ adresszusatz }}
+                  {{ plz }} {{ ort }}
+                </div>
+              <br><br>
+              <p>
+                  Hallo {{ user.name }} {{ user.surname }},<br>
+                  nachfolgend die Rechnung für deine Bestellung bei Verpackungszubehör.de.<br>
+                  Bestellnummer: {{ order._id }}
+              </p>
+              <br>
+              Produkte:
+              <table>
+                  <tr>
+                      <th>Name</th>
+                      <th>Menge</th>
+                      <th>Stückpreis</th>
+                      <th>Summe</th>
+                  </tr>
+                  <tr *ngFor="let item of cart.items; let i = index">
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.quantity }}</td>
+                      <td>{{ item.priceItem }} €</td>
+                      <td>{{ item.priceTotal }} €</td>
+                  </tr>
+                  <tr>
+                      <td></td>
+                      <td></td>
+                      <td>Total:</td>
+                      <td>{{ cart.subTotal }} €</td>
+                  </tr>
+              </table>
+              <br>
+              <p>
+                Lieferadresse: <br>
+                <br>
+                {{ user.name }} {{ user.surname }}<br>
+                {{ strasse }} {{ hausnummer }}<br>
+                {{ adresszusatz }}
+                {{ plz }} {{ ort }}
+              </p>
+              <br>
+              <p>
+                  Zahlung innerhalb 14 Tagen an: <br>
+                  <br>
+                  Bela & Flo von Verpackungszubehör.de<br>
+                  IBAN: DE12 3456 7890 9876 54<br>
+                  BIC: GENODEF1WZK
+              </p>
+            </div>
+          <!-- <p class="lorem">
             Things boom shackalack rhoncus yo. In fo shizzle my nizzle gangsta platea dictumst. Check it out pot.
           </p>
           <div class="input-group">
-            <input nbInput type="text" placeholder="Enter something" class="form-control" formControlName="thirdCtrl"
+            <input nbInput type="text" placeholder="Enter something" class="form-control" formControlName="third"
                    [ngClass]="{'form-control-danger': thirdForm.invalid && (thirdForm.dirty || thirdForm.touched)}">
           </div>
           <button nbButton nbStepperPrevious>prev</button>
-          <button nbButton nbStepperNext>Confirm</button>
+          <button nbButton nbStepperNext>Confirm</button> -->
         </form>
       </nb-step>
       <nb-step [stepControl]="thirdForm" [hidden]="true" label="Third step">

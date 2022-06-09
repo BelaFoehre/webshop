@@ -42,10 +42,4 @@ export class OrderService {
   getOrderUpdateListener(): Observable<OrderModel[]>{
     return this.ordersUpdated.asObservable()
   }
-
-  addAdress(form: FormGroup) {
-    console.log('test')
-    console.log(form.get('land')?.value)
-    console.log(form.value)
-  }
 }

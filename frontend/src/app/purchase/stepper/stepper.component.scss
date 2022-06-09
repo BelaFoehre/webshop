@@ -1,0 +1,22 @@
+table, th, tr, td, caption {
+    border: 1px solid black;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-width: thin 0 0 thin;
+    margin: 0 0 1em;
+    table-layout: auto;
+    max-width: 100%;
+}
+th, td {
+    font-weight: normal;
+    text-align: left;
+    padding: .2em .5em;
+}
+th, caption {
+    font-weight: 700;
+}
+td {
+    text-align: right;
+}
