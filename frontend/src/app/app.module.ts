@@ -14,6 +14,7 @@ import { CartComponent } from './purchase/cart/cart.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StepperComponent } from './purchase/stepper/stepper.component';
 import { ToastrModule } from 'ngx-toastr';
+import { OrderOverviewComponent } from './content/order-overview/order-overview.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ToastrModule } from 'ngx-toastr';
     HeaderComponent,
     CartComponent,
     StepperComponent,
+    OrderOverviewComponent
   ],
   imports: [
     NbCheckboxModule,
@@ -40,6 +42,7 @@ import { ToastrModule } from 'ngx-toastr';
     NbInputModule,
     FormsModule,
     NbUserModule,
+    NbTreeGridModule,
     NbCardModule,
     NbTagModule,
     NbRadioModule,

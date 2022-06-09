@@ -27,6 +27,10 @@ export class CartService {
     });
   }
 
+  getCartById(cartId: string) {
+    return this.http.get(`api/purchase/cart/${cartId}`);
+  }
+
   getCartUpdateListener() {
     return this.cart.asObservable()
   }

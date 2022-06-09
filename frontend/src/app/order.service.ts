@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
+import { AuthService } from './auth.service';
 import { OrderModel } from './order.model';
+import { UserModel } from './user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +12,9 @@ import { OrderModel } from './order.model';
 export class OrderService {
 
   private ordersUpdated = new Subject<OrderModel[]>()
+  user!: UserModel;
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient, private authService: AuthService){}
 
   /**
    * This function takes in an object of type OrderModel and returns an observable of type OrderModel
@@ -46,5 +49,18 @@ export class OrderService {
   sendInvoice(data: { userId: string, htmlInvoice: string }){
     return this.http
       .post('/api/purchase/order-invoice', data, {observe:'response'})
+  }
+
+  getOwnOrders(): Observable<OrderModel[]>{
+    return this.http
+      .get<OrderModel[]>(`/api/purchase/order?token=${this.getToken()}`)
+  }
+
+  private getToken(){
+    let token;
+    this.authService.getToken().subscribe((res: any) => {
+      token = res['token']
+    })
+    return token
   }
 }

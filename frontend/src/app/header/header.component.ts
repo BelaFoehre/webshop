@@ -23,17 +23,18 @@ export class HeaderComponent implements OnInit {
   ) {
     this.authService.onTokenChange().subscribe((token) => {
       if(token.isValid()){
-        this.items.push(
+        this.items = [
           { title: 'Profil' },
-          { title: 'Logout', link: '/auth/logout' }
-        )
+          { title: 'Logout', link: '/auth/logout' },
+          { title: 'Bestellungen', link: '/orders' }
+        ]
         let payload = token.getPayload()
         this.user_name = `${payload.name} ${payload.surname}`
       } else {
-        this.items.push(
+        this.items = [
           { title: 'Login', link: '/auth/login' },
           { title: 'Registrieren', link: '/auth/register' }
-        )
+        ]
       }
     })
   }

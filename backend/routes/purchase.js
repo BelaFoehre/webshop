@@ -3,7 +3,7 @@ const router = express.Router();
 const bodyParser = require('body-parser').json();
 const Cart = require('../model/Cart');
 const Order = require('../model/Order')
-const { findCartById, getCartByUserToken, updateCart, findOrderById, resetCart } = require('../config/support.js');
+const { findCartById, getCartByUserToken, updateCart, findOrderById, resetCart, getUserByToken } = require('../config/support.js');
 const { sendMail } = require('../config/nodemailer');
 const User = require('../model/User');
 
@@ -151,13 +151,30 @@ router.get('/order/:id', (req, res) => {
     })
 })
 
+// get orders of a user
+router.get('/order', (req, res) => {
+    getUserByToken(req.query.token).then((user) => {
+        Order.find({ userId: user._id }, (err, data) => {
+            console.log(data)
+            if(err) return res.status(404).json(err)
+            return res.status(200).json(data)
+        })
+    }
+    ).catch((err) => {
+        return res.status(404).json(err)
+    })
+})
+
 /* A get request to the route /order. It is using the mongoose find method to find all orders. If there
 is an error or no result, it returns a 400 status code with the error. If there is a result, it
 returns a 200 status code with the result. */
 router.get('/order', (req, res) => {
     Order.find((error, result) => {
         if(error | !result) return res.status(400).json(error)
-        else return res.status(200).json(result)
+        else {
+            console.log(result)
+            return res.status(200).json(result)
+        }
     }).catch((ignored) => {
         // TODO verifiy that dis is okay
     })
