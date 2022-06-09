@@ -43,12 +43,14 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
 
   private dialogRef!: NbDialogRef<EditProductComponent>;
 
-  /**
-   * @param {InventoryService} inventoryService - This is the service that will be used to get the data from the server.
-   * @param dataSourceBuilder - NbTreeGridDataSourceBuilder<FSEntry>
-   */
-  constructor(private inventoryService: InventoryService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private dialogService: NbDialogService) {
-  }
+/**
+ * We're injecting the InventoryService, NbTreeGridDataSourceBuilder, and NbDialogService into the
+ * constructor
+ * @param {InventoryService} inventoryService - This is the service that we created earlier.
+ * @param dataSourceBuilder - NbTreeGridDataSourceBuilder<FSEntry>
+ * @param {NbDialogService} dialogService - This is the service that will be used to open the dialog.
+ */
+  constructor(private inventoryService: InventoryService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private dialogService: NbDialogService) { }
 
   /**
    * The ngOnInit() function is a lifecycle hook that is called after Angular has initialized all
