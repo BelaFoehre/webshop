@@ -165,4 +165,11 @@ router.get('/order-all', (req, res) => {
     })
 })
 
+router.delete('/orders', (req, res) => {
+    Order.deleteMany({}, (err, data) => {
+        if(err) return res.status(404).json(err)
+        else return res.status(200).json(data)
+    })
+})
+
 module.exports = router;

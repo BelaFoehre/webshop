@@ -51,12 +51,6 @@ export class InventoryService {
           let level2 = category.sub1.map((input) => {
             return {
               title: input,
-              /* Anzeige ist Buggy, deswegen pausiert TODO
-              children: [
-                {
-                  title: "test1"
-                }
-              ]*/
             }
           })
           return {

@@ -8,16 +8,15 @@ import { filter, map } from 'rxjs/operators';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
-  user_name: string = "Manuel Neuer"
-  user_description: string = "chef"
+  user_name: string = "Nicht Angemeldet"
+  user_description: string = ""
   user_avatar: string = ""
 
   items: NbMenuItem[] = [];
 
   constructor(
-    // private nbMenuService: NbMenuService, @Inject(NB_WINDOW) private window: any,
     private readonly sidebarService: NbSidebarService,
     private readonly authService: NbAuthService
   ) {
@@ -38,23 +37,4 @@ export class HeaderComponent implements OnInit {
       }
     })
   }
-
-  /**
-   * Toggles the animation for the sidebar to open or close it.
-   * @returns `false`
-   */
-  toggleSidebar(): boolean {
-    this.sidebarService.toggle(true, 'left');
-    return false;
-  }
-
-  ngOnInit() {
-  //   this.nbMenuService.onItemClick()
-  //     .pipe(
-  //       filter(({ tag }) => tag === 'user-context-menu'),
-  //       map(({ item: { title } }) => title),
-  //     )
-  //     .subscribe(title => this.window.alert(`${title} was clicked!`));
-  }
-
 }
