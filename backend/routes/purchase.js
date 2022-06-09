@@ -7,6 +7,11 @@ const { findCartById, getCartByUserToken, updateCart, findOrderById, resetCart, 
 const { sendMail } = require('../config/nodemailer');
 const User = require('../model/User');
 
+/* This is a put request to the route /cart/:id. It is using the findCartById function to find the cart
+with the id in the request. If there is a cart, it is using the updateCart function to update the
+cart with the itemId and itemQty in the request body. If there is an error, it returns a 400 status
+code with the error. If there is no error, it returns a 200 status code with the data. If there is
+no cart, it returns a 404 status code with the error. */
 router.put('/cart/:id', bodyParser, async (req, res) => {
     findCartById(req.params.id).then((cart) => {
         const { itemId, itemQty } = req.body
@@ -20,6 +25,12 @@ router.put('/cart/:id', bodyParser, async (req, res) => {
         return res.status(404).json(err)
     })
 })
+
+/* A put request to the route /cart. It is using the getCartByUserToken function to find the cart
+with the token in the request. If there is a cart, it is using the updateCart function to update the
+cart with the itemId and itemQty in the request body. If there is an error, it returns a 400 status
+code with the error. If there is no error, it returns a 200 status code with the data. If there is
+no cart, it returns a 404 status code with the error. */
 router.put('/cart', bodyParser, async (req, res) => {
     getCartByUserToken(req.query.token).then(async (cart) => {
 
@@ -35,6 +46,7 @@ router.put('/cart', bodyParser, async (req, res) => {
     })
 })
 
+/* Deleting the cart. */
 router.delete('/cart', bodyParser, async (req, res) => {
     getCartByUserToken(req.query.token).then(async (cart) => {
         resetCart(cart).then((data) => {
@@ -48,6 +60,9 @@ router.delete('/cart', bodyParser, async (req, res) => {
     })
 })
 
+/* This is a get request to the route /cart/:id. It is using the findCartById function to find the cart
+with the id in the request. If there is a cart, it returns a 200 status code with the cart. If there
+is no cart, it returns a 404 status code with the error. */
 router.get('/cart/:id', (req, res) => {
     findCartById(req.params.id).then((data) => {
         return res.status(200).json(data)
@@ -56,6 +71,9 @@ router.get('/cart/:id', (req, res) => {
     })
 })
 
+/* This is a get request to the route /cart. It is using the getCartByUserToken function to find the cart
+with the token in the request. If there is a cart, it returns a 200 status code with the cart.
+If there is no cart, it returns a 404 status code with the error. */
 router.get('/cart', async (req, res) => {
     if(req.query.token){
         getCartByUserToken(req.query.token).then((data) => {
@@ -71,6 +89,12 @@ router.get('/cart', async (req, res) => {
     }
 })
 
+/* This is a post request to the route /order-invoice. It is using the bodyParser middleware to parse
+the request body. It is using the User model to find the user with the userId in the request body.
+If there is a user, it is using the sendMail function to send an email to the user with the
+htmlInvoice in the request body. If there is an error, it returns a 400 status code with the error.
+If there is no error, it returns a 200 status code with the data. If there is no user, it returns a
+404 status code with the error. */
 router.post('/order-invoice', bodyParser, async (req, res) => {
     const { userId, htmlInvoice } = req.body
     const user = await User.findById(userId)
@@ -82,6 +106,7 @@ router.post('/order-invoice', bodyParser, async (req, res) => {
     })
 })
 
+/* Creating an order with the cartId and userId in the request body. */
 router.post('/order', bodyParser, async (req, res) => {
     const { cartId, userId } = req.body
 
@@ -137,11 +162,13 @@ router.get('/order/:id', (req, res) => {
     })
 })
 
-// get orders of a user
+/* Getting the user by the token in the request query. If there is a user, it is finding
+the orders with the userId of the user. If there is an error, it returns a 404 status code with the
+error. If there is no error, it returns a 200 status code with the data. If there is no user, it
+returns a 404 status code with the error. */
 router.get('/order', (req, res) => {
     getUserByToken(req.query.token).then((user) => {
         Order.find({ userId: user._id }, (err, data) => {
-            console.log(data)
             if(err) return res.status(404).json(err)
             return res.status(200).json(data)
         })
@@ -151,20 +178,19 @@ router.get('/order', (req, res) => {
     })
 })
 
-/* A get request to the route /order. It is using the mongoose find method to find all orders. If there
-is an error or no result, it returns a 400 status code with the error. If there is a result, it
-returns a 200 status code with the result. */
+/* Getting all the orders. */
 router.get('/order-all', (req, res) => {
     Order.find((error, result) => {
         if(error | !result) return res.status(400).json(error)
         else {
             return res.status(200).json(result)
         }
-    }).catch((ignored) => {
-        // TODO verifiy that dis is okay
+    }).catch((err) => {
+        return res.status(404).json(err)
     })
 })
 
+/* Deleting all the orders. */
 router.delete('/orders', (req, res) => {
     Order.deleteMany({}, (err, data) => {
         if(err) return res.status(404).json(err)

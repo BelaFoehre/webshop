@@ -3,17 +3,13 @@ const router = express.Router();
 const bodyParser = require('body-parser').json();
 const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken");
-// const checkAuth = require('../middleware/check-auth');
 const User = require('../model/User');
 const { sendMail } = require('../config/nodemailer');
 const Cart = require('../model/Cart');
-const { addSampleProductToCart } = require('../config/support');
 
-// Register
+/* This is the route for registering a new user. */
 router.post("/register", bodyParser, async (req, res) => {
-    // Our register logic starts here
      try {
-      // Get user input
       const { name, surname, email, password, confirmPassword } = req.body;
 
       // Validate user input
@@ -33,40 +29,18 @@ router.post("/register", bodyParser, async (req, res) => {
         return res.status(409).send("User Already Exist. Please Login");
       }
 
-      //Encrypt user password
       encryptedUserPassword = await bcrypt.hash(password, 10);
 
-      // Create user in our database
-      /* for production: */
-      // const user = await User.create({
-      //   name: name,
-      //   surname: surname,
-      //   email: email.toLowerCase(), // sanitize
-      //   password: encryptedUserPassword,
-      //   cart: await Cart.create({})
-      // })
-
-      /* for development */
       const cart = await Cart.create({})
-
       const user = await User.create({
         name: name,
         surname: surname,
-        email: email.toLowerCase(), // sanitize
+        email: email.toLowerCase(),
         password: encryptedUserPassword,
         cart: cart,
         roles: ['Consumer']
       })
 
-      console.log(cart)
-      addSampleProductToCart(cart._id).catch((err) => {
-        console.log(err)
-      }).then((stuff) => {
-        console.log(stuff)
-      })
-      /* end */
-
-      // Create token
       const token = jwt.sign(
         {
           _id: user._id,
@@ -78,32 +52,26 @@ router.post("/register", bodyParser, async (req, res) => {
           expiresIn: "5h",
         }
       );
-      // save user token
       user.token = token;
 
-      // return new user
       return res.status(201).json(user);
     } catch (err) {
-      console.log(err);
+      return res.status(500).send(err);
     }
 })
 
-// Login
+/* This is the route for logging in a user. */
 router.post("/login", bodyParser, async (req, res) => {
 
      try {
-      // Get user input
       const { email, password } = req.body;
 
-      // Validate user input
       if (!(email && password)) {
         res.status(400).send("All input is required");
       }
-      // Validate if user exist in our database
       const user = await User.findOne({ email });
 
       if (user && (await bcrypt.compare(password, user.password))) {
-        // Create token
         const token = jwt.sign(
           {
             _id: user._id,
@@ -118,20 +86,18 @@ router.post("/login", bodyParser, async (req, res) => {
           }
         );
 
-        // save user token
         user.token = token;
 
-        // user
-        console.log(user)
         return res.status(200).json(user);
       }
       return res.status(400).send("Invalid Credentials");
 
     } catch (err) {
-        console.log(err);
+        return res.status(500).send(err);
     }
 })
 
+/* This is the route for sending a password reset email to the user. */
 router.put('/forgot-password', bodyParser, (req, res) => {
   const { email } = req.body;
 
@@ -165,11 +131,11 @@ router.put('/forgot-password', bodyParser, (req, res) => {
   })
 })
 
+/* This is the route for resetting a user's password. */
 router.put('/reset-password', bodyParser, async (req, resp) => {
   console.log(req.body)
   const {resetLink, password} = req.body;
 
-  //Encrypt user password
   encryptedUserPassword = await bcrypt.hash(password, 10);
 
   if(resetLink){
@@ -191,8 +157,6 @@ router.put('/reset-password', bodyParser, async (req, resp) => {
   } else {
     return resp.status(401).json({error: "Auth err"})
   }
-
 })
 
-// # if user with that email exists, we have sent you a password reset email
 module.exports = router;

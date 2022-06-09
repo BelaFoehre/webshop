@@ -4,11 +4,13 @@ const bodyParser = require('body-parser').json();
 const Inventory = require('../model/Inventory');
 const { getProductById, addNewInventory, validateInventory } = require('../config/support.js');
 
+/* This is a route to get all the products in the inventory. */
 router.get('', async (req, res) => {
     const inv = await Inventory.find()
     return res.status(200).json(inv)
 })
 
+/* This is a route to get a product by id. */
 router.get('/:id', async (req, res) => {
     getProductById(req.params.id).then((data) => {
         return res.status(200).json(data)

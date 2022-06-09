@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../model/User");
 const Order = require("../model/Order");
 
+/* The above code is a promise that will return the product by the id. */
 exports.getProductById = (searchId) => {
     return new Promise((resolve, reject) => {
         Inventory.findById(searchId, (error, result) => {
@@ -13,13 +14,7 @@ exports.getProductById = (searchId) => {
     })
 }
 
-/**
- * extra, da von nutzer beim bearbten im cart 
- * und admin bei bearbeitung des sortiments
- * @param {*} product 
- * @param {*} qtyChange 
- * @returns data or error
- */
+/* Updating the inventory. */
 exports.updateInventory = (product, qtyChange) => {
     product.availableQty += qtyChange
 
@@ -31,8 +26,8 @@ exports.updateInventory = (product, qtyChange) => {
     })
 }
 
+/* A promise that will return the cart by the id. */
 exports.findCartById = (searchId) => {
-
     return new Promise((resolve, reject) => {
         Cart.findById(searchId, (error, result) => {
             if(error | !result) reject(error)
@@ -41,6 +36,7 @@ exports.findCartById = (searchId) => {
     })
 }
 
+/* A promise that will return the user by the token. */
 exports.getUserByToken = (token) => {
     return new Promise((resolve, reject) => {
       jwt.verify(token, process.env.TOKEN_KEY, (error, decodedData) => {
@@ -88,8 +84,8 @@ exports.addSampleProductToCart = (cartId) => {
     })
 }
 
+/* Getting the cart by the user token. */
 exports.getCartByUserToken = (userToken) => {
-
     return new Promise((resolve, reject) => {
         this.getUserByToken(userToken).then((data) => {
             User.findById(data._id).then((data) => {
@@ -103,8 +99,8 @@ exports.getCartByUserToken = (userToken) => {
     })
 }
 
+/* Resetting the cart. */
 exports.resetCart = (cartId) => {
-
         return new Promise((resolve, reject) => {
             this.findCartById(cartId).then((cart) => {
                 cart.items = []
@@ -119,8 +115,8 @@ exports.resetCart = (cartId) => {
         })
 }
 
+/* Updating the cart. */
 exports.updateCart = (cart, itemId, itemQty) => {
-
     return new Promise(async (resolve, reject) => {
         const product = await this.getProductById(itemId).catch((err) => {
             reject(err)
@@ -166,6 +162,7 @@ exports.updateCart = (cart, itemId, itemQty) => {
     })
 }
 
+/* Validating the inventory. */
 exports.validateInventory = (name, brand, category_main, category_sub1, price, availableQty, tags) => {
     return new Promise((resolve, reject) => {
         try {
@@ -181,6 +178,7 @@ exports.validateInventory = (name, brand, category_main, category_sub1, price, a
     })
 }
 
+/* A promise that will return the order by the id. */
 exports.addNewInventory = (name, brand, description, category_main, category_sub1, price, availableQty, tags, imgBase64) => {
     return new Promise((resolve, reject) => {
 
@@ -207,6 +205,7 @@ exports.addNewInventory = (name, brand, description, category_main, category_sub
     })
 }
 
+/* A promise that will return the order by the id. */
 exports.findOrderById = (orderId) => {
     return new Promise((resolve, reject) => {
 

@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
-// const env = require('dotenv').config();
-const MONGO_URI = `${process.env.DB_URL}`//:${process.env.DB_PORT}`;
+const MONGO_URI = `${process.env.DB_URL}`;
+
+/* This is a function that connects to the database. */
 exports.connect = () => {
   console.log(`Info :: Connecting to the database ${MONGO_URI} ..`)
   mongoose
     .connect(MONGO_URI, {
-      // user: 'root',
-      // pass: 'pwd',
       useNewUrlParser: true,
       useUnifiedTopology: true
     })

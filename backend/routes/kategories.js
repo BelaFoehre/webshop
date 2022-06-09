@@ -5,6 +5,7 @@ const bodyParser = require('body-parser').json();
 const Inventory = require('../model/Inventory')
 
 
+/* This is a router.get function that is getting the unique categories from the inventory. */
 router.get('', async (req, res) => {
     const uniqueCategories = await Inventory.distinct('category.main')
     let nestedCategories = Promise.all(uniqueCategories.map(async (entry) => {
