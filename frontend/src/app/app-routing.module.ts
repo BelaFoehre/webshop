@@ -15,8 +15,8 @@ const routes: Routes = [
   { path: '', redirectTo: '/content', pathMatch: 'full' },
   { path: 'content', loadChildren: contentModule, canActivate: [AuthGuard, isLockedGuard] },
   { path: 'auth', loadChildren: authModule },
-  { path: 'cart', component: CartComponent, canActivate: [AuthGuard, isLockedGuard] }, // //, hasRoleGuard] }, //, data: { role: 'Consumer'} },
-  { path: 'admin', loadChildren: adminModule, canActivate: [AuthGuard]}, //, hasRoleGuard], data: { role: 'Admin' }},
+  { path: 'cart', component: CartComponent, canActivate: [AuthGuard, isLockedGuard] },
+  { path: 'admin', loadChildren: adminModule, canActivate: [AuthGuard, hasRoleGuard], data: { role: 'Admin' }},
   { path: 'orders', component: OrderOverviewComponent, canActivate: [AuthGuard, isLockedGuard] }
 
 ];

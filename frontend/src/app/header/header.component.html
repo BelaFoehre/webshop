@@ -1,5 +1,16 @@
 <nb-layout-header fixed>
+    <hr>
     <h2 routerLink="/content">Bester Webshop EU West</h2>
+    <hr>
+    <a *ngIf="isAdmin"
+      nbButton
+      outline
+      status="success"
+      routerLink="/admin"
+      > Admin Seite
+    <nb-icon icon="award-outline"></nb-icon>
+    </a>
+
     <hr>
     <nb-user
       [name]="user_name"
