@@ -125,10 +125,10 @@ export class StepperComponent implements OnInit {
   }
 
   createOrder(){
-    let orderData: OrderModel = {
+    let orderData = {
       cartId: this.cart._id || '404',
       userId: this.user._id || '404',
-      status: 'created'
+      status: 'entgegengenommen'
     }
     this.orderService.addNewOrder(orderData).subscribe((res) => {
       if(res.ok){

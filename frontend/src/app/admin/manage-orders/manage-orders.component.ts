@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbSortRequest } from '@nebular/theme';
+import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbSortRequest, NbDialogService, NbDialogRef } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 import { InventoryService } from 'src/app/inventory.service';
 import { OrderModel } from 'src/app/order.model';
 import { OrderService } from 'src/app/order.service';
+import { EditOrderStatusComponent } from '../edit-order-status/edit-order-status.component';
 
 interface TreeNode<T> {
   data: T;
@@ -12,9 +13,11 @@ interface TreeNode<T> {
 }
 
 interface FSEntry {
-  cartId: string;
-  userId: string;
-  status?: string;
+  Summe?: Number;
+  UserId: string;
+  Status?: string;
+  Produktanzahl: number;
+  OrderId: string;
 }
 
 @Component({
@@ -23,7 +26,7 @@ interface FSEntry {
   styleUrls: ['./manage-orders.component.scss']
 })
 export class ManageOrdersComponent implements OnInit, OnDestroy {
-  allColumns = [ 'cartId', 'userId', 'status'];
+  allColumns = ['Produktanzahl', 'Summe', 'UserId', 'Status', 'OrderId'];
   data: TreeNode<FSEntry>[] = []
 
   dataSource!: NbTreeGridDataSource<FSEntry>
@@ -34,11 +37,16 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
   orders: OrderModel[] = []
   ordersSub!: Subscription
 
-  /**
-   * @param {OrderService} orderService - This is the service that will be used to get the data from the server.
-   * @param dataSourceBuilder - NbTreeGridDataSourceBuilder<FSEntry>
-   */
-  constructor(private orderService: OrderService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>) {
+  private dialogRef!: NbDialogRef<EditOrderStatusComponent>
+
+/**
+ * The constructor function is used to inject the OrderService and NbTreeGridDataSourceBuilder services
+ * into the component
+ * @param {OrderService} orderService - This is the service that we created earlier.
+ * @param dataSourceBuilder - NbTreeGridDataSourceBuilder<FSEntry>
+ * @param {NbDialogService} dialogService - This is the service that will be used to open the dialog.
+ */
+  constructor(private orderService: OrderService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private dialogService: NbDialogService) {
   }
 
   /**
@@ -94,9 +102,11 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
         this.orders = orders[0]
         orders[0].map((order: OrderModel) => {
           this.data.push({data: {
-            cartId: order.cartId,
-            userId: order.userId,
-            status: order.status || "unknown"
+            Produktanzahl: order.cartItems.length,
+            Summe: order.subTotal,
+            UserId: order.userId,
+            Status: order.status || "unknown",
+            OrderId: order._id || '404'
           }})
         })
         this.reloadTable()
@@ -117,4 +127,21 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
       this.ordersSub.unsubscribe()
   }
 
+/**
+ * It opens a dialog box with the EditOrderStatusComponent component inside it, and passes the orderId
+ * to the component
+ * @param {string} orderId - string - this is the orderId that we are passing to the
+ * EditOrderStatusComponent.
+ */
+  editOrderStatus(orderId: string){
+    this.dialogRef = this.dialogService.open(EditOrderStatusComponent, {
+      context: {
+        orderId: orderId
+      }, hasBackdrop: true, closeOnBackdropClick: true
+    })
+
+    this.dialogRef.onClose.subscribe(() => {
+      window.location.reload();
+    })
+  }
 }

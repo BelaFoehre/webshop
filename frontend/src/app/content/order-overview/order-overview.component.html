@@ -15,7 +15,12 @@
           {{column}}
         </th>
         <td nbTreeGridCell *nbTreeGridCellDef="let row">
-            {{ row.data[column] }}
+          <div *ngIf="column!=='Summe'">
+            {{ row.data[column] || '-' }}
+          </div>
+          <div *ngIf="column=='Summe'">
+            {{ row.data[column]+' €' || '-' }}
+          </div>
         </td>
       </ng-container>
 

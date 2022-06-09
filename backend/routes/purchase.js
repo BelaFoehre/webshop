@@ -72,7 +72,6 @@ router.get('/cart', async (req, res) => {
 })
 
 router.post('/order-invoice', bodyParser, async (req, res) => {
-    console.log('test')
     const { userId, htmlInvoice } = req.body
     const user = await User.findById(userId)
     if(!user) return res.status(404).json({error: 'User not found'})
@@ -93,25 +92,23 @@ router.post('/order', bodyParser, async (req, res) => {
     let orderDoc
 
     let orderPromise = new Promise((resolve, reject) => {
-        Order.create({
-            cartId, userId
-        }, (error, doc) => {
-            if(error | !doc) reject(error)
-            else {
-                orderDoc = doc
-                resolve(doc)
-            }
+        findCartById(cartId).then((cart) => {
+
+            Order.create({
+                userId,
+                cartItems: cart.items,
+                subTotal: cart.subTotal
+            }, (error, doc) => {
+                if(error | !doc) reject(error)
+                else {
+                    orderDoc = doc
+                    resolve(doc)
+                }
+            })
         })
     })
 
     await orderPromise
-
-    let cartPromise = new Promise((resolve, reject) => {
-        //delete cart TODO
-    })
-
-    //wait orderPromise, dann cartPromise
-
     return res.status(200).json(orderDoc)
 })
 
@@ -120,8 +117,6 @@ router.put('/order/:id', bodyParser, async (req, res) => {
     const { cartId, billingaddressId, shippingaddressId, userId, status } = req.body
 
     findOrderById(req.params.id).then((order) => {
-        //ggf try catch hier einabuen, net sicher
-        // ob das untere catch zb status fehler catchen würde
         order.cartId = cartId
         order.billingaddressId = billingaddressId
         order.shippingaddressId = shippingaddressId
@@ -168,11 +163,10 @@ router.get('/order', (req, res) => {
 /* A get request to the route /order. It is using the mongoose find method to find all orders. If there
 is an error or no result, it returns a 400 status code with the error. If there is a result, it
 returns a 200 status code with the result. */
-router.get('/order', (req, res) => {
+router.get('/order-all', (req, res) => {
     Order.find((error, result) => {
         if(error | !result) return res.status(400).json(error)
         else {
-            console.log(result)
             return res.status(200).json(result)
         }
     }).catch((ignored) => {

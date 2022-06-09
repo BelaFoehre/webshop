@@ -21,7 +21,7 @@ export class OrderService {
    * @param {OrderModel} data - OrderModel - the data that we want to send to the server
    * @returns The response from the server.
    */
-  addNewOrder(data: OrderModel){
+  addNewOrder(data: any){
     return this.http
       .post<OrderModel>('/api/purchase/order', data, {observe:'response'})
   }
@@ -32,7 +32,7 @@ export class OrderService {
    */
   getAllOrders(): void{
     this.http
-      .get<OrderModel>('/api/purchase/order')
+      .get<OrderModel>('/api/purchase/order-all')
       .subscribe((res: OrderModel) => {
         this.ordersUpdated.next([res])
       })
@@ -62,5 +62,10 @@ export class OrderService {
       token = res['token']
     })
     return token
+  }
+
+  editOrderStatus(orderId: string, new_status: string) {
+    return this.http
+      .put(`/api/purchase/order/${orderId}`, {status: new_status}, {observe:'response'})
   }
 }

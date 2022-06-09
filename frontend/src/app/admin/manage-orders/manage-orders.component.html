@@ -15,7 +15,21 @@
           {{column}}
         </th>
         <td nbTreeGridCell *nbTreeGridCellDef="let row">
+          <div *ngIf="column!=='Status' && column!=='Summe'">
             {{ row.data[column] || '-' }}
+          </div>
+          <div *ngIf="column=='Status'">
+            {{ row.data[column] || '-' }}
+            <button nbButton
+                    outline
+                    status="warning"
+                    (click)="editOrderStatus(row.data['ID'])">
+              <nb-icon icon="edit"></nb-icon>
+            </button>
+          </div>
+          <div *ngIf="column=='Summe'">
+            {{ row.data[column]+' €' || '-' }}
+          </div>
         </td>
       </ng-container>
 

@@ -1,7 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbSortRequest } from '@nebular/theme';
-import { Subscription } from 'rxjs';
-import { CartModel } from 'src/app/cart.model';
 import { OrderModel } from 'src/app/order.model';
 import { OrderService } from 'src/app/order.service';
 import { CartService } from 'src/app/purchase/cart/cart.service';
@@ -89,20 +87,15 @@ export class OrderOverviewComponent implements OnInit {
   private loadOrders(){
     this.orderService.getOwnOrders()
       .subscribe((orders: any) => {
-
-        orders.forEach((order: OrderModel) => {
-          this.cartService.getCartById(order.cartId).subscribe((cart: any) => {
-            // cart.map((cart: CartModel) => {
-              this.data.push({
-                data: {
-                  Status: order.status,
-                  Summe: cart.subTotal
-                }
-              })
-            // })
-            this.reloadTable()
+        orders.map((order: OrderModel) => {
+          this.data.push({
+            data: {
+              Summe: order.subTotal,
+              Status: order.status
+            }
           })
-        });
+        })
+        this.reloadTable()
       });
   }
 

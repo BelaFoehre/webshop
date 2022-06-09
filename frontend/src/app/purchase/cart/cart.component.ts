@@ -42,7 +42,7 @@ export class CartComponent implements OnInit {
   }
 
   checkout(){
-    this.dialogRef = this.dialogService.open(StepperComponent, { context: { cart: this.cart }, closeOnBackdropClick: false })
+    this.dialogRef = this.dialogService.open(StepperComponent, { context: { cart: this.cart }, closeOnBackdropClick: false, hasScroll: true })
     // this.cartService.checkout()
   }
 
