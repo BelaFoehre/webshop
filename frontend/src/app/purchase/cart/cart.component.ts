@@ -73,5 +73,9 @@ export class CartComponent implements OnInit {
  */
   checkout(){
     this.dialogRef = this.dialogService.open(StepperComponent, { context: { cart: this.cart }, hasBackdrop: true, closeOnBackdropClick: true })
+
+    this.dialogRef.onClose.subscribe(() => {
+      window.location.reload()
+    })
   }
 }
