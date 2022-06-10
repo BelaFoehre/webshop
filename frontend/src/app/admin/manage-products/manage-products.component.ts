@@ -42,6 +42,7 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
   productsSub!: Subscription
 
   private dialogRef!: NbDialogRef<EditProductComponent>;
+  isLoading: boolean = false
 
 /**
  * We're injecting the InventoryService, NbTreeGridDataSourceBuilder, and NbDialogService into the
@@ -52,11 +53,11 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
  */
   constructor(private inventoryService: InventoryService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private dialogService: NbDialogService) { }
 
-  /**
-   * The ngOnInit() function is a lifecycle hook that is called after Angular has initialized all
-   * data-bound properties of a directive
-   */
+/**
+ * We're setting the isLoading property to true, and then calling the loadProducts() function
+ */
   ngOnInit(){
+    this.isLoading = true
     this.loadProducts()
   }
 
@@ -126,6 +127,7 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
  */
   private reloadTable(){
     this.dataSource = this.dataSourceBuilder.create(this.data)
+    this.isLoading = false
   }
 
  /**

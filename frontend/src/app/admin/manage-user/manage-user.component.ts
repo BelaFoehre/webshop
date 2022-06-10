@@ -37,6 +37,7 @@ export class ManageUserComponent implements OnInit {
   userSub!: Subscription
 
   private dialogRef!: NbDialogRef<LockUserComponent>;
+  isLoading: boolean = false;
 
 /**
  * The constructor function is used to inject the UserService and NbTreeGridDataSourceBuilder services
@@ -51,11 +52,11 @@ export class ManageUserComponent implements OnInit {
     private dialogService: NbDialogService
   ) { }
 
-  /**
-   * The ngOnInit() function is a lifecycle hook that is called after Angular has initialized all
-   * data-bound properties of a directive
-   */
+/**
+ * We're setting the isLoading property to true, and then calling the loadUsers() function
+ */
   ngOnInit(): void {
+    this.isLoading = true
     this.loadUsers()
   }
 
@@ -119,11 +120,12 @@ export class ManageUserComponent implements OnInit {
       })
   }
 
-  /**
-   * It creates a new data source from the data source builder, using the data that was passed in
-   */
+/**
+ * It takes the data from the API call, creates a new data source, and sets the loading flag to false
+ */
   private reloadTable(){
     this.dataSource = this.dataSourceBuilder.create(this.data);
+    this.isLoading = false
   }
 
   /**

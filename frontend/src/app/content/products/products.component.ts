@@ -43,6 +43,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   productsSub!: Subscription
 
   private dialogRef!: NbDialogRef<DetailViewComponent>;
+  isLoading: boolean = false
 
 /**
  * We're injecting the InventoryService, NbTreeGridDataSourceBuilder, NbDialogService, and
@@ -59,13 +60,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
     private toastr: ToastrService
   ) { }
 
-  /**
-   * The ngOnInit() function is a lifecycle hook that is called after Angular has initialized all
-   * data-bound properties of a directive
-   */
+/**
+ * We're setting the isLoading property to true, and then calling the loadProducts() function
+ */
    ngOnInit(){
-    this.loadProducts()
-  }
+     this.isLoading = true
+     this.loadProducts()
+    }
 
   /**
    * The function takes a sort request object as a parameter, and then sets the sortColumn and
@@ -133,6 +134,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
  */
   private reloadTable(){
     this.dataSource = this.dataSourceBuilder.create(this.data)
+    this.isLoading = false
   }
 
  /**

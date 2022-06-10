@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ManageProductsComponent } from './manage-products/manage-products.component';
 import { AdminRoutingModule } from './admin-routing.module'
-import { NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbMenuModule, NbTagModule, NbTreeGridModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbMenuModule, NbSpinnerModule, NbTagModule, NbTreeGridModule } from '@nebular/theme';
 import { FormsModule } from '@angular/forms';
 import { ManageOrdersComponent } from './manage-orders/manage-orders.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
@@ -31,6 +31,7 @@ import { LockUserComponent } from './lock-user/lock-user.component';
     NbTagModule,
     FormsModule,
     NbInputModule,
+    NbSpinnerModule,
     NbTreeGridModule,
     NbButtonModule,
     NbIconModule

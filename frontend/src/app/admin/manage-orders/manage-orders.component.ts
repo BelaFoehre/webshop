@@ -37,6 +37,7 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
   ordersSub!: Subscription
 
   private dialogRef!: NbDialogRef<EditOrderStatusComponent>
+  isLoading: boolean = false
 
 /**
  * The constructor function is used to inject the OrderService and NbTreeGridDataSourceBuilder services
@@ -48,11 +49,11 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
   constructor(private orderService: OrderService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>, private dialogService: NbDialogService) {
   }
 
-  /**
-   * The ngOnInit() function is a lifecycle hook that is called after Angular has initialized all
-   * data-bound properties of a directive
-   */
+/**
+ * We're setting the isLoading property to true, and then calling the loadOrders() function
+ */
   ngOnInit(){
+    this.isLoading = true
     this.loadOrders()
   }
 
@@ -113,10 +114,11 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
   }
 
 /**
- * It creates a new data source from the data that was passed in
+ * It takes the data from the API call and creates a new data source for the table
  */
   reloadTable(){
     this.dataSource = this.dataSourceBuilder.create(this.data)
+    this.isLoading = false
   }
 
  /**

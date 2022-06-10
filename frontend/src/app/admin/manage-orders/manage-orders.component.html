@@ -1,5 +1,5 @@
 <nb-card>
-  <nb-card-body>
+  <nb-card-body [nbSpinner]="isLoading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
 
     <label class="search-label" for="search">Suchen: </label>
     <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input" style="margin: 10px;">
