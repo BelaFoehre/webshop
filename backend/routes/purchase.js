@@ -182,11 +182,7 @@ router.get('/order', (req, res) => {
 router.get('/order-all', (req, res) => {
     Order.find((error, result) => {
         if(error | !result) return res.status(400).json(error)
-        else {
-            return res.status(200).json(result)
-        }
-    }).catch((err) => {
-        return res.status(404).json(err)
+        else return res.status(200).json(result)
     })
 })
 
