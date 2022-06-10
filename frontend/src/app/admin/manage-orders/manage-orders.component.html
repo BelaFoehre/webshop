@@ -3,6 +3,14 @@
 
     <label class="search-label" for="search">Suchen: </label>
     <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input" style="margin: 10px;">
+    <a nbButton
+      style="float:right"
+      outline
+      status="primary"
+      routerLink="/admin"
+      > zurück zur Admin Seite
+    <nb-icon icon="award-outline"></nb-icon>
+    </a>
 
     <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)" [contentEditable]="true" style="table-layout: auto;">
 
