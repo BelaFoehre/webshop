@@ -136,6 +136,7 @@ exports.updateCart = (cart, itemId, itemQty) => {
                 priceItem: product.price,
                 priceTotal: itemQty * product.price
             })
+            cart.subTotal += itemQty * product.price
         }
 
         let cartPromise = new Promise((resolve, reject) => {
