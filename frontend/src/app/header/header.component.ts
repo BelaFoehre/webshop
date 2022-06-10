@@ -29,7 +29,8 @@ export class HeaderComponent implements OnInit {
         this.items = [
           { title: 'Profil' },
           { title: 'Logout', link: '/auth/logout' },
-          { title: 'Bestellungen', link: '/orders' }
+          { title: 'Bestellungen', link: '/orders' },
+          { title: 'Passwort ändern', link: '/auth/request-password' }
         ]
         let payload = token.getPayload()
         this.user_name = `${payload.name} ${payload.surname}`
