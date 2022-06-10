@@ -167,7 +167,7 @@ exports.validateInventory = (name, brand, category_main, category_sub1, price, a
     return new Promise((resolve, reject) => {
         try {
             availableQty = parseInt(availableQty)
-            price = parseInt(price)
+            price = parseFloat(price)
         } catch (err) {
             reject(err)
         }
