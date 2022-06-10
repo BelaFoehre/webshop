@@ -10,7 +10,7 @@ exports.sendMail = async (target, subject, text, html) => {
             service: 'gmail',
             auth: {
               user: email,
-              pass: 'lmxlvnivlumfuunk'
+              pass: process.env.EMAIL_PW
             }
         });
           
@@ -26,7 +26,7 @@ exports.sendMail = async (target, subject, text, html) => {
             if(!error){
                 resolve(true)
             } else {
-                resolve(error)
+                resolve(false)
             }
         })
     })
