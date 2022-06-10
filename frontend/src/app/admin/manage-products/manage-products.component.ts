@@ -135,26 +135,16 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
       this.productsSub.unsubscribe()
   }
 
-  /**
-   * This function is called when the user clicks the edit button on a product. It takes the product id
-   * as a parameter and calls the openEditProductDialog function, passing the product id as a parameter
-   * @param {string} selectedProductId - string - this is the id of the product that was selected by
-   * the user.
-   */
-  editProduct(selectedProductId: string){
-    this.openEditProductDialog(selectedProductId)
-  }
-
-  /**
-   * This function opens the EditProductComponent in a dialog box, and when the dialog box is closed,
-   * it reloads the page
-   * @param {string} id - string - The id of the product to be edited.
-   */
-  openEditProductDialog(id: string){
+/**
+ * It opens a dialog with the EditProductComponent, passing in the id of the product to be edited, and
+ * whether or not the product is new
+ * @param {string} id - The id of the product to be edited.
+ * @param {boolean} isNew - boolean - This is a boolean value that determines whether the dialog is for
+ * a new product or an existing product.
+ */
+ editProduct(id: string, isNew: boolean){
     this.dialogRef = this.dialogService.open(EditProductComponent, {
-      context: {
-        id: id
-      }, hasBackdrop: true, closeOnBackdropClick: true
+      context: { id, isNew }, hasBackdrop: true, closeOnBackdropClick: true
     })
 
     this.dialogRef.onClose.subscribe(() => {

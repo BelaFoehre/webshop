@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddProductComponent } from './add-product/add-product.component';
 import { ManageProductsComponent } from './manage-products/manage-products.component';
 import { AdminRoutingModule } from './admin-routing.module'
 import { NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbMenuModule, NbTagModule, NbTreeGridModule } from '@nebular/theme';
@@ -16,7 +15,6 @@ import { LockUserComponent } from './lock-user/lock-user.component';
 
 @NgModule({
   declarations: [
-    AddProductComponent,
     ManageProductsComponent,
     ManageOrdersComponent,
     EditProductComponent,
@@ -38,7 +36,6 @@ import { LockUserComponent } from './lock-user/lock-user.component';
     NbIconModule
   ],
   exports: [
-    AddProductComponent,
     ManageProductsComponent,
     ManageOrdersComponent
   ]

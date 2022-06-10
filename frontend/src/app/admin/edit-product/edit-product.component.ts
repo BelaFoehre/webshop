@@ -12,6 +12,7 @@ import { InventoryService } from 'src/app/services/inventory.service';
 export class EditProductComponent implements OnInit {
   constructor(private dialogRef: NbDialogRef<EditProductComponent>, private inventoryService: InventoryService) { }
 
+  isNew!: boolean
   id!: string
   name!: string
   brand!: string
@@ -28,16 +29,18 @@ export class EditProductComponent implements OnInit {
  * values of the product
  */
   ngOnInit() {
-    this.inventoryService.getProduct(this.id).subscribe((res) => {
-      this.name = res.name
-      this.brand = res.brand
-      this.main = res.category.main
-      this.sub1 = res.category.sub1
-      this.price = res.price
-      this.availableQty = res.availableQty
-      this.trees = new Set(res.tags)
-      this.imageSrc = res.imgBase64
-    })
+    if(!this.isNew){
+      this.inventoryService.getProduct(this.id).subscribe((res) => {
+        this.name = res.name
+        this.brand = res.brand
+        this.main = res.category.main
+        this.sub1 = res.category.sub1
+        this.price = res.price
+        this.availableQty = res.availableQty
+        this.trees = new Set(res.tags)
+        this.imageSrc = res.imgBase64
+      })
+    }
   }
 
 /**
@@ -59,12 +62,23 @@ export class EditProductComponent implements OnInit {
         tags: Array.from(this.trees),
         imgBase64: this.imageSrc
       }
-      this.inventoryService.updateProduct(this.id, data).subscribe((res) => {
-        if(res.status == 200){
-          form.reset()
-          this.dialogRef.close()
-        }
-      })
+
+      if(this.isNew){
+        this.inventoryService.addNewProduct(data).subscribe((res) => {
+          if(res.status == 201){
+            form.reset()
+            this.dialogRef.close()
+          }
+        })
+      } else {
+        this.inventoryService.updateProduct(this.id, data).subscribe((res) => {
+          if(res.status == 200){
+            form.reset()
+            this.dialogRef.close()
+          }
+        })
+      }
+
     }
   }
 
