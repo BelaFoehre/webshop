@@ -151,4 +151,15 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
       window.location.reload();
     })
   }
+
+/**
+ * We're calling the deleteProduct function from the inventory service, and passing in the id of the
+ * product we want to delete
+ * @param {string} id - The id of the product to be deleted.
+ */
+  deleteProduct(id: string){
+    this.inventoryService.deleteProduct(id).subscribe(() => {
+      window.location.reload();
+    })
+  }
 }

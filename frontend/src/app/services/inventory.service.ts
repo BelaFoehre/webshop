@@ -43,6 +43,17 @@ export class InventoryService {
   }
 
 /**
+ * This function takes in an id as a parameter, and then uses that id to delete the product from the
+ * database
+ * @param {String} id - String - This is the id of the product that we want to delete.
+ * @returns The response from the server.
+ */
+  deleteProduct(id: String){
+    return this.http
+      .delete<any>(`/api/inventory/${id}`, {observe:'response'})
+  }
+
+/**
  * We're using the `http` service to make a `GET` request to the `/api/inventory` endpoint. We're then
  * subscribing to the response and updating the `productsUpdated` subject with the response
  */
