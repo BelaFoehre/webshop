@@ -1,0 +1,20 @@
+<form (ngSubmit)="editUser(form)" #form="ngForm" aria-labelledby="title">
+
+  <nb-card >
+    <nb-card-body style="width: fit-content;">
+      <label>Vorname</label>
+      <br><input nbInput type="text" [(ngModel)]="name" placeholder="Vorname" [required]="true" name="name">
+      <br><br><label>Nachname</label>
+      <br><input nbInput type="text" [(ngModel)]="surname" placeholder="Nachname" [required]="true" name="surname">
+      <br><br><label>E-Mail</label>
+      <br><input nbInput pattern=".+@.+..+" type="string" [(ngModel)]="email" placeholder="email" [required]="true" name="email">
+    </nb-card-body>
+    <button nbButton style="float:left" status="success" [disabled]="!form.valid">Bestätigen</button>
+    <button nbButton
+    style="float:left"
+    outline
+    status="primary"
+    routerLink="/admin"
+    > zurück </button>
+  </nb-card>
+</form>

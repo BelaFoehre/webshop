@@ -18,16 +18,16 @@ export class HeaderComponent implements OnInit {
   items: NbMenuItem[] = [];
 
 /**
- * We subscribe to the onTokenChange() function of the AuthService and if the token is valid we set the
- * items array to contain the profile, logout and orders links. If the token is not valid we set the
- * items array to contain the login and register links
- * @param {AuthService} authService - AuthService - this is the service we created earlier.
+ * We subscribe to the onTokenChange() function of the AuthService and if the token is valid, we set
+ * the items array to the logged in user's menu items and the user_name variable to the user's name. If
+ * the token is not valid, we set the items array to the guest user's menu items
+ * @param {AuthService} authService - AuthService - This is the service we created earlier.
  */
   constructor(private readonly authService: AuthService) {
     this.authService.onTokenChange().subscribe((token) => {
       if(token.isValid()){
         this.items = [
-          { title: 'Profil' },
+          { title: 'Profil', link: '/profile' },
           { title: 'Logout', link: '/auth/logout' },
           { title: 'Bestellungen', link: '/orders' },
           { title: 'Passwort ändern', link: '/auth/request-password' }

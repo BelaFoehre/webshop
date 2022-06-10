@@ -35,5 +35,13 @@ router.get('/:id', async (req, res) => {
     })
 })
 
+/* This is the route that is used to update the user. */
+router.put('/:id', async (req, res) => {
+    const { name, email, surname } = req.body
+    User.findByIdAndUpdate(req.params.id, { name, email, surname }, (error, result) => {
+        if(error | !result) return res.status(404).json(error)
+        if(result) return res.status(200).json(result)
+    })
+})
 
 module.exports = router;

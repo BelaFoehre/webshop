@@ -67,4 +67,18 @@ export class UserService {
   getUser(id: string){
     return this.http.get<UserModel>(`/api/users/${id}`)
   }
+
+/**
+ * It takes an id, name, surname and email as arguments, creates an object with the data, and then
+ * sends a PUT request to the server with the data and the id
+ * @param {string} id - the id of the user you want to update
+ * @param {string} name - string, surname: string , email: string
+ * @param {string} surname - string - the surname of the user
+ * @param {string} email - string - the email of the user
+ * @returns The response from the server.
+ */
+  updateUser(id: string, name: string, surname: string , email: string){
+    let data = { name, surname, email }
+    return this.http.put<UserModel>(`/api/users/${id}`, data, {observe:'response'})
+  }
 }

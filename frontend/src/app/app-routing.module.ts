@@ -6,6 +6,7 @@ import { hasRoleGuard } from './services/hasRole-guard.service';
 import { StepperComponent } from './purchase/stepper/stepper.component';
 import { isLockedGuard } from './services/is-locked.service';
 import { OrderOverviewComponent } from './content/order-overview/order-overview.component';
+import { EditProfileComponent } from './content/edit-profile/edit-profile.component';
 
 const contentModule = () => import('./content/content.module').then(x => x.ContentModule);
 const authModule = () => import('./auth/auth.module').then(x => x.NgxAuthModule);
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'auth', loadChildren: authModule },
   { path: 'cart', component: CartComponent, canActivate: [AuthGuard, isLockedGuard] },
   { path: 'admin', loadChildren: adminModule, canActivate: [AuthGuard, hasRoleGuard], data: { role: 'Admin' }},
-  { path: 'orders', component: OrderOverviewComponent, canActivate: [AuthGuard, isLockedGuard] }
+  { path: 'orders', component: OrderOverviewComponent, canActivate: [AuthGuard, isLockedGuard] },
+  { path: 'profile', component: EditProfileComponent, canActivate: [AuthGuard, isLockedGuard] },
 
 ];
 
