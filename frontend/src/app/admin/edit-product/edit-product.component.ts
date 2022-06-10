@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NbDialogRef, NbTagComponent, NbTagInputAddEvent } from '@nebular/theme';
+import { ToastrService } from 'ngx-toastr';
 import { InventoryModel } from 'src/app/models/inventory.model';
 import { InventoryService } from 'src/app/services/inventory.service';
 
@@ -10,7 +11,20 @@ import { InventoryService } from 'src/app/services/inventory.service';
   styleUrls: ['./edit-product.component.scss']
 })
 export class EditProductComponent implements OnInit {
-  constructor(private dialogRef: NbDialogRef<EditProductComponent>, private inventoryService: InventoryService) { }
+
+/**
+ * The constructor function is used to inject the services that we need to use in this component
+ * @param dialogRef - NbDialogRef<EditProductComponent> - This is the reference to the dialog that is
+ * being opened.
+ * @param {InventoryService} inventoryService - This is the service that we created earlier.
+ * @param {ToastrService} toastr - This is a service that allows us to display messages to the
+ * user.
+ */
+  constructor(
+    private dialogRef: NbDialogRef<EditProductComponent>,
+    private inventoryService: InventoryService,
+    private toastr: ToastrService
+  ) { }
 
   isNew!: boolean
   id!: string
@@ -23,6 +37,7 @@ export class EditProductComponent implements OnInit {
   description!: string
 
   imageSrc!: string
+  trees: Set<string> = new Set()
 
 /**
  * It gets the product from the database and sets the values of the variables in the component to the
@@ -44,8 +59,8 @@ export class EditProductComponent implements OnInit {
   }
 
 /**
- * It takes the form data, creates a new object with the data, and sends it to the server
- * @param {NgForm} form - NgForm - This is the form that we are going to submit.
+ * It takes the form data, creates a new object with the data and sends it to the server
+ * @param {NgForm} form - NgForm - The form that was submitted
  */
   editProduct(form: NgForm) {
     if(form.valid){
@@ -65,24 +80,38 @@ export class EditProductComponent implements OnInit {
 
       if(this.isNew){
         this.inventoryService.addNewProduct(data).subscribe((res) => {
-          if(res.status == 201){
-            form.reset()
-            this.dialogRef.close()
+          if(res.status == 200){
+            this.toastr.success('Produkt erfolgreich aktualisiert!', 'Erfolg', { timeOut: 2000 })
+            .onHidden.subscribe(() => {
+              form.reset()
+              this.dialogRef.close()
+            })
+          } else {
+            this.toastr.error('Produkt konnte nicht geändert werden!', 'Fehler', { timeOut: 2000 })
+            .onHidden.subscribe(() => {
+              this.dialogRef.close()
+            })
           }
         })
       } else {
         this.inventoryService.updateProduct(this.id, data).subscribe((res) => {
           if(res.status == 200){
-            form.reset()
-            this.dialogRef.close()
+            this.toastr.success('Produkt erfolgreich aktualisiert!', 'Erfolg', { timeOut: 2000 })
+            .onHidden.subscribe(() => {
+              form.reset()
+              this.dialogRef.close()
+            })
+          } else {
+            this.toastr.error('Produkt konnte nicht geändert werden!', 'Fehler', { timeOut: 2000 })
+            .onHidden.subscribe(() => {
+              this.dialogRef.close()
+            })
           }
         })
       }
 
     }
   }
-
-  trees: Set<string> = new Set()
 
 /**
  * It removes the tag from the list of tags.
@@ -129,7 +158,6 @@ export class EditProductComponent implements OnInit {
   _handleReaderLoaded(e: any) {
     let reader = e.target;
     this.imageSrc = reader.result;
-    console.log(this.imageSrc)
   }
 }
 

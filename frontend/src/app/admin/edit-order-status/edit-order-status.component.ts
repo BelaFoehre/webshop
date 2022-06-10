@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
+import { ToastrService } from 'ngx-toastr';
 import { OrderService } from 'src/app/services/order.service';
 
 @Component({
@@ -15,24 +16,36 @@ export class EditOrderStatusComponent {
   status!: string
 
 /**
- * The constructor function is used to inject the NbDialogRef service and the OrderService service into
- * the component
+ * It's a constructor function that injects the dialogRef, orderService, and toastrService
  * @param dialogRef - NbDialogRef<EditOrderStatusComponent> - This is the reference to the dialog.
  * @param {OrderService} orderService - This is the service that we created earlier.
+ * @param {ToastrService} toastr - This is the service that we'll use to display messages to the user.
  */
-  constructor(private dialogRef: NbDialogRef<EditOrderStatusComponent>, private orderService: OrderService) { }
+  constructor(
+    private dialogRef: NbDialogRef<EditOrderStatusComponent>,
+    private orderService: OrderService,
+    private toastr: ToastrService
+  ) { }
 
 /**
- * It takes the form data, sends it to the backend, and if the backend returns a status code of 200, it
- * closes the dialog
- * @param {NgForm} form - NgForm - this is the form that we created in the HTML file.
+ * It takes the form data, sends it to the backend, and then displays a toastr message depending on the
+ * response
+ * @param {NgForm} form - NgForm - The form that is used to change the status of the order.
  */
   changeOrderStatus(form: NgForm){
     if(form.valid){
       this.orderService.editOrderStatus(this.orderId, this.status_neu).subscribe((res) => {
 
         if(res.status == 200){
-          this.dialogRef.close()
+          this.toastr.success('Status erfolgreich geändert!', 'Erfolg', { timeOut: 2000 })
+          .onHidden.subscribe(() => {
+            this.dialogRef.close()
+          })
+        } else {
+          this.toastr.error('Status konnte nicht geändert werden!', 'Fehler', { timeOut: 2000 })
+          .onHidden.subscribe(() => {
+            this.dialogRef.close()
+          })
         }
       })
     }

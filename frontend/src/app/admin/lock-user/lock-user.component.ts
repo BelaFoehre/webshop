@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
-import { UserModel } from 'src/app/models/user.model';
-import { AuthService } from 'src/app/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -13,14 +12,17 @@ import { UserService } from 'src/app/services/user.service';
 export class LockUserComponent implements OnInit {
 
 /**
- * The constructor function is used to inject the NbDialogRef service and the UserService service into
- * the component.
+ * The constructor function is used to inject the NbDialogRef service, the UserService service, and the
+ * ToastrService service
  * @param dialogRef - NbDialogRef<LockUserComponent> - This is the reference to the dialog.
  * @param {UserService} userService - This is the service that we created earlier.
+ * @param {ToastrService} toastr - This is the service that will be used to display the toast
+ * notification.
  */
   constructor(
     private dialogRef: NbDialogRef<LockUserComponent>,
-    private userService: UserService
+    private userService: UserService,
+    private toastr: ToastrService
   ) { }
 
   name!: string
@@ -43,18 +45,25 @@ export class LockUserComponent implements OnInit {
   }
 
 /**
- * It takes the form as an argument, checks if the form is valid, and if it is, it calls the lockUser
- * function from the user service, passing in the userId, true, and the lock_msg
- * @param {NgForm} form - NgForm - This is the form that we are using to get the data from the user.
+ * It takes the form data, sends it to the user service, and then displays a toastr message depending
+ * on the response
+ * @param {NgForm} form - NgForm - The form that contains the input fields
  */
   lockUser(form: NgForm) {
     if(form.valid){
       this.userService.lockUser(this.userId, true, this.lock_msg).subscribe((res) => {
         if(res.status == 200){
-          this.dialogRef.close()
+          this.toastr.success('Nutzer erfolgreich gesperrt!', 'Erfolg', { timeOut: 2000 })
+          .onHidden.subscribe(() => {
+            this.dialogRef.close()
+          })
+        } else {
+          this.toastr.error('Nutzer konnte nicht gesperrt werden!', 'Fehler', { timeOut: 2000 })
+          .onHidden.subscribe(() => {
+            this.dialogRef.close()
+          })
         }
       })
     }
   }
-
 }
