@@ -1,25 +1,27 @@
 <nb-layout-header fixed>
-    <hr>
-    <h2 routerLink="/content">Bester Webshop EU West</h2>
-    <hr>
+  <hr>
+  <h2 nbButton routerLink="/content">Gummibärenstube</h2>
+  <hr>
+  <div>
     <a *ngIf="isAdmin"
-      nbButton
-      outline
-      status="success"
-      routerLink="/admin"
-      > Admin Seite
-    <nb-icon icon="award-outline"></nb-icon>
-    </a>
-
-    <hr>
+    nbButton
+    style="float:left; margin-right: 25px"
+    outline
+    status="success"
+    routerLink="/admin"
+    > Admin Seite
+  <nb-icon icon="award-outline"></nb-icon>
+  </a>
     <nb-user
-      [name]="user_name"
-      [title]="user_description"
-      [picture]="user_avatar"
-      [nbContextMenu]="items"
-      nbContextMenuTag="user-context-menu"
-      nbContextMenuTrigger="hover"></nb-user>
-      <li class="nav-item">
-        <a routerLink="/cart" class="nav-link">Cart </a>
-      </li>
+    style="float:left"
+    [name]="user_name"
+    [title]="user_description"
+    [picture]="user_avatar"
+    [nbContextMenu]="items"
+    nbContextMenuTag="user-context-menu"
+    nbContextMenuTrigger="hover"></nb-user>
+    <li style="float:right" class="nav-item">
+      <a routerLink="/cart" class="nav-link"><nb-icon icon="shopping-cart-outline"></nb-icon></a>
+    </li>
+  </div>
 </nb-layout-header>

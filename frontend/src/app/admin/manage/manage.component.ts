@@ -25,10 +25,6 @@ export class ManageComponent {
       title: 'Bestellungen',
       icon: 'shopping-cart-outline',
       link: '/admin/orders',
-    },
-    {
-      title: 'Privacy Policy',
-      icon: { icon: 'checkmark-outline', pack: 'eva' },
     }
   ];
 }

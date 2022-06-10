@@ -21,6 +21,7 @@
           <div *ngIf="column=='Status'">
             {{ row.data[column] || '-' }}
             <button nbButton
+                    style="float:right"
                     outline
                     status="warning"
                     (click)="editOrderStatus(row.data['OrderId'], row.data['Status'])">
