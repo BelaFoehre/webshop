@@ -113,11 +113,11 @@ router.put('/forgot-password', bodyParser, (req, res) => {
         return res.status(400).json({error: "reset password link error"})
       } else {
 
-        let subject = 'You Idiot forgot your fucking password god damn'
-        let text = 'Idioto use da link to reset dat shit'
+        let subject = "Reset Password"
+        let text = 'Klicken Sie auf den folgenden Link um Ihr Passwort zurückzusetzen: '
         let html = `
           <h2>Please click dis link brah</h2>
-          <a href="http://${process.env.HOST}:4200/auth/reset-password?token=${token}">RESET PASSWORD</a>`
+          <a href="http://${process.env.HOST}:4200/auth/reset-password?token=${token}">RESET PASSWORT</a>`
 
        let response = await sendMail(email, subject, text, html)
 
